@@ -97,4 +97,228 @@
     (autoload 'omlg-grab-link "org-mac-link")
     (define-key org-mode-map (kbd "C-c g") 'omlg-grab-link)))
 
+
+;;; added by standino
+(defun sacha/org-agenda-clock (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block today
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+(defun cw/org-agenda-clock-daily-report (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+       :block today
+
+       ))))
+
+
+
+(defun cw/org-agenda-clock-thisweek (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thisweek
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+(defun cw/org-agenda-clock-lastweek (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this week: \n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block lastweek
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+(defun cw/org-agenda-clock-thismonth (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this month: \n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thismonth
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+(defun cw/org-agenda-clock-thisyear (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this year: \n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thisyear
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+;; Change your existing org-agenda-custom-commands
+(setq org-agenda-custom-commands
+      '(("a" "My custom agenda"
+         (
+          (sacha/org-agenda-clock)
+          (todo "OKTODAY" )
+          (todo "STARTED")
+
+          (org-agenda-list nil nil 1)
+;;          (sacha/org-agenda-load)
+          (todo "WAITING")
+          (todo "DELEGATED" )
+
+          (todo "TODO")
+          (tags "OFFICE")
+;;          (tags "PROJECT-WAITING")
+          (todo "MAYBE")
+          )
+         )
+        ("d" "delegated"
+         ((todo "DELEGATED" ))
+         )
+        ("c" "finished tasks"
+         ((todo "DONE" )
+          (todo "DEFERRED" )
+          (todo "CANCELLED" )
+          )
+         )
+        ("w" "waiting"
+         ((todo "WAITING" ))
+         )
+        ("o" "overview"
+         ((todo "WAITING" )
+          (cw/org-agenda-clock-daily-report)
+          (cw/org-agenda-clock-thisweek)
+          (cw/org-agenda-clock-thismonth)
+          (cw/org-agenda-clock-thisyear)
+          )
+         )
+        ("A" "priority A"
+         ((tags "//#A" ))
+         )
+        ("T" todo-tree "TODO")
+        ("W" todo-tree "WAITING")
+        ("u" "Unscheduled" ((sacha/org-agenda-list-unscheduled)))
+        ("v" tags-todo "+BOSS-URGENT")
+        ("U" tags-tree "+BOSS-URGENT")
+        ("f" occur-tree "\\<FIXME\\>")
+        )
+      )
+;;; writing presentation
+
+;; {{ export org-mode in Chinese into PDF
+;; @see http://freizl.github.io/posts/tech/2012-04-06-export-orgmode-file-in-Chinese.html
+;; and you need install texlive-xetex on different platforms
+;; To install texlive-xetex:
+;;    `sudo USE="cjk" emerge texlive-xetex` on Gentoo Linux
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+(setq org-latex-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+
+;; Install a default set-up for Beamer export.
+(unless (assoc "beamer-cn" org-latex-classes)
+  (add-to-list 'org-latex-classes
+               '("beamer-cn"
+                 "\\documentclass[presentation]{beamer}
+\\usepackage{xeCJK}
+\\setCJKmainfont{SimSun}
+\[DEFAULT-PACKAGES]
+\[PACKAGES]
+\[EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+
+
+;; }}
+
+;;; GTD 提醒
+
+(defun sacha/org-clock-in-if-starting ()
+  "Clock in when the task is marked STARTED."
+  (when  (string= org-state "STARTED")
+    (org-clock-in)
+;;    (org-pomodoro)
+))
+
+(add-hook 'org-after-todo-state-change-hook
+          'sacha/org-clock-in-if-starting)
+
+(defadvice org-clock-in (after sacha activate)
+  "Set this task's status to 'STARTED'."
+  (org-todo "STARTED"))
+
+(defun sacha/org-clock-out-if-waiting ()
+  "Clock in when the task is marked STARTED."
+  (when  (string= org-state "WAITING")
+    (org-clock-out)))
+(add-hook 'org-after-todo-state-change-hook
+          'sacha/org-clock-out-if-waiting)
+
+(defun sacha/org-clock-out-if-oktoday ()
+  "clock out  when the task is marked OKTODAY."
+  (when (string= org-state "OKTODAY")
+    (org-clock-out)))
+(add-hook 'org-after-todo-state-change-hook
+          'sacha/org-clock-out-if-oktoday)
+
+;; Pomodoro and org-mode
+
+(add-to-list 'org-modules' org-timer)
+(setq org-timer-default-timer 25)
+(add-hook 'org-clock-in-hook' (lambda ()
+       (if (not org-timer-current-timer)
+       (org-timer-set-timer '(16)))))
+(add-hook 'org-clock-out-hook' (lambda ()
+       (setq org-mode-line-string nil)
+))
+(add-hook 'org-timer-done-hook 'have-a-rest)
+
+(defun have-a-rest ()
+  "alert a have a rest msg"
+  (interactive)
+  (shell-command  "msg changwei 'It really is time to take a break'")
+  ;;(org-timer-set-timer 5)
+;;  (setq org-mode-line-string "休息中...")
+)
+
+
+
+;;; end added by standino
+
 (provide 'init-org)

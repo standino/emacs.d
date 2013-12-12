@@ -41,6 +41,7 @@
 
 (require 'init-recentf)
 (require 'init-ido)
+(require 'init-helm)
 (require 'init-hippie-expand)
 (require 'init-auto-complete)
 (require 'init-windows)
@@ -59,9 +60,10 @@
 (require 'init-csv)
 (require 'init-erlang)
 (require 'init-javascript)
+(require 'init-sh)
 (require 'init-php)
 (require 'init-org)
-(require 'init-nxml)
+(require 'init-org-mime)
 (require 'init-css)
 (require 'init-haml)
 (require 'init-python-mode)
@@ -72,9 +74,7 @@
 
 (require 'init-paredit)
 (require 'init-lisp)
-(require 'init-slime)
-(require 'init-clojure)
-(require 'init-common-lisp)
+(require 'init-elisp)
 
 (when *spell-check-support-enabled*
   (require 'init-spelling))
@@ -92,6 +92,7 @@
   (require-package 'osx-location))
 (require-package 'regex-tool)
 
+(require 'init-pomodoro)
 ;;----------------------------------------------------------------------------
 ;; Allow access from emacsclient
 ;;----------------------------------------------------------------------------
