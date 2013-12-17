@@ -95,23 +95,59 @@
   (define-key org-mode-map (kbd "C-M-<up>") 'org-up-element)
   (when *is-a-mac*
     (autoload 'omlg-grab-link "org-mac-link")
-    (define-key org-mode-map (kbd "C-c g") 'omlg-grab-link)))
+    (define-key org-mode-map (kbd "C-c g") 'omlg-grab-link))
+
+
+  )
 
 
 ;;; added by standino
+;; Remove empty LOGBOOK drawers on clock out
+;;(defun bh/remove-empty-drawer-on-clock-out ()
+;;  (interactive)
+;;  (save-excursion
+;;    (beginning-of-line 0)
+;;    (org-remove-empty-drawer-at "LOGBOOK" (point))))
+;;
+;;(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
+;;
+;;; Enable habit tracking (and a bunch of other modules)
+;;(setq org-modules (quote (org-bbdb
+;;                          org-bibtex
+;;                          org-crypt
+;;                          org-gnus
+;;                          org-id
+;;                          org-info
+;;                          org-jsinfo
+;;                          org-habit
+;;                          org-inlinetask
+;;                          org-irc
+;;                          org-mew
+;;                          org-mhe
+;;                          org-protocol
+;;                          org-rmail
+;;                          org-vm
+;;                          org-wl
+;;                          org-w3m)))
+;;
+;;; position the habit graph on the agenda to the right of the default
+;;(setq org-habit-graph-column 50)
+;;
+;;(run-at-time "09:00" 86400 '(lambda () (setq org-habit-show-habits t)))
+
 (defun sacha/org-agenda-clock (match)
   ;; Find out when today is
   (let* ((inhibit-read-only t))
     (goto-char (point-max))
     (org-dblock-write:clocktable
      `(:scope agenda
-       :maxlevel 8
-           :block today
-           :formula %
-           :compact t
-           :narrow 150!
-;;           :link t
-       ))))
+              :maxlevel 8
+              :block today
+              :formula %
+              :compact t
+              :narrow 150!
+              ;;           :link t
+              ))))
 
 (defun cw/org-agenda-clock-daily-report (match)
   ;; Find out when today is
@@ -123,9 +159,6 @@
        :block today
 
        ))))
-
-
-
 (defun cw/org-agenda-clock-thisweek (match)
   ;; Find out when today is
   (let* ((inhibit-read-only t))
@@ -250,8 +283,9 @@
         "xelatex -interaction nonstopmode -output-directory %o %f"
         "xelatex -interaction nonstopmode -output-directory %o %f"))
 
-;; Install a default set-up for Beamer export.
-(unless (assoc "beamer-cn" org-latex-classes)
+  ;; Install a default set-up for Beamer export.
+(require 'ox-beamer)
+  (unless (assoc "beamer-cn" org-latex-classes)
   (add-to-list 'org-latex-classes
                '("beamer-cn"
                  "\\documentclass[presentation]{beamer}
@@ -266,6 +300,7 @@
 
 
 ;; }}
+
 
 ;;; GTD 提醒
 
@@ -317,6 +352,31 @@
 ;;  (setq org-mode-line-string "休息中...")
 )
 
+(setq org-agenda-span 'day)
+
+;; I use C-c c to start capture mode
+(global-set-key (kbd "C-c c") 'org-capture)
+
+;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
+(setq org-capture-templates
+      (quote (("t" "todo" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+              ("r" "respond" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+              ("n" "note" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+              ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
+               "* %?\n%U\n" :clock-in t :clock-resume t)
+              ("w" "org-protocol" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* TODO Review %c\n%U\n" :immediate-finish t)
+              ("m" "Meeting" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+              ("p" "Phone call" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+              ("d" "Development" entry (file+headline (concat my-idea-home "org/mygtd.org") "Development")
+               "* TODO [#A] [/] %? %u SCHEDULED:%t:OFFICE:\n" )
+              ("h" "Habit" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
 
 ;;; end added by standino

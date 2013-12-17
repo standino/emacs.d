@@ -128,14 +128,11 @@
 (setq appt-display-format 'window)
 (setq appt-disp-window-function (function my-appt-disp-window))
 
-(defun my-appt-disp-window (min-to-app new-time msg)                      
-  (save-window-excursion (shell-command (concat 
-                                         "msg changwei '" 
-                                         (string-replace-all "<" "[]" msg)
-                                         "' "
+(defun my-appt-disp-window (min-to-app new-time msg)
+  (save-window-excursion (shell-command (concat "msg changwei '"  (string-replace-all "<" "[]" msg)"' "
                                          ) nil nil)
                          )
-  )                      
+  )
 
 
 (provide 'init-reminder)
