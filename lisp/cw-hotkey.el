@@ -46,7 +46,7 @@
 ;;(setq tabbar-cycling-scope (quote tabs))
 
 (global-set-key "\C-o" 'scroll-down)
-(global-set-key "\C-i" 'my-tab)
+;;(global-set-key "\C-i" 'my-tab)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key [(f3)] 'dired)
 (global-set-key [(f4)] 'eshell)
@@ -75,14 +75,6 @@
 (keyboard-translate ?\C-h ?\C-?)
 (global-set-key (kbd "M-8") 'extend-selection)
 (global-set-key (kbd "M-*") 'select-text-in-quote)
-
-
-(defun start-eclipse ()
-  "open eclipse"
-  (interactive)
-  (shell-command  "d:/JD/ideas/bin/startEclipse.bat &")
-
-)
 
 
 (provide 'cw-hotkey)

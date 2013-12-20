@@ -8,7 +8,7 @@
 (global-set-key (kbd "C-c n") 'orgtbl-tab)
 
 (global-set-key "\C-o" 'scroll-down)
-(global-set-key "\C-i" 'my-tab)
+;;(global-set-key "\C-i" 'my-tab)
 (global-set-key [(f3)] 'dired)
 (global-set-key [(f4)] 'eshell)
 (global-set-key [(f8)] 'highlight-symbol-at-point)
