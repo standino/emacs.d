@@ -135,7 +135,7 @@
                                          "' "
                                          ) nil nil)
                          )
-  )                      
+  )
 
 
 (provide 'cw-reminder)

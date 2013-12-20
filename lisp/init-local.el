@@ -1,25 +1,3 @@
-;;; key
-(global-set-key "\C-z" 'set-mark-command)
-
-(set-language-environment 'utf-8)
-;;(prefer-coding-system 'gb2312)
-(prefer-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-;;(set-terminal-coding-system 'gb2312)
-(set-buffer-file-coding-system 'utf-8)
-
-;;; path
-(setq my-idea-home "~/ideas/")
-(setq my-emacs-home "~/ideas/emacs/")
-(add-to-list 'load-path (concat my-emacs-home "lib"))
-
-
-
-(defun cw/open-host-file ()
-   (interactive)
-   (find-file (concat "/cygdrive/c/Windows/System32/drivers/etc/"  "hosts"))
- )
-
 (defun djcb-duplicate-line (&optional commentfirst)
   "comment line at point; if COMMENTFIRST is non-nil, comment the original"
   (interactive)
@@ -93,6 +71,5 @@
 (require 'cw-nxhml)
 (require 'cw-load-path)
 (require 'cw-file)
-;;(require 'cw-muse)
 (require 'init-org-page)
 (provide 'init-local)
