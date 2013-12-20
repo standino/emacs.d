@@ -146,7 +146,7 @@
               :formula %
               :compact t
               :narrow 150!
-              ;;           :link t
+              :link t
               ))))
 
 (defun cw/org-agenda-clock-daily-report (match)
@@ -357,6 +357,15 @@
 ;; I use C-c c to start capture mode
 (global-set-key (kbd "C-c c") 'org-capture)
 
+(define-key global-map "\C-cr"
+  (lambda () (interactive) (org-capture nil "m")))
+(define-key global-map "\C-cd"
+  (lambda () (interactive) (org-capture nil "d")))
+
+(global-set-key (kbd "<f12>") (lambda () (interactive)(org-agenda nil  "a")))
+
+
+
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
       (quote (("t" "todo" entry (file (concat my-idea-home "org/mygtd.org"))
@@ -370,7 +379,7 @@
               ("w" "org-protocol" entry (file (concat my-idea-home "org/mygtd.org"))
                "* TODO Review %c\n%U\n" :immediate-finish t)
               ("m" "Meeting" entry (file+headline (concat my-idea-home "org/mygtd.org") "Meeting")
-               "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+               "* MEETING with %? :MEETING:\n%U" )
               ("p" "Phone call" entry (file (concat my-idea-home "org/mygtd.org"))
                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
               ("d" "Development" entry (file+headline (concat my-idea-home "org/mygtd.org") "Development")
@@ -378,7 +387,11 @@
               ("h" "Habit" entry (file (concat my-idea-home "org/mygtd.org"))
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
+;;http://doc.norang.ca/org-mode.html
+;;18.38 Remove Multiple State Change Log Details From The Agenda
+;;I skip multiple timestamps for the same entry in the agenda view with the following setting.
 
+(setq org-agenda-skip-additional-timestamps-same-entry t)
 ;;; end added by standino
 
 (provide 'init-org)
