@@ -51,26 +51,33 @@
          :sort-by :date
          :category-index nil)))
 
+(defun cw/commit-pub ()
+    (shell-command  "st ci")
+    (op/do-publication t nil nil t)
+  )
+
 (defun cw/pub-blog-git ()
   (interactive)
+
   (setq op/repository-directory (concat my-idea-home "standino.github.com") )
-  (op/do-publication t nil nil t)
-)
+  (cw/commit-pub)
+
+
+  )
 (defun cw/pub-notes-local ()
   (interactive)
-  (setq op/repository-org-branch "master") ;; default is "source"
 
+  (setq op/repository-org-branch "master")  ;; default is "source"
   (setq op/repository-html-branch "master") ;; default is "master"
-
   (setq op/repository-directory (concat my-idea-home "orgpage") )
-
-  (op/do-publication t nil nil t)
+  (cw/commit-pub)
 )
 
 (defun cw/pub-all ()
   (interactive)
   (cw/pub-blog-git)
   (cw/pub-notes-local)
+  (shell-command  "st site")
 
   )
 
