@@ -75,8 +75,8 @@
 
 (defun cw/pub-all ()
   (interactive)
-  (cw/pub-blog-git)
   (cw/pub-notes-local)
+  (cw/pub-blog-git)
   (shell-command  "st site")
 
   )
