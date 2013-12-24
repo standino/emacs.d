@@ -392,6 +392,15 @@
 ;;I skip multiple timestamps for the same entry in the agenda view with the following setting.
 
 (setq org-agenda-skip-additional-timestamps-same-entry t)
+
+(require 'org-crypt)
+; Encrypt all entries before saving
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+; GPG key to use for encryption
+(setq org-crypt-key "F0B66B40")
+
 ;;; end added by standino
+
 
 (provide 'init-org)
