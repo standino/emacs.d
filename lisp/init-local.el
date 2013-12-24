@@ -71,5 +71,7 @@
 (require 'cw-nxhml)
 (require 'cw-load-path)
 (require 'cw-file)
+(require 'cw-backup)
 (require 'init-org-page)
+
 (provide 'init-local)
