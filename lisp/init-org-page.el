@@ -20,6 +20,9 @@
 
 (setq op/personal-google-analytics-id "UA-46515756-1")
 
+(setq op/repository-org-branch "master")  ;; default is "source"
+
+(setq op/repository-html-branch "master") ;; default is "master"
 
 (setq op/category-config-alist
       '(("blog" ;; this is the default configuration
@@ -58,7 +61,6 @@
 
 (defun cw/pub-blog-git ()
   (interactive)
-
   (setq op/repository-directory (concat my-idea-home "standino.github.com") )
   (cw/commit-pub)
 
@@ -66,9 +68,6 @@
   )
 (defun cw/pub-notes-local ()
   (interactive)
-
-  (setq op/repository-org-branch "master")  ;; default is "source"
-  (setq op/repository-html-branch "master") ;; default is "master"
   (setq op/repository-directory (concat my-idea-home "orgpage") )
   (cw/commit-pub)
 )
