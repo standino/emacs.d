@@ -1,0 +1,128 @@
+hg push
+git push
+cd
+cd localsite/
+ls
+cd local.standino.github.io/
+git pull
+git clone ../../ideas/standino.github.com/ .
+ls
+cd ..
+ls
+mv local.standino.github.io/ ~/
+ls
+mkdir local.standino.git.io
+cd local.standino.git.io/
+git clone ../../ideas/standino.github.com/ .
+ls
+git checkout master
+ls
+cp media/ ../
+cd ..
+ls
+mdkir local.orgpage
+mkdir local.orgpage
+cd local.orgpage/
+ls
+git clone ../../ideas/orgpage/ .
+ls
+cd ..
+ls
+cd
+ls
+cd ideas/
+cd standino.github.com/
+ls
+cd blog/
+ls
+rm *
+ls
+cd ..
+ls
+cd wiki
+ls
+rm e*
+ls
+rm g*
+ls
+rm l*
+ls
+rm c*
+ls
+rm n*
+ls
+rm a*
+ls
+rm p*
+ls
+rm o*
+ls
+rm maven.org 
+rm "#emacs.org#"
+ls
+rm s*
+ls
+cd ..
+ls
+st site
+git status
+git push
+git push
+cd
+cd projects/pbs/trunk/
+hg st
+hg ci -m "back"
+hg st
+hg diff
+hg diff
+hg ci -m "ÔÚ¿ªÊ¼¼ÆËãµÄÊ±ºòÒÑ¾­°ÑProductÏÞÖÆÔÚ50¸öÁË£¬ËùÒÔ²»ÐèÒªÔÙ·Ö´Îµ÷ÓÃÄÚÅä½Ó¿ÚÁË¡£"
+hg st
+hg addremove
+hg ci -m "ÔÚ¿ªÊ¼¼ÆËãµÄÊ±ºòÒÑ¾­°ÑProductÏÞÖÆÔÚ50¸öÁË£¬ËùÒÔ²»ÐèÒªÔÙ·Ö´Îµ÷ÓÃÄÚÅä½Ó¿ÚÁË¡£"
+cd ..
+cd ..
+cd ..
+cd ideas/
+hg st
+hg st
+hg st
+hg st
+cd ..
+cd ..
+cd orgpage/
+git status
+ls
+cd wiki/
+ls
+ls
+hg st
+hg ci -m bakup
+git status
+git add cygwin.org 
+git commit -m "init"
+git status
+cd ..
+ls
+rm emacs-w32.exe.stackdump 
+ls
+git status
+cd
+cd projects/pbs/trunk/
+hg st
+hg diff
+hg diff
+cd 
+cd projects/pbs/trunk/
+hg diff
+cd projects/pbs/trunk/
+hg idff
+hg diff
+hg ci -m "添加空判断"
+cd ..
+cd ..
+etags –file-scope=no -R
+etags  -R
+cd  /tmp/babel-41247d_/
+ls
+cat plantuml-4124QEp
+cat plantuml-4124dOv

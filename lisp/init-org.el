@@ -146,7 +146,7 @@
               :formula %
               :compact t
               :narrow 150!
-              :link t
+;;              :link t
               ))))
 
 (defun cw/org-agenda-clock-daily-report (match)
