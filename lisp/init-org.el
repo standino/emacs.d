@@ -400,6 +400,14 @@
 ; GPG key to use for encryption
 (setq org-crypt-key "F0B66B40")
 
+
+;;Enable Auto Fill mode
+(defun my-org-mode-hook ()
+
+(setq-default fill-column 130)
+(auto-fill-mode 1))
+
+(add-hook 'muse-mode-hook 'my-org-mode-hook)
 ;;; end added by standino
 
 
