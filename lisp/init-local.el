@@ -73,6 +73,7 @@
 (require 'cw-file)
 (require 'cw-backup)
 (require 'init-org-page)
+(require 'init-dict)
 (org-agenda nil  "a")
 
 (provide 'init-local)
