@@ -53,7 +53,8 @@
 (global-set-key [(f5)] 'gtd)
 (global-set-key [(f6)] 'my-dired-to-jd)
 (global-set-key [(f7)] 'my-dired-to-standino)
-;;(global-set-key [(f8)] 'highlight-symbol-at-point)
+(global-set-key [(f8)] 'dic-lookup-w3m--ce-haici-word)
+(global-set-key [(control f8)] 'dic-lookup-w3m--ce-ichiba-region)
 
 (global-set-key (kbd "<f9>") 'list-bookmarks)
 (global-set-key [(f10)] 'bookmark-set)

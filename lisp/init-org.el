@@ -362,7 +362,7 @@
 (define-key global-map "\C-cd"
   (lambda () (interactive) (org-capture nil "d")))
 
-(global-set-key (kbd "<f12>") (lambda () (interactive)(switch-to-buffer "*Org Agenda*")))
+(global-set-key (kbd "<f12>") (lambda () (interactive)(switch-to-buffer "*Org Agenda*")(org-agenda-redo)))
 
 
 
