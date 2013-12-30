@@ -407,7 +407,44 @@
 (setq-default fill-column 130)
 (auto-fill-mode 1))
 
-(add-hook 'muse-mode-hook 'my-org-mode-hook)
+(add-hook 'org-mode-hook 'my-org-mode-hook)
+
+(defun cw/tasks-last-week ()
+  "Produces an org agenda tags view list of all the tasks completed
+last week."
+
+  (interactive)
+    (org-tags-view nil
+          (concat
+
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 7 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+(defun cw/tasks-last-month ()
+  "Produces an org agenda tags view list of all the tasks completed
+last month with the Category Foo."
+  (interactive)
+    (org-tags-view nil
+          (concat
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 30 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+(defun cw/tasks-last-year ()
+  "Produces an org agenda tags view list of all the tasks completed
+last month with the Category Foo."
+
+  (interactive)
+    (org-tags-view nil
+          (concat
+
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 365 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+
+
 ;;; end added by standino
 
 
