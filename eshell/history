@@ -1,110 +1,3 @@
-hg push
-git push
-cd
-cd localsite/
-ls
-cd local.standino.github.io/
-git pull
-git clone ../../ideas/standino.github.com/ .
-ls
-cd ..
-ls
-mv local.standino.github.io/ ~/
-ls
-mkdir local.standino.git.io
-cd local.standino.git.io/
-git clone ../../ideas/standino.github.com/ .
-ls
-git checkout master
-ls
-cp media/ ../
-cd ..
-ls
-mdkir local.orgpage
-mkdir local.orgpage
-cd local.orgpage/
-ls
-git clone ../../ideas/orgpage/ .
-ls
-cd ..
-ls
-cd
-ls
-cd ideas/
-cd standino.github.com/
-ls
-cd blog/
-ls
-rm *
-ls
-cd ..
-ls
-cd wiki
-ls
-rm e*
-ls
-rm g*
-ls
-rm l*
-ls
-rm c*
-ls
-rm n*
-ls
-rm a*
-ls
-rm p*
-ls
-rm o*
-ls
-rm maven.org 
-rm "#emacs.org#"
-ls
-rm s*
-ls
-cd ..
-ls
-st site
-git status
-git push
-git push
-cd
-cd projects/pbs/trunk/
-hg st
-hg ci -m "back"
-hg st
-hg diff
-hg diff
-hg ci -m "ÔÚ¿ªÊ¼¼ÆËãµÄÊ±ºòÒÑ¾­°ÑProductÏÞÖÆÔÚ50¸öÁË£¬ËùÒÔ²»ÐèÒªÔÙ·Ö´Îµ÷ÓÃÄÚÅä½Ó¿ÚÁË¡£"
-hg st
-hg addremove
-hg ci -m "ÔÚ¿ªÊ¼¼ÆËãµÄÊ±ºòÒÑ¾­°ÑProductÏÞÖÆÔÚ50¸öÁË£¬ËùÒÔ²»ÐèÒªÔÙ·Ö´Îµ÷ÓÃÄÚÅä½Ó¿ÚÁË¡£"
-cd ..
-cd ..
-cd ..
-cd ideas/
-hg st
-hg st
-hg st
-hg st
-cd ..
-cd ..
-cd orgpage/
-git status
-ls
-cd wiki/
-ls
-ls
-hg st
-hg ci -m bakup
-git status
-git add cygwin.org 
-git commit -m "init"
-git status
-cd ..
-ls
-rm emacs-w32.exe.stackdump 
-ls
 git status
 cd
 cd projects/pbs/trunk/
@@ -126,3 +19,110 @@ cd  /tmp/babel-41247d_/
 ls
 cat plantuml-4124QEp
 cat plantuml-4124dOv
+cd 
+cd ideas/standino.github.com/
+sed -i "s/U-360BUYAD\\changwei/Will Chang/g"  `find ./ -type f -name "*.org"`
+sed -i "s/U-360BUYAD\changwei/Will Chang/g"  `find ./ -type f -name "*.org"`
+sed -i "s/U-360BUYAD\changwei/Will Chang/g"  `/bin/find ./ -type f -name "*.org"`
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/U-360BUYAD\changwei/Will Chang/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/U-360BUYAD\\changwei/Will Chang/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/changwei@BJXX-CHANGWEI.360buyAD.local/changwei.cn@gmail.com/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/\/wiki\//\/wiki\/html\//g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/\<src.*\>/#+BEGIN_SRC /g' '{}' \;
+git commit -m -a "批量修改url和用户名"
+git commit -a -m  "批量修改url和用户名"
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/#+BEGIN_SRC >/#+BEGIN_SRC/g' '{}' \;
+git status
+git help
+git checkout
+git status
+git help
+git checkout .
+ls
+git status
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/#+BEGIN_SRC >/#+END_SRC/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<#+BEGIN_SRC ">/#+BEGIN_SRC/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<code>/#+BEGIN_SRC/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/</code>/#+END_SRC/g' '{}' \;
+git checkout .
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/#+BEGIN_SRC >/#+END_SRC/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/code>/#+END_SRC/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<code>/#+BEGIN_SRC/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<#+BEGIN_SRC ">/#+BEGIN_SRC/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<example>/#+BEGIN_SRC/g' '{}' \;
+/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/example>/#+END_SRC/g' '{}' \;
+git status
+git commit -a -m "using begin_src to replace src, code and exmple tags in muse"
+history
+cd ..
+cd orgpage/
+ /bin/find . -type f -name  "*.org" -execdir sed -i -e 's/\/wiki\//\/wiki\/html\//g' '{}' \;
+cd 
+cd projects/
+ls
+cd pbs/
+ls
+mkdir tmp
+wsdl2java -p  com.jd.emall.rpc.server.wares  -d d:/JD/projects/pbs/tmp http://admin.ebook.360buy.net/services/services/ebookQueryWs?wsdl 
+cd trunk/
+hg st
+hg addremove
+hg ci -m "使用新接口编写代码"
+cd ..
+ls
+mkdir redis
+cd redis
+mvn archetype:generate -DgroupId=com.jd.pbs.redis -DartifactId=pbsRedis -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+ls
+cd pbsRedis/
+ls
+myremotedesk redis
+myremotedesk redis
+cd ..
+cd ..
+ls
+scp warestock_to_redis.sql ipc_admin@192.168.232.116:/home/ipc_admin
+ls
+scp warestock_to_redis.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+ls
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
+history
+scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sh ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sh ipc_admin@192.168.232.116:/home/ipc_admin
+scp *.sh ipc_admin@192.168.232.116:/home/ipc_admin
+ls
+mv *.sql redis/
+mv *.sh redis/
+cd redis/
+ls
+mv pbsRedis ../
+ls
+scp * ipc_admin@192.168.232.116:/home/ipc_admin
+scp * ipc_admin@192.168.232.116:/home/ipc_admin
+scp * ipc_admin@192.168.232.116:/home/ipc_admin

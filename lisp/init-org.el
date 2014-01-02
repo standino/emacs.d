@@ -134,6 +134,7 @@
 ;;(setq org-habit-graph-column 50)
 ;;
 ;;(run-at-time "09:00" 86400 '(lambda () (setq org-habit-show-habits t)))
+(run-at-time "11:50" 86400 '(cw/pub-all))
 
 (defun sacha/org-agenda-clock (match)
   ;; Find out when today is
