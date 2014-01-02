@@ -380,7 +380,7 @@
               ("w" "org-protocol" entry (file (concat my-idea-home "org/mygtd.org"))
                "* TODO Review %c\n%U\n" :immediate-finish t)
               ("m" "Meeting" entry (file+headline (concat my-idea-home "org/mygtd.org") "Meeting")
-               "* MEETING with %? :MEETING:\n%U" )
+               "* [#A] [/]   %?  SCHEDULED:%t   :MEETING:\n%U" )
               ("p" "Phone call" entry (file (concat my-idea-home "org/mygtd.org"))
                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
               ("d" "Development" entry (file+headline (concat my-idea-home "org/mygtd.org") "Development")
