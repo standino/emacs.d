@@ -150,6 +150,18 @@
 ;;              :link t
               ))))
 
+(defun cw/org-agenda-clock (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+              :maxlevel 8
+              :block today
+              :compact t
+              :narrow 150!
+              ))))
+
 (defun cw/org-agenda-clock-daily-report (match)
   ;; Find out when today is
   (let* ((inhibit-read-only t))
@@ -257,6 +269,8 @@
           (cw/org-agenda-clock-thisyear)
           )
          )
+        ("x" "试验"
+         (          (cw/org-agenda-clock)))
         ("A" "priority A"
          ((tags "//#A" ))
          )
