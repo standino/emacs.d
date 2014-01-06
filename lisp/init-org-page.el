@@ -56,13 +56,14 @@
 
 (defun cw/commit-pub ()
     (shell-command  "st ci")
-    (op/do-publication t nil nil t)
+;;    (op/do-publication t nil nil t)
   )
 
 (defun cw/pub-blog-git ()
   (interactive)
   (setq op/repository-directory (concat my-idea-home "standino.github.com") )
   (cw/commit-pub)
+  (op/do-publication nil "HEAD^1" "~/ideas/standino.github.com/" nil)
 
 
   )
@@ -70,6 +71,7 @@
   (interactive)
   (setq op/repository-directory (concat my-idea-home "orgpage") )
   (cw/commit-pub)
+  (op/do-publication nil "HEAD^1" "~/ideas/orgpage/" nil)
 )
 
 (defun cw/pub-all ()
