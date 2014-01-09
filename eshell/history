@@ -1,128 +1,128 @@
-git status
 cd
-cd projects/pbs/trunk/
-hg st
-hg diff
-hg diff
-cd 
-cd projects/pbs/trunk/
-hg diff
-cd projects/pbs/trunk/
-hg idff
-hg diff
-hg ci -m "添加空判断"
-cd ..
-cd ..
-etags –file-scope=no -R
-etags  -R
-cd  /tmp/babel-41247d_/
+cd ideas/redis/
 ls
-cat plantuml-4124QEp
-cat plantuml-4124dOv
-cd 
-cd ideas/standino.github.com/
-sed -i "s/U-360BUYAD\\changwei/Will Chang/g"  `find ./ -type f -name "*.org"`
-sed -i "s/U-360BUYAD\changwei/Will Chang/g"  `find ./ -type f -name "*.org"`
-sed -i "s/U-360BUYAD\changwei/Will Chang/g"  `/bin/find ./ -type f -name "*.org"`
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/U-360BUYAD\changwei/Will Chang/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/U-360BUYAD\\changwei/Will Chang/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/changwei@BJXX-CHANGWEI.360buyAD.local/changwei.cn@gmail.com/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/\/wiki\//\/wiki\/html\//g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/\<src.*\>/#+BEGIN_SRC /g' '{}' \;
-git commit -m -a "批量修改url和用户名"
-git commit -a -m  "批量修改url和用户名"
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/#+BEGIN_SRC >/#+BEGIN_SRC/g' '{}' \;
-git status
-git help
-git checkout
-git status
-git help
-git checkout .
-ls
-git status
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/#+BEGIN_SRC >/#+END_SRC/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<#+BEGIN_SRC ">/#+BEGIN_SRC/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<code>/#+BEGIN_SRC/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/</code>/#+END_SRC/g' '{}' \;
-git checkout .
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/#+BEGIN_SRC >/#+END_SRC/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/code>/#+END_SRC/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<code>/#+BEGIN_SRC/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<#+BEGIN_SRC ">/#+BEGIN_SRC/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<example>/#+BEGIN_SRC/g' '{}' \;
-/bin/find . -type f -name  "*.org" -execdir sed -i -e 's/<\/example>/#+END_SRC/g' '{}' \;
-git status
-git commit -a -m "using begin_src to replace src, code and exmple tags in muse"
 history
+history | grep scp
+scp * ipc_admin@192.168.232.116:/home/ipc_admin
+scp * ipc_admin@192.168.232.116:/home/ipc_admin
+scp * ipc_admin@192.168.232.116:/home/ipc_admin
+scp * ipc_admin@192.168.232.116:/home/ipc_admin
+scp * ipc_admin@192.168.232.116:/home/ipc_admin
+scp * ipc_admin@192.168.232.116:/home/ipc_admin
 cd ..
-cd orgpage/
- /bin/find . -type f -name  "*.org" -execdir sed -i -e 's/\/wiki\//\/wiki\/html\//g' '{}' \;
-cd 
+cd ..
 cd projects/
 ls
 cd pbs/
 ls
-mkdir tmp
-wsdl2java -p  com.jd.emall.rpc.server.wares  -d d:/JD/projects/pbs/tmp http://admin.ebook.360buy.net/services/services/ebookQueryWs?wsdl 
 cd trunk/
 hg st
-hg addremove
-hg ci -m "使用新接口编写代码"
+hg ci -m "在ProductWrap中缓存库存信息，避免多次调用inventoryInfoAccesor.get(product);"
+hg branch
+hg help
+hg help diff
+hg heads
+hg diff -r 27 -r 24
+hg st
 cd ..
 ls
-mkdir redis
-cd redis
-mvn archetype:generate -DgroupId=com.jd.pbs.redis -DartifactId=pbsRedis -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+cd branches/
 ls
-cd pbsRedis/
+cd buyingplan/
 ls
-myremotedesk redis
-myremotedesk redis
+hg pull ../../trunk/
+hg merge
+hg heads
+hg branch
+hg merge -r 36
+hg status
+hg diff  core_pbs/src/main/java/com/jd/pbs/replenishment/ReplenishmentComputeTask.java
+hg branch
+cd ..
+cd ..
+cd trunk/
+ls
+hg st
+hg diff core_pbs/src/main/java/com/jd/pbs/replenishment/model/ProductWrap.java
+hg ci -m "在ProductWrap中缓存库存信息，避免多次调用inventoryInfoAccesor.get(product);"
+cd ..
+ls
+cd branches/
+ls
+cd buyingplan/
+hg pull ../../trunk/
+hg update
+hg branches
+hg merge default
+hg st
+hg ci -m "merge from trunk"
+hg merge default
+hg branches
+hg merge "PBS可用库存逻辑"
+pwd
+hg udpate
+hg update
+hg branch
+ls
+hg heads
+cd ..
+ls
+cd ..
+ls
+cd trunk/
+cd calc_entrance_pbs/
+mvn 
+cd ..
+cd calc_parent_pbs/
+mvn install
+cd ..
+ls
+cd calc_entrance_pbs/
+mvn install
+mvn install
+cd ..
+ls
+cd calc_parent_pbs/
+mvn install
+mvn -f ../calc_entrance_pbs/pom.xml install
 cd ..
 cd ..
 ls
-scp warestock_to_redis.sql ipc_admin@192.168.232.116:/home/ipc_admin
+cd branches/
 ls
-scp warestock_to_redis.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
+cd pbs_1_2_0/
 ls
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-./mysql_to_redis.sh ./mysql_to_redis.sql 3000000
-history
-scp *.sql ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sh ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sh ipc_admin@192.168.232.116:/home/ipc_admin
-scp *.sh ipc_admin@192.168.232.116:/home/ipc_admin
 ls
-mv *.sql redis/
-mv *.sh redis/
-cd redis/
 ls
-mv pbsRedis ../
+mkdir pbs-calc
+cd pbs-calc
+mvn archetype:generate   -DarchetypeGroupId=org.apache.maven.archetypes   -DgroupId=com.jd.pbs.calc   -DartifactId=common
 ls
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
+mvn archetype:generate      -DgroupId=com.jd.pbs.calc   -DartifactId=common
+mvn archetype:generate   -DarchetypeGroupId=org.apache.maven.archetype   -DgroupId=com.jd.pbs.calc   -DartifactId=common
+mvn archetype:create  -DgroupId=com.jd.pbs.calc   -DartifactId=common
+ls
+cd common/
+ls
+cd src/
+ls
+cd ..
+ls
+cd ..
+ls
+mvn archetype:generate   -DarchetypeGroupId=org.apache.maven.archetypes –DarchetypeArtifactId=maven-archetype-quickstart  -DgroupId=com.jd.pbs.calc   -DartifactId=data-hub
+ls
+mvn archetype:generate    -DgroupId=com.jd.pbs.calc   -DartifactId=data-hub -DinteractiveMode=false
+mvn archetype:generate    -DgroupId=com.jd.pbs.calc   -DartifactId=inventory-model -DinteractiveMode=false
+mvn archetype:generate    -DgroupId=com.jd.pbs.calc   -DartifactId=business-rule -DinteractiveMode=falsemvn archetype:generate    -DgroupId=com.jd.pbs.calc   -DartifactId=sheduler -DinteractiveMode=false
+ls
+mvn archetype:generate   -DarchetypeArtifactId=maven-archetype-webapp   -DgroupId=com.jd.pbs.calc   -DartifactId=web
+ls
+mvn install
+mvn install
+mvn install
+mvn install
+cd common/
+mvn install
+cd ..
+ls
