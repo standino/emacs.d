@@ -1,3 +1,4 @@
+(require-package 'helm)
 (helm-mode 1)
 
 (setq helm-completing-read-handlers-alist
