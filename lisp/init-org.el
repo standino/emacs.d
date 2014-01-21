@@ -244,7 +244,7 @@
           (todo "DELEGATED" )
 
           (todo "TODO")
-          (tags "OFFICE")
+          (tags "PROJECT")
 ;;          (tags "PROJECT-WAITING")
           (todo "MAYBE")
           )
