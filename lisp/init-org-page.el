@@ -63,7 +63,7 @@
   (interactive)
   (setq op/repository-directory (concat my-idea-home "standino.github.com") )
   (cw/commit-pub)
-  (op/do-publication nil "HEAD^1" "~/ideas/standino.github.com/" nil)
+  (op/do-publication)
 
 
   )
@@ -71,7 +71,7 @@
   (interactive)
   (setq op/repository-directory (concat my-idea-home "orgpage") )
   (cw/commit-pub)
-  (op/do-publication nil "HEAD^1" "~/ideas/orgpage/" nil)
+  (op/do-publication)
 )
 
 (defun cw/pub-all ()
