@@ -78,7 +78,7 @@
   (interactive)
   (cw/pub-notes-local)
   (cw/pub-blog-git)
-  (shell-command  "st site")
+ ;; (shell-command  "st site")
 
   )
 
