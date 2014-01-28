@@ -29,10 +29,10 @@
 (require 'init-frame-hooks)
 (require 'init-xterm)
 (require 'init-themes)
-(require 'init-osx-keys)
+;;(require 'init-osx-keys)
 (require 'init-gui-frames)
 (require 'init-maxframe)
-(require 'init-proxies)
+;;(require 'init-proxies)
 (require 'init-dired)
 (require 'init-isearch)
 (require 'init-uniquify)
@@ -47,18 +47,18 @@
 (require 'init-windows)
 (require 'init-sessions)
 (require 'init-fonts)
-(require 'init-mmm)
+;;(require 'init-mmm)
 
 (require 'init-editing-utils)
 
-(require 'init-darcs)
+;;(require 'init-darcs)
 (require 'init-git)
 
-(require 'init-crontab)
+;;(require 'init-crontab)
 (require 'init-textile)
-(require 'init-markdown)
+;;(require 'init-markdown)
 (require 'init-csv)
-(require 'init-erlang)
+;;(require 'init-erlang)
 (require 'init-javascript)
 (require 'init-sh)
 (require 'init-php)
@@ -67,7 +67,7 @@
 (require 'init-css)
 (require 'init-haml)
 (require 'init-python-mode)
-(require 'init-haskell)
+;;(require 'init-haskell)
 (require 'init-ruby-mode)
 (require 'init-rails)
 (require 'init-sql)
@@ -79,7 +79,7 @@
 (when *spell-check-support-enabled*
   (require 'init-spelling))
 
-(require 'init-marmalade)
+;;(require 'init-marmalade)
 (require 'init-misc)
 
 ;; Extra packages which don't require any configuration
