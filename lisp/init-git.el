@@ -1,10 +1,10 @@
 (require-package 'magit)
-(require-package 'git-gutter-fringe)
 (require-package 'git-blame)
 (require-package 'git-commit-mode)
 (require-package 'git-rebase-mode)
 (require-package 'gitignore-mode)
 (require-package 'gitconfig-mode)
+(require-package 'git-messenger)
 
 (setq-default
  magit-save-some-buffers nil
@@ -16,8 +16,12 @@
 ;; quickly open magit on any one of your projects.
 (global-set-key [(meta f12)] 'magit-status)
 
+(after-load 'magit
+  (define-key magit-status-mode-map (kbd "C-M-<up>") 'magit-goto-parent-section))
+
 (require-package 'fullframe)
-(fullframe magit-status magit-mode-quit-window :magit-fullscreen nil)
+(after-load 'magit
+  (fullframe magit-status magit-mode-quit-window :magit-fullscreen nil))
 
 
 ;;; When we start working on git-backed files, use git-wip if available
@@ -25,12 +29,6 @@
 (after-load 'vc-git
   (global-magit-wip-save-mode)
   (diminish 'magit-wip-save-mode))
-
-
-;;; Use the fringe version of git-gutter
-
-(after-load 'git-gutter
-  (require 'git-gutter-fringe))
 
 
 (when *is-a-mac*

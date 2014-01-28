@@ -82,6 +82,8 @@
 ;;(require 'init-marmalade)
 (require 'init-misc)
 
+(require 'init-dash)
+(require 'init-ledger)
 ;; Extra packages which don't require any configuration
 
 (require-package 'gnuplot)
@@ -122,8 +124,10 @@
 ;;----------------------------------------------------------------------------
 (require 'init-locales)
 
-(message "init completed in %.2fms"
-         (sanityinc/time-subtract-millis (current-time) before-init-time))
+(add-hook 'after-init-hook
+          (lambda ()
+            (message "init completed in %.2fms"
+                     (sanityinc/time-subtract-millis after-init-time before-init-time))))
 
 
 (provide 'init)
