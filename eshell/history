@@ -1,14 +1,3 @@
-ls
-history
-history | grep scp
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
-scp * ipc_admin@192.168.232.116:/home/ipc_admin
-cd ..
-cd ..
 cd projects/
 ls
 cd pbs/
@@ -126,3 +115,14 @@ cd ..
 ls
 ls
 mvn jetty:run &
+cd ..
+ls
+cd /cygdrive/d/JD/
+ls
+cd backup/
+ls
+history
+myremotedesk retail
+ls
+scp nginx-1.5.10.tar.gz jalimay@192.168.229.77:/usr/changwei
+myremotedesk retail

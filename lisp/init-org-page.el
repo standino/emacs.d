@@ -55,7 +55,7 @@
          :category-index nil)))
 
 (defun cw/commit-pub ()
-    (shell-command  "st ci")
+;;    (shell-command  "st ci")
 ;;    (op/do-publication t nil nil t)
   )
 
