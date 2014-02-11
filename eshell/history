@@ -1,13 +1,3 @@
-cd projects/
-ls
-cd pbs/
-ls
-cd trunk/
-hg st
-hg ci -m "在ProductWrap中缓存库存信息，避免多次调用inventoryInfoAccesor.get(product);"
-hg branch
-hg help
-hg help diff
 hg heads
 hg diff -r 27 -r 24
 hg st
@@ -126,3 +116,13 @@ myremotedesk retail
 ls
 scp nginx-1.5.10.tar.gz jalimay@192.168.229.77:/usr/changwei
 myremotedesk retail
+cd 
+cd projects/retail/branches/retail_2_0_0/
+ls
+mvn -f retail_portal/pom.xml jetty:run
+mvn -f retail_portal/pom.xml jetty:run
+mvn -f retail_portal/pom.xml jetty:run
+svn up
+mvn -f retail_portal/pom.xml jetty:run
+mvn install
+mvn -f retail_portal/pom.xml jetty:run

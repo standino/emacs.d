@@ -269,8 +269,10 @@
           (cw/org-agenda-clock-thisyear)
           )
          )
-        ("x" "试验"
-         (          (cw/org-agenda-clock)))
+        ("x" "Weekly schedule" agenda ""
+         ((org-agenda-ndays 7)          ;; agenda will start in week view
+          (org-agenda-repeating-timestamp-show-all nil)   ;; ensures that repeating events appear on all relevant dates
+          (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
         ("A" "priority A"
          ((tags "//#A" ))
          )
