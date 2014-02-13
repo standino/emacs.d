@@ -1,12 +1,3 @@
-hg heads
-hg diff -r 27 -r 24
-hg st
-cd ..
-ls
-cd branches/
-ls
-cd buyingplan/
-ls
 hg pull ../../trunk/
 hg merge
 hg heads
@@ -126,3 +117,12 @@ svn up
 mvn -f retail_portal/pom.xml jetty:run
 mvn install
 mvn -f retail_portal/pom.xml jetty:run
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+mvn jetty:run
+mvn jetty:run
+mvn jetty:run
+clear
