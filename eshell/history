@@ -1,15 +1,3 @@
-hg pull ../../trunk/
-hg merge
-hg heads
-hg branch
-hg merge -r 36
-hg status
-hg diff  core_pbs/src/main/java/com/jd/pbs/replenishment/ReplenishmentComputeTask.java
-hg branch
-cd ..
-cd ..
-cd trunk/
-ls
 hg st
 hg diff core_pbs/src/main/java/com/jd/pbs/replenishment/model/ProductWrap.java
 hg ci -m "在ProductWrap中缓存库存信息，避免多次调用inventoryInfoAccesor.get(product);"
@@ -126,3 +114,15 @@ mvn jetty:run
 mvn jetty:run
 mvn jetty:run
 clear
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+ls
+cd ..
+mvn install
+mvn -f retail_portal/pom.xml jetty:run &
+mvn clean install
+mvn -f retail_portal/pom.xml jetty:stop
+mvn -f retail_portal/pom.xml jetty:run
