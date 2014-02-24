@@ -1,12 +1,3 @@
-mvn install
-mvn -f ../calc_entrance_pbs/pom.xml install
-cd ..
-cd ..
-ls
-cd branches/
-ls
-cd pbs_1_2_0/
-ls
 ls
 ls
 mkdir pbs-calc
@@ -126,3 +117,12 @@ cd salesone/
 ls
 mvn install
 mvn -f salesone-web/pom.xml jetty:run
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+mvn clean install
+mvn -f retail_portal/pom.xml jetty:run
+mvn -f retail_portal/pom.xml jetty:run
