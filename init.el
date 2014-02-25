@@ -88,6 +88,7 @@
 
 (require 'init-dash)
 (require 'init-ledger)
+
 ;; Extra packages which don't require any configuration
 
 (require-package 'gnuplot)
@@ -133,6 +134,8 @@
             (message "init completed in %.2fms"
                      (sanityinc/time-subtract-millis after-init-time before-init-time))))
 
+
+(require 'init-java)
 
 (provide 'init)
 
