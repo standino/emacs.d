@@ -1,45 +1,3 @@
-ls
-ls
-mkdir pbs-calc
-cd pbs-calc
-mvn archetype:generate   -DarchetypeGroupId=org.apache.maven.archetypes   -DgroupId=com.jd.pbs.calc   -DartifactId=common
-ls
-mvn archetype:generate      -DgroupId=com.jd.pbs.calc   -DartifactId=common
-mvn archetype:generate   -DarchetypeGroupId=org.apache.maven.archetype   -DgroupId=com.jd.pbs.calc   -DartifactId=common
-mvn archetype:create  -DgroupId=com.jd.pbs.calc   -DartifactId=common
-ls
-cd common/
-ls
-cd src/
-ls
-cd ..
-ls
-cd ..
-ls
-mvn archetype:generate   -DarchetypeGroupId=org.apache.maven.archetypes –DarchetypeArtifactId=maven-archetype-quickstart  -DgroupId=com.jd.pbs.calc   -DartifactId=data-hub
-ls
-mvn archetype:generate    -DgroupId=com.jd.pbs.calc   -DartifactId=data-hub -DinteractiveMode=false
-mvn archetype:generate    -DgroupId=com.jd.pbs.calc   -DartifactId=inventory-model -DinteractiveMode=false
-mvn archetype:generate    -DgroupId=com.jd.pbs.calc   -DartifactId=business-rule -DinteractiveMode=falsemvn archetype:generate    -DgroupId=com.jd.pbs.calc   -DartifactId=sheduler -DinteractiveMode=false
-ls
-mvn archetype:generate   -DarchetypeArtifactId=maven-archetype-webapp   -DgroupId=com.jd.pbs.calc   -DartifactId=web
-ls
-mvn install
-mvn install
-mvn install
-mvn install
-cd common/
-mvn install
-cd ..
-ls
-ls
-mvn jetty:run &
-cd ..
-ls
-cd /cygdrive/d/JD/
-ls
-cd backup/
-ls
 history
 myremotedesk retail
 ls
@@ -126,3 +84,45 @@ cd ..
 mvn clean install
 mvn -f retail_portal/pom.xml jetty:run
 mvn -f retail_portal/pom.xml jetty:run
+mvn -f retail_portal/pom.xml jetty:run
+cd ..
+ls
+cd sone_1_0_0/
+ls
+mvn clean install
+mvn -f retail_portal/pom.xml jetty:run
+mvn clean install
+mvn clean install
+mvn -f retail_portal/pom.xml jetty:run&
+cd common/
+mvn -f retail_portal/pom.xml jetty:stop
+lsof -i:80
+lsof -i:8080
+mvn clean install
+mvn -f retail_portal/pom.xml jetty:run&
+mvn -f retail_portal/pom.xml jetty:run&
+mvn -f retail_portal/pom.xml install
+mvn -f retail_portal/pom.xml jetty:stop
+mvn clean install && mvn -f retail_portal/pom.xml jetty:run 7
+mvn -f retail_portal/pom.xml jetty:run&
+clear
+mvn -f retail_portal/pom.xml install
+mvn -f retail_portal/pom.xml install
+mvn -f retail_portal/pom.xml install
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+cd ..
+mvn clean install
+mvn -f retail_portal/pom.xml jetty:stop
+mvn -f retail_portal/pom.xml jetty:run &
+mvn install
+mvn -f retail_portal/pom.xml jetty:stop
+mvn -f retail_portal/pom.xml jetty:run &
+lsof -i:8080
+lsof -i:8080
+ps -A | grep java
+ps -ef | grep java

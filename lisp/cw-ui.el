@@ -157,7 +157,7 @@
 ;;   "fontset-courier" 'cjk-misc
 ;;   "-*-simsun-*-*-*-*-14-*-*-*-*-*-gbk-0" nil 'prepend)
   
-  (setq split-width-threshold most-positive-fixnum)
+;;  (setq split-width-threshold most-positive-fixnum)
   )
 
 

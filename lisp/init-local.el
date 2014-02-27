@@ -72,6 +72,7 @@
 (require 'cw-load-path)
 (require 'cw-file)
 (require 'cw-backup)
+(require 'cw-mysql)
 (require 'init-org-page)
 (require 'init-dict)
 (org-agenda nil  "a")
