@@ -64,7 +64,7 @@
 
   )
 ;;上下分屏
-(setq split-width-threshold most-positive-fixnum)
+;;(setq split-width-threshold most-positive-fixnum)
 
 (require 'init-reminder)
 (require 'init-hotkey)
