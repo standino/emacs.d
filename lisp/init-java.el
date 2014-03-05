@@ -31,4 +31,10 @@
 (add-to-list 'flymake-allowed-file-name-masks
              '("\\.java$" my-flymake-init flymake-simple-cleanup))
 
+
+(defun eclim-run-test ()
+  (interactive)
+  (if (not (string= major-mode "java-mode"))
+    (message "Sorry cannot run current buffer."))
+  (compile (concat eclim-executable " -command java_junit -p " eclim--project-name " -t " (eclim-package-and-class))))
 (provide 'init-java)
