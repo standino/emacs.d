@@ -1,6 +1,8 @@
 ;; 加载 mysql
-(my-require-or-install 'sql)
-(my-require-or-install 'mysql)
+;;(my-require-or-install 'sql)
+(require 'sql)
+;;(my-require-or-install 'mysql)
+(require 'mysql)
 
 (setq sql-product 'mysql)
 (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))  
