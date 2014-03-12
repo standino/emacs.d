@@ -128,15 +128,28 @@
 (setq appt-display-format 'window)
 (setq appt-disp-window-function (function my-appt-disp-window))
 
+
+(require 'alert)
+
+
+
 (defun my-appt-disp-window (min-to-app new-time msg)                      
   (save-window-excursion (shell-command (concat 
                                          "msg changwei '" 
                                          (string-replace-all "<" "[]" msg)
                                          "' "
                                          ) nil nil)
+
+                         (alert (string-replace-all "<" "[]" msg))
                          )
   )
 
+(require-package 'express)
+(express-install-aliases)
+
+;;(express-message-popup "teste") 
+
+;;(express-with-message-notify "teste") 
 
 (provide 'cw-reminder)
 ;;; cw-reminder.el ends here
