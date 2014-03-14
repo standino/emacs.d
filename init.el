@@ -136,6 +136,8 @@
 
 
 (require 'init-java)
+(require 'init-gtags)
+(require 'init-macro)
 
 (provide 'init)
 
