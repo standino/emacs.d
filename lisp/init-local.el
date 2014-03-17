@@ -6,9 +6,9 @@
   (end-of-line)
   (let ((str (buffer-substring (region-beginning) (region-end))))
     (when commentfirst
-    (comment-region (region-beginning) (region-end)))
+      (comment-region (region-beginning) (region-end)))
     (insert-string
-      (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
+     (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
     (forward-line -1)))
 
 ;; or choose some better bindings....
@@ -27,13 +27,13 @@
   "cyg is the function for cygwin, ln is the function for linux."
   (interactive)
   (if (equal system-type 'cygwin)
-          (if cyg (funcall cyg))
+      (if cyg (funcall cyg))
     )
   (if (equal system-type 'windows-nt)
-          (if cyg (funcall cyg))
-        )
+      (if cyg (funcall cyg))
+    )
   (if (equal system-type 'gnu/linux)
-          (if ln (funcall ln))
+      (if ln (funcall ln))
     )
 
   )
@@ -42,7 +42,7 @@
   " only run for cygwin"
   (interactive)
   (if (equal system-type 'cygwin)
-          (if fn (funcall fn))
+      (if fn (funcall fn))
     )
   )
 
@@ -50,8 +50,8 @@
   " only run for win"
   (interactive)
   (if (equal system-type 'windows-nt)
-          (if fn (funcall fn))
-        )
+      (if fn (funcall fn))
+    )
   )
 
 (defun linux-do (fn)
@@ -59,12 +59,28 @@
   (interactive)
 
   (if (equal system-type 'gnu/linux)
-          (if fn (funcall fn))
+      (if fn (funcall fn))
     )
 
   )
 ;;上下分屏
 ;;(setq split-width-threshold most-positive-fixnum)
+
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+(defun cleanup-buffer ()
+  "Perform a bunch of operations on the whitespace content of a buffer.
+Including indent-buffer, which should not be called automatically on save."
+  (interactive)
+  (untabify-buffer)
+  (delete-trailing-whitespace)
+  (indent-buffer))
+
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max)))
 
 (require 'init-reminder)
 (require 'init-hotkey)
