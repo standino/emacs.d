@@ -15,6 +15,18 @@
 (global-set-key [remap execute-extended-command] 'smex)
 
 (require-package 'idomenu)
+(require-package 'flx-ido)
+(require-package 'ido-vertical-mode)
+(ido-vertical-mode)
+
+;; General project support
+(require-package 'projectile)
+(require-package 'helm-projectile)
+(projectile-global-mode)
+(setq projectile-enable-caching nil
+      projectile-globally-ignored-directories '("target")
+      )
+
 
 ;; Allow the same buffer to be open in different frames
 (setq ido-default-buffer-method 'selected-window)

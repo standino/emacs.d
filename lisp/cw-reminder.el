@@ -147,9 +147,9 @@
 (require-package 'express)
 (express-install-aliases)
 
-;;(express-message-popup "teste") 
+(express-message-popup "teste") 
 
-;;(express-with-message-notify "teste") 
+(express-with-message-notify "teste") 
 
 (provide 'cw-reminder)
 ;;; cw-reminder.el ends here

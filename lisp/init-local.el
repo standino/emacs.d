@@ -81,6 +81,11 @@ Including indent-buffer, which should not be called automatically on save."
 (defun untabify-buffer ()
   (interactive)
   (untabify (point-min) (point-max)))
+;;启动调试信息
+;;(setq debug-on-error t)
+
+;;(require 'pretty-mode)
+;;(global-pretty-mode 1)
 
 (require 'init-reminder)
 (require 'init-hotkey)

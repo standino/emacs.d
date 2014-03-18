@@ -3,7 +3,7 @@
 ;; Copyright (C) 2008  Will
 
 ;; Author: Will <will@will-laptop>
-;; Keywords: 
+;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,15 +22,15 @@
 
 ;; ;;
 ;; cw-reminder.el
-;; 
+;;
 ;; Made by Will
 ;; Login   <will@will-laptop>
-;; 
+;;
 ;; Started on  Thu Dec 11 11:25:33 2008 Will
 ;; Last update Wed May  5 14:58:06 2010 Will
 ;;
 
-;;(setq appt-display-format 'popup)   
+;;(setq appt-display-format 'popup)
 ;;(defvar zendisp "zenity --info --title='Appointment' ")
 ;;(defun appt-display-message (string mins)
 ;;  "Display a reminder about an appointment.
@@ -77,22 +77,22 @@
 ;;  (interactive)
 ;;  (require 'org)
 ;;  (let* ((today (org-date-to-gregorian
-;;		 (time-to-days (current-time))))
-;;	 (files org-agenda-files) entries file)
+;;               (time-to-days (current-time))))
+;;       (files org-agenda-files) entries file)
 ;;    (while (setq file (pop files))
 ;;      (setq entries (append entries (org-agenda-get-day-entries
-;;				     file today :timestamp))))
+;;                                   file today :timestamp))))
 ;;    (setq entries (delq nil entries))
 ;;    (mapc (lambda(x)
-;;	    (let* ((event (org-trim (get-text-property 1 'txt x)))
-;;		   (time-of-day (get-text-property 1 'time-of-day x)) tod)
-;;	      (when time-of-day
-;;		(setq tod (number-to-string time-of-day)
-;;		      tod (when (string-match
-;;				  "\\([0-9]\\{1,2\\}\\)\\([0-9]\\{2\\}\\)" tod)
-;;			     (concat (match-string 1 tod) ":"
-;;				     (match-string 2 tod))))
-;;		(if tod (appt-add tod event))))) entries)))
+;;          (let* ((event (org-trim (get-text-property 1 'txt x)))
+;;                 (time-of-day (get-text-property 1 'time-of-day x)) tod)
+;;            (when time-of-day
+;;              (setq tod (number-to-string time-of-day)
+;;                    tod (when (string-match
+;;                                "\\([0-9]\\{1,2\\}\\)\\([0-9]\\{2\\}\\)" tod)
+;;                           (concat (match-string 1 tod) ":"
+;;                                   (match-string 2 tod))))
+;;              (if tod (appt-add tod event))))) entries)))
 ;;
 ;;(org-agenda-to-appt)
 ;;
@@ -108,30 +108,35 @@
 (defun my-org-agenda-to-appt ()
   (interactive)
   (setq appt-time-msg-list nil)
-   (let ((org-deadline-warning-days 0))    ;; will be automatic in org 5.23
-        (org-agenda-to-appt)))
+  (let ((org-deadline-warning-days 0))    ;; will be automatic in org 5.23
+    (org-agenda-to-appt)))
 
 ;; Run once, activate and schedule refresh
 (my-org-agenda-to-appt)
 (appt-activate t)
 (run-at-time "24:01" nil 'my-org-agenda-to-appt)
 
-
+(setq appt-issue-message t)
 (setq appt-message-warning-time '1)
 (setq appt-display-interval '1)
 
 (setq org-deadline-warning-days '1)
-; Update appt each time agenda opened.
+                                        ; Update appt each time agenda opened.
 (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
 
-; Setup zenify, we tell appt to use window, and replace default function
+                                        ; Setup zenify, we tell appt to use window, and replace default function
 (setq appt-display-format 'window)
 (setq appt-disp-window-function (function my-appt-disp-window))
 
+(require-package 'express)
+(express-install-aliases)
+
+;;(express-message-popup "teste")
+
 (defun my-appt-disp-window (min-to-app new-time msg)
-  (save-window-excursion (shell-command (concat "msg changwei '"  (string-replace-all "<" "[]" msg)"' "
-                                         ) nil nil)
-                         )
+  (save-window-excursion
+    (express-message-popup (string-replace-all "<" "[]" msg))
+    )
   )
 
 
