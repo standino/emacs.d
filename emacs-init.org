@@ -1,0 +1,1053 @@
+* Mysql  (require 'cw-mysql)
+
+#+BEGIN_SRC  emacs-lisp
+
+;; 加载 mysql
+;;(my-require-or-install 'sql)
+(require 'sql)
+;;(my-require-or-install 'mysql)
+(require 'mysql)
+
+(setq sql-product 'mysql)
+(add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
+(add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
+
+;;保存历史
+(add-hook 'sql-interactive-mode-hook
+         (lambda ()
+           (setq sql-input-ring-file-name "~/sql_history")
+           (setq comint-scroll-to-bottom-on-output t)
+           (setq tab-width 4)
+           (set (make-local-variable 'truncate-lines) t)
+
+           ))
+;;
+
+(add-hook 'sql-mode-hook
+         (lambda ()
+           (setq tab-width 4)
+           (setq indent-tabs-mode nil)
+           ))
+
+(setq sql-mysql-options '("-C" "-t" "-f" "-n"))
+
+(setq sql-connection-alist
+      '((pool-sone-dev
+         (sql-product 'mysql)
+         (sql-server "192.168.229.76")
+         (sql-user "root")
+         (sql-password "123456")
+         (sql-database "sone")
+         (sql-port 3306))
+        (pool-retail-dev
+         (sql-product 'mysql)
+         (sql-server "192.168.206.120")
+         (sql-user "ipc")
+         (sql-password "ipc")
+         (sql-database "retail")
+         (sql-port 3358))))
+
+(defun sql-connect-preset (name)
+  "Connect to a predefined SQL connection listed in `sql-connection-alist'"
+  (eval `(let ,(cdr (assoc name sql-connection-alist))
+           (flet ((sql-get-login (&rest what)))
+             (sql-product-interactive sql-product)))))
+
+(defun sql-pool-sone-dev ()
+  (interactive)
+  (sql-connect-preset 'pool-sone-dev))
+
+(defun sql-pool-retail-dev ()
+  (interactive)
+  (sql-connect-preset 'pool-retail-dev))
+
+(setq sql-send-terminator ";")
+
+(eval-after-load "sql"
+   '(load-library "sql-indent"))
+
+(defgroup xdb-connect nil
+  "interactiv db-sessions"
+  :prefix "xdb-"
+  :group 'local)
+
+(defcustom xdb-mysql-sqli-file "~/mysqlSQL-log.sql"
+  "Default SQLi file for mysql-sessions"
+  :type 'string
+  :group 'xdb-connect)
+
+(setq global-mode-string
+      (append global-mode-string
+              '(" " cw-my-sql-str
+                " "))
+)
+
+
+(defun cw-update-db-name(dbname  userName)
+  (setq cw-my-sql-str (format "DB:%s" dbname))
+
+)
+
+
+(defun cw-mysql-sone-dev ()
+  "connect to a mysql server with interactiv sql-Buffer"
+  (interactive)
+  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
+  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
+  (find-file-other-window xdb-mysql-sqli-file)
+  (sql-pool-sone-dev)
+  (other-window -1)
+  (sql-set-sqli-buffer-generally)
+  (cw-update-db-name "sone-dev" "")
+)
+
+(defun cw-mysql-retail-dev ()
+  "connect to a mysql server with interactiv sql-Buffer"
+  (interactive)
+  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
+  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
+  (find-file-other-window xdb-mysql-sqli-file)
+  (sql-pool-retail-dev)
+  (other-window -1)
+  (sql-set-sqli-buffer-generally)
+  (cw-update-db-name "retail-dev" "")
+)
+
+#+END_SRC
+* Org
+#+BEGIN_SRC
+;;; added by standino
+;; Remove empty LOGBOOK drawers on clock out
+;;(defun bh/remove-empty-drawer-on-clock-out ()
+;;  (interactive)
+;;  (save-excursion
+;;    (beginning-of-line 0)
+;;    (org-remove-empty-drawer-at "LOGBOOK" (point))))
+;;
+;;(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
+;;
+;;; Enable habit tracking (and a bunch of other modules)
+;;(setq org-modules (quote (org-bbdb
+;;                          org-bibtex
+;;                          org-crypt
+;;                          org-gnus
+;;                          org-id
+;;                          org-info
+;;                          org-jsinfo
+;;                          org-habit
+;;                          org-inlinetask
+;;                          org-irc
+;;                          org-mew
+;;                          org-mhe
+;;                          org-protocol
+;;                          org-rmail
+;;                          org-vm
+;;                          org-wl
+;;                          org-w3m)))
+;;
+;;; position the habit graph on the agenda to the right of the default
+;;(setq org-habit-graph-column 50)
+;;
+;;(run-at-time "09:00" 86400 '(lambda () (setq org-habit-show-habits t)))
+
+
+(defun sacha/org-agenda-clock (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+              :maxlevel 8
+              :block today
+              :formula %
+              :compact t
+              :narrow 150!
+              ))))
+
+(defun cw/org-agenda-clock (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+              :maxlevel 8
+              :block today
+              :compact t
+              :narrow 150!
+              ))))
+
+(defun cw/org-agenda-clock-daily-report (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+       :block today
+
+       ))))
+(defun cw/org-agenda-clock-thisweek (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thisweek
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+(defun cw/org-agenda-clock-lastweek (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this week: \n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block lastweek
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+(defun cw/org-agenda-clock-thismonth (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this month: \n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thismonth
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+(defun cw/org-agenda-clock-thisyear (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this year: \n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thisyear
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+;; Change your existing org-agenda-custom-commands
+(setq org-agenda-custom-commands
+      '(("a" "My custom agenda"
+         (
+          (sacha/org-agenda-clock)
+          (todo "OKTODAY" )
+          (todo "STARTED")
+
+          (org-agenda-list nil nil 1)
+;;          (sacha/org-agenda-load)
+          (todo "WAITING")
+          (todo "DELEGATED" )
+
+          (todo "TODO")
+          (tags "PROJECT")
+;;          (tags "PROJECT-WAITING")
+          (todo "MAYBE")
+          )
+         )
+        ("d" "delegated"
+         ((todo "DELEGATED" ))
+         )
+        ("c" "finished tasks"
+         ((todo "DONE" )
+          (todo "DEFERRED" )
+          (todo "CANCELLED" )
+          )
+         )
+        ("w" "waiting"
+         ((todo "WAITING" ))
+         )
+        ("o" "overview"
+         ((todo "WAITING" )
+          (cw/org-agenda-clock-daily-report)
+          (cw/org-agenda-clock-thisweek)
+          (cw/org-agenda-clock-thismonth)
+          (cw/org-agenda-clock-thisyear)
+          )
+         )
+        ("x" "Weekly schedule" agenda ""
+         ((org-agenda-ndays 7)          ;; agenda will start in week view
+          (org-agenda-repeating-timestamp-show-all nil)   ;; ensures that repeating events appear on all relevant dates
+          (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+        ("A" "priority A"
+         ((tags "//#A" ))
+         )
+        ("T" todo-tree "TODO")
+        ("W" todo-tree "WAITING")
+        ("u" "Unscheduled" ((sacha/org-agenda-list-unscheduled)))
+        ("v" tags-todo "+BOSS-URGENT")
+        ("U" tags-tree "+BOSS-URGENT")
+        ("f" occur-tree "\\<FIXME\\>")
+        )
+      )
+;;; writing presentation
+
+;; {{ export org-mode in Chinese into PDF
+;; @see http://freizl.github.io/posts/tech/2012-04-06-export-orgmode-file-in-Chinese.html
+;; and you need install texlive-xetex on different platforms
+;; To install texlive-xetex:
+;;    `sudo USE="cjk" emerge texlive-xetex` on Gentoo Linux
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+(setq org-latex-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+
+  ;; Install a default set-up for Beamer export.
+(require 'ox-beamer)
+  (unless (assoc "beamer-cn" org-latex-classes)
+  (add-to-list 'org-latex-classes
+               '("beamer-cn"
+                 "\\documentclass[presentation]{beamer}
+\\usepackage{xeCJK}
+\\setCJKmainfont{SimSun}
+\[DEFAULT-PACKAGES]
+\[PACKAGES]
+\[EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+
+
+;; }}
+
+
+;;; GTD 提醒
+
+(defun sacha/org-clock-in-if-starting ()
+  "Clock in when the task is marked STARTED."
+  (when  (string= org-state "STARTED")
+    (org-clock-in)
+;;    (org-pomodoro)
+))
+
+(add-hook 'org-after-todo-state-change-hook
+          'sacha/org-clock-in-if-starting)
+
+(defadvice org-clock-in (after sacha activate)
+  "Set this task's status to 'STARTED'."
+  (org-todo "STARTED"))
+
+(defun sacha/org-clock-out-if-waiting ()
+  "Clock in when the task is marked STARTED."
+  (when  (string= org-state "WAITING")
+    (org-clock-out)))
+(add-hook 'org-after-todo-state-change-hook
+          'sacha/org-clock-out-if-waiting)
+
+(defun sacha/org-clock-out-if-oktoday ()
+  "clock out  when the task is marked OKTODAY."
+  (when (string= org-state "OKTODAY")
+    (org-clock-out)))
+(add-hook 'org-after-todo-state-change-hook
+          'sacha/org-clock-out-if-oktoday)
+
+;; Pomodoro and org-mode
+
+(add-to-list 'org-modules' org-timer)
+(setq org-timer-default-timer 25)
+(add-hook 'org-clock-in-hook' (lambda ()
+       (if (not org-timer-current-timer)
+       (org-timer-set-timer '(16)))))
+(add-hook 'org-clock-out-hook' (lambda ()
+       (setq org-mode-line-string nil)
+))
+(add-hook 'org-timer-done-hook 'have-a-rest)
+
+(defun have-a-rest ()
+  "alert a have a rest msg"
+  (interactive)
+  (shell-command  "msg changwei 'It really is time to take a break'")
+  ;;(org-timer-set-timer 5)
+;;  (setq org-mode-line-string "休息中...")
+)
+
+(setq org-agenda-span 'day)
+
+;; I use C-c c to start capture mode
+(global-set-key (kbd "C-c c") 'org-capture)
+
+(define-key global-map "\C-cr"
+  (lambda () (interactive) (org-capture nil "m")))
+(define-key global-map "\C-cd"
+  (lambda () (interactive) (org-capture nil "d")))
+
+(global-set-key (kbd "<f12>") (lambda () (interactive)(switch-to-buffer "*Org Agenda*")(org-agenda-redo)))
+
+
+
+;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
+(setq org-capture-templates
+      (quote (("t" "todo" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+              ("r" "respond" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+              ("n" "note" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+              ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
+               "* %?\n%U\n" :clock-in t :clock-resume t)
+              ("w" "org-protocol" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* TODO Review %c\n%U\n" :immediate-finish t)
+              ("m" "Meeting" entry (file+headline (concat my-idea-home "org/mygtd.org") "Meeting")
+               "* [#A] [/]   %?  SCHEDULED:%t   :MEETING:\n%U" )
+              ("p" "Phone call" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+              ("d" "Development" entry (file+headline (concat my-idea-home "org/mygtd.org") "Development")
+               "* TODO [#A] [/] %? %u SCHEDULED:%t:OFFICE:\n" )
+              ("h" "Habit" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
+
+;;http://doc.norang.ca/org-mode.html
+;;18.38 Remove Multiple State Change Log Details From The Agenda
+;;I skip multiple timestamps for the same entry in the agenda view with the following setting.
+
+(setq org-agenda-skip-additional-timestamps-same-entry t)
+
+(require 'org-crypt)
+; Encrypt all entries before saving
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt")))
+; GPG key to use for encryption
+(setq org-crypt-key "F0B66B40")
+
+
+;;Enable Auto Fill mode
+(defun my-org-mode-hook ()
+
+(setq-default fill-column 130)
+(auto-fill-mode 1))
+
+(add-hook 'org-mode-hook 'my-org-mode-hook)
+
+(defun cw/tasks-last-week ()
+  "Produces an org agenda tags view list of all the tasks completed
+last week."
+
+  (interactive)
+    (org-tags-view nil
+          (concat
+
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 7 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+(defun cw/tasks-last-month ()
+  "Produces an org agenda tags view list of all the tasks completed
+last month with the Category Foo."
+  (interactive)
+    (org-tags-view nil
+          (concat
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 30 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+(defun cw/tasks-last-year ()
+  "Produces an org agenda tags view list of all the tasks completed
+last month with the Category Foo."
+
+  (interactive)
+    (org-tags-view nil
+          (concat
+
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 365 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+
+
+;;; end added by standino
+
+
+
+
+
+  #+END_SRC
+
+** Org 写文档和记笔记 (require 'init-org-page)
+#+BEGIN_SRC
+
+;;; package --- 配置org page
+;;; Commentary: 配置org page
+
+
+(require 'org-page)
+
+
+(setq op/site-main-title "Keep going")
+
+(setq op/site-sub-title "努力超越自己！")
+
+(setq op/site-domain "http://standino.github.io/")
+
+
+(setq op/personal-github-link "https://github.com/standino")
+
+
+(setq op/personal-disqus-shortname "standino")
+
+
+(setq op/personal-google-analytics-id "UA-46515756-1")
+
+(setq op/repository-org-branch "master")  ;; default is "source"
+
+(setq op/repository-html-branch "master") ;; default is "master"
+
+(setq op/category-config-alist
+      '(("blog" ;; this is the default configuration
+         :show-meta t
+         :show-comment t
+         :uri-generator op/generate-uri
+         :uri-template "/blog/%y/%m/%d/%t/"
+         :sort-by :date       ;; how to sort the posts
+         :category-index t)   ;; generate category index or not
+        ("wiki"
+         :show-meta t
+         :show-comment t
+         :uri-generator op/generate-uri
+         :uri-template "/wiki/%t/"
+         :sort-by :mod-date
+         :category-index t)
+        ("index"
+         :show-meta nil
+         :show-comment nil
+         :uri-generator op/generate-uri
+         :uri-template "/"
+         :sort-by :date
+         :category-index nil)
+        ("about"
+         :show-meta nil
+         :show-comment nil
+         :uri-generator op/generate-uri
+         :uri-template "/about/"
+         :sort-by :date
+         :category-index nil)))
+
+(defun cw/commit-pub ()
+;;    (shell-command  "st ci")
+;;    (op/do-publication t nil nil t)
+  )
+
+(defun cw/pub-blog-git ()
+  (interactive)
+  (setq op/repository-directory (concat my-idea-home "standino.github.com") )
+  (cw/commit-pub)
+  (op/do-publication)
+
+
+  )
+(defun cw/pub-notes-local ()
+  (interactive)
+  (setq op/repository-directory (concat my-idea-home "orgpage") )
+  (cw/commit-pub)
+  (op/do-publication)
+)
+
+(defun cw/pub-all ()
+  (interactive)
+  (cw/pub-notes-local)
+  (cw/pub-blog-git)
+ ;; (shell-command  "st site")
+
+  )
+
+(provide 'init-org-page)
+
+
+#+END_SRC
+* 常用函数 init
+
+
+#+BEGIN_SRC
+(defun djcb-duplicate-line (&optional commentfirst)
+  "comment line at point; if COMMENTFIRST is non-nil, comment the original"
+  (interactive)
+  (beginning-of-line)
+  (push-mark)
+  (end-of-line)
+  (let ((str (buffer-substring (region-beginning) (region-end))))
+    (when commentfirst
+      (comment-region (region-beginning) (region-end)))
+    (insert-string
+     (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
+    (forward-line -1)))
+
+;; or choose some better bindings....
+
+;; duplicate a line
+(global-set-key (kbd "C-c y") 'djcb-duplicate-line)
+
+;; duplicate a line and comment the first
+(global-set-key (kbd "C-c c") (lambda()(interactive)(djcb-duplicate-line t)))
+
+
+;; 当backspace用
+(keyboard-translate ?\C-h ?\C-?)
+
+(defun cygwin-or-linux (cyg ln)
+  "cyg is the function for cygwin, ln is the function for linux."
+  (interactive)
+  (if (equal system-type 'cygwin)
+      (if cyg (funcall cyg))
+    )
+  (if (equal system-type 'windows-nt)
+      (if cyg (funcall cyg))
+    )
+  (if (equal system-type 'gnu/linux)
+      (if ln (funcall ln))
+    )
+
+  )
+
+(defun cygwin-do (fn)
+  " only run for cygwin"
+  (interactive)
+  (if (equal system-type 'cygwin)
+      (if fn (funcall fn))
+    )
+  )
+
+(defun win-do (fn)
+  " only run for win"
+  (interactive)
+  (if (equal system-type 'windows-nt)
+      (if fn (funcall fn))
+    )
+  )
+
+(defun linux-do (fn)
+  " only run for linux"
+  (interactive)
+
+  (if (equal system-type 'gnu/linux)
+      (if fn (funcall fn))
+    )
+
+  )
+;;上下分屏
+;;(setq split-width-threshold most-positive-fixnum)
+
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+(defun cleanup-buffer ()
+  "Perform a bunch of operations on the whitespace content of a buffer.
+Including indent-buffer, which should not be called automatically on save."
+  (interactive)
+  (untabify-buffer)
+  (delete-trailing-whitespace)
+  (indent-buffer))
+
+(defun untabify-buffer ()
+  (interactive)
+  (untabify (point-min) (point-max)))
+;;启动调试信息
+;;(setq debug-on-error t)
+
+;;(require 'pretty-mode)
+;;(global-pretty-mode 1)
+
+(require 'init-reminder)
+(org-agenda nil  "a")
+
+;;(provide 'init-local)
+
+
+#+END_SRC
+
+* init-reminder
+
+#+BEGIN_SRC
+;;; cw-reminder.el --- popup window to reminde me.
+
+;; Copyright (C) 2008  Will
+
+;; Author: Will <will@will-laptop>
+;; Keywords:
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; ;;
+;; cw-reminder.el
+;;
+;; Made by Will
+;; Login   <will@will-laptop>
+;;
+;; Started on  Thu Dec 11 11:25:33 2008 Will
+;; Last update Wed May  5 14:58:06 2010 Will
+;;
+
+;;(setq appt-display-format 'popup)
+;;(defvar zendisp "zenity --info --title='Appointment' ")
+;;(defun appt-display-message (string mins)
+;;  "Display a reminder about an appointment.
+;;The string STRING describes the appointment, due in integer MINS minutes.
+;;The format of the visible reminder is controlled by `appt-display-format'.
+;;The variable `appt-audible' controls the audible reminder."
+;;  ;; let binding for backwards compatability. Remove when obsolete
+;;  ;; vars appt-msg-window and appt-visible are dropped.
+;;  (let ((appt-display-format
+;;         (if (eq appt-display-format 'ignore)
+;;         (cond (appt-msg-window 'window)
+;;           (appt-visible 'echo))
+;;           appt-display-format)))
+;;    (cond ((eq appt-display-format 'window)
+;;           (funcall appt-disp-window-function
+;;                    (number-to-string mins)
+;;                    ;; TODO - use calendar-month-abbrev-array rather
+;;                    ;; than %b?
+;;                    (format-time-string "%a %b %e " (current-time))
+;;                    string)
+;;           (run-at-time (format "%d sec" appt-display-duration)
+;;                        nil
+;;                        appt-delete-window-function))
+;;          ((eq appt-display-format 'echo)
+;;           (message "%s" string))
+;;          ((eq appt-display-format 'popup)
+;;           (shell-command (concat zendisp
+;;                  " --text='"
+;;                  string
+;;                  "'"
+;;                  )))
+;;
+;;      )
+;;    (if appt-audible (beep 1))))
+;;
+;;; Code:
+
+;;---------------------------------------------------------------------------------
+;;Setting up appointment reminders in Org
+
+;; Make appt aware of appointments from the agenda
+;;(defun org-agenda-to-appt ()
+;;  "Activate appointments found in `org-agenda-files'."
+;;  (interactive)
+;;  (require 'org)
+;;  (let* ((today (org-date-to-gregorian
+;;               (time-to-days (current-time))))
+;;       (files org-agenda-files) entries file)
+;;    (while (setq file (pop files))
+;;      (setq entries (append entries (org-agenda-get-day-entries
+;;                                   file today :timestamp))))
+;;    (setq entries (delq nil entries))
+;;    (mapc (lambda(x)
+;;          (let* ((event (org-trim (get-text-property 1 'txt x)))
+;;                 (time-of-day (get-text-property 1 'time-of-day x)) tod)
+;;            (when time-of-day
+;;              (setq tod (number-to-string time-of-day)
+;;                    tod (when (string-match
+;;                                "\\([0-9]\\{1,2\\}\\)\\([0-9]\\{2\\}\\)" tod)
+;;                           (concat (match-string 1 tod) ":"
+;;                                   (match-string 2 tod))))
+;;              (if tod (appt-add tod event))))) entries)))
+;;
+;;(org-agenda-to-appt)
+;;
+;;(defadvice org-agenda-to-appt (before wickedcool activate)
+;;  "Clear the appt-time-msg-list."
+;;  (setq appt-time-msg-list nil))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; For org appointment reminders
+;;
+;;;; Get appointments for today
+(defun my-org-agenda-to-appt ()
+  (interactive)
+  (setq appt-time-msg-list nil)
+  (let ((org-deadline-warning-days 0))    ;; will be automatic in org 5.23
+    (org-agenda-to-appt)))
+
+;; Run once, activate and schedule refresh
+(my-org-agenda-to-appt)
+(appt-activate t)
+(run-at-time "24:01" nil 'my-org-agenda-to-appt)
+
+(setq appt-issue-message t)
+(setq appt-message-warning-time '1)
+(setq appt-display-interval '1)
+
+(setq org-deadline-warning-days '1)
+                                        ; Update appt each time agenda opened.
+(add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
+
+                                        ; Setup zenify, we tell appt to use window, and replace default function
+(setq appt-display-format 'window)
+(setq appt-disp-window-function (function my-appt-disp-window))
+
+(require-package 'express)
+(express-install-aliases)
+
+;;(express-message-popup "teste")
+
+(defun my-appt-disp-window (min-to-app new-time msg)
+  (save-window-excursion
+    (express-message-popup (string-replace-all "<" "[]" msg))
+    )
+  )
+
+
+(provide 'init-reminder)
+;;; cw-reminder.el ends here
+
+
+#+END_SRC
+
+* 快捷键设置 (require 'init-hotkey)
+#+BEGIN_SRC
+;;; Hotkey options
+(defalias 'tt 'toggle-truncate-lines)
+(defalias 'yas  'yas/expand)
+(defalias 'sql-org-table 'org-table-create-or-convert-from-region)
+(defalias 'sql-org-next  'orgtbl-tab)
+(global-set-key "\C-z" 'set-mark-command)
+(global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
+(global-set-key (kbd "C-c n") 'orgtbl-tab)
+
+(global-set-key "\C-o" 'scroll-down)
+;;(global-set-key "\C-i" 'my-tab)
+(global-set-key [(f3)] 'dired)
+(global-set-key [(f4)] 'eshell)
+(global-set-key [(f8)] 'highlight-symbol-at-point)
+
+(global-set-key (kbd "<f9>") 'list-bookmarks)
+(global-set-key [(f10)] 'bookmark-set)
+(global-set-key [(f11)] 'fullscreen)
+
+;;(define-key global-map (kbd "C-c f") 'wy-go-to-char)
+;;(define-key global-map (kbd "C-c b") 'my-back-to-char)
+;;
+;;(global-set-key [(control ?\.)] 'ska-point-to-register)
+;;(global-set-key [(control ?\,)] 'ska-jump-to-register)
+;;(global-set-key (kbd "M-X") 'anything)
+;;
+;;(keyboard-translate ?\C-h ?\C-?)
+;;(global-set-key (kbd "M-8") 'extend-selection)
+;;(global-set-key (kbd "M-*") 'select-text-in-quote)
+
+(provide 'init-hotkey)
+
+
+#+END_SRC
+* 格式化xml 文件(require 'cw-nxhml)
+  #+BEGIN_SRC
+
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . anjsp-mode))
+
+(defun bf-pretty-print-xml-region (begin end)
+  "Pretty format XML markup in region. You need to have nxml-mode http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do this.
+  The function inserts linebreaks to separate tags that have nothing but whitespace between them. It then indents the markup by using nxml's indentation rules."
+  (interactive "r")
+  (save-excursion (nxml-mode) (goto-char begin)
+                  (while (search-forward-regexp "\>[ \\t]*\<" nil t)
+                    (backward-char) (insert "\n"))
+                  (indent-region begin end))
+(message "Ah, much better!"))
+
+(defun msh-close-tag ()
+  "Close the previously defined XML tag"
+  (interactive)
+  (let ((tag nil)
+        (quote nil))
+    (save-excursion
+      (do ((skip 1))
+          ((= 0 skip))
+        (re-search-backward "</?[a-zA-Z0-9_-]+")
+        (cond ((looking-at "</")
+               (setq skip (+ skip 1)))
+              ((not (looking-at "<[a-zA-Z0-9_-]+[^>]*?/>"))
+               (setq skip (- skip 1)))))
+      (when (looking-at "<\\([a-zA-Z0-9_-]+\\)")
+        (setq tag (match-string 1)))
+      (if (eq (get-text-property (point) 'face)
+              'font-lock-string-face)
+          (setq quote t)))
+    (when tag
+      (setq quote (and quote
+                       (not (eq (get-text-property (- (point) 1) 'face)
+                                'font-lock-string-face))))
+      (if quote
+          (insert "\""))
+      (insert "</" tag ">")
+      (if quote
+          (insert "\"")))))
+
+
+  #+END_SRC
+
+*(require 'cw-load-path)
+  #+BEGIN_SRC
+
+;;; package --- 设置路径
+;;; code
+
+(setq my-idea-home "~/ideas/")
+(setq my-emacs-home "~/ideas/emacs/")
+(add-to-list 'load-path (concat my-emacs-home "lib"))
+
+(defun cw/open-host-file ()
+   (interactive)
+   (find-file (concat "/cygdrive/c/Windows/System32/drivers/etc/"  "hosts"))
+ )
+
+(require 'require-or-install)
+
+(defun my-require-or-install (feature)
+  (require-or-install feature  (format "%s.el" feature) )
+  )
+
+(defun my-require (feature)
+  " put the ~/.emacs.d/$feature to path"
+    (add-to-list 'load-path  (format "~/.emacs.d/%s"   feature) )
+  (my-require-or-install feature)
+)
+
+(require 'wc)
+
+
+
+  #+END_SRC
+* (require 'cw-file)
+  #+BEGIN_SRC
+
+
+(defun set-clipboard-contents-from-string (str)
+  "Copy the value of string STR into the clipboard."
+  (let ((x-select-enable-clipboard t))
+    (x-select-text str)))
+
+(defun string-replace-all (old new big)
+  "Replace all occurences of OLD string with NEW string in BIG sting."
+  (do ((newlen (length new))
+       (i (search old big)
+          (search old big :start2 (+ i newlen))))
+      ((null i) big)
+    (setq big
+          (concatenate 'string
+                       (subseq big 0 i)
+                       new
+                       (subseq big (+ i (length old))))))
+  )
+
+(defun path-to-clipboard ()
+  "Copy the current file's path to the clipboard.
+     If the current buffer has no file, copy the buffer's default directory."
+  (interactive)
+  (let (
+        (path  (expand-file-name (or (buffer-file-name) default-directory)))
+        )
+    (set-clipboard-contents-from-string path )
+    (kill-new path)
+    (message "%s" path)))
+
+
+(defun win-path()
+  (concat "C:\\dsw" (string-replace-all "/" "\\" (expand-file-name (or (buffer-file-name) default-directory))))
+  )
+
+(defun buffer-dir()
+  (file-name-directory (expand-file-name (or (buffer-file-name) default-directory)))
+  )
+
+(defun kill-unmodified-buffers ()
+  "Kill some buffers.  Asks the user whether to kill each one of them.
+Non-interactively, if optional argument LIST is non-nil, it
+specifies the list of buffers to kill, asking for approval for each one."
+  (interactive)
+  (setq list (buffer-list))
+  (while list
+    (let* ((buffer (car list))
+           (name (buffer-name buffer)))
+      (and name                         ; Can be nil for an indirect buffer
+                                        ; if we killed the base buffer.
+           (not (string-equal name ""))
+           (/= (aref name 0) ?\s)
+           (if (buffer-modified-p buffer)
+               (message "")(kill-buffer buffer))
+           ))
+    (setq list (cdr list))))
+(setq grep-files-aliases
+      (quote (("asm" . "*.[sS]")
+              ("c" . "*.c") ("cc" . "*.cc *.cxx *.cpp *.C *.CC *.c++")
+              ("cchh" . "*.cc *.[ch]xx *.[ch]pp *.[CHh] *.CC *.HH *.[ch]++")
+              ("hh" . "*.hxx *.hpp *.[Hh] *.HH *.h++")
+              ("ch" . "*.[ch]")
+               ("el" . "*.el")
+               ("h" . "*.h")
+               ("l" . "[Cc]hange[Ll]og*")
+               ("m" . "[Mm]akefile*")
+               ("tex" . "*.tex")
+               ("texi" . "*.texi")
+               (java . "*.java")
+               (sql . "*.sql *.SQL")
+               (xml . "*.xml"))))
+
+
+  #+END_SRC
+
+* 备份设置 (require 'cw-backup)
+
+
+
+#+BEGIN_SRC
+
+(setq backup-directory-alist '(("" . "~/backup/emacs/backup")))
+(setq-default make-backup-file t)
+(setq make-backup-file t)
+
+(setq make-backup-files t)
+(setq version-control t)
+(setq kept-old-versions 2)
+(setq kept-new-versions 10)
+(setq delete-old-versions t)
+
+
+
+#+END_SRC
+
+
+
+* (require 'init-dict)
+#+BEGIN_SRC
+(require-package 'dic-lookup-w3m)
+(require 'dic-lookup-w3m)
+(require 'dic-lookup-w3m-zh)
+
+(provide 'init-dict)
+
+
+#+END_SRC
