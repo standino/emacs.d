@@ -361,10 +361,13 @@
 ))
 (add-hook 'org-timer-done-hook 'have-a-rest)
 
+(require-package 'express)
+(express-install-aliases)
+
 (defun have-a-rest ()
   "alert a have a rest msg"
   (interactive)
-  (shell-command  "msg changwei 'It really is time to take a break'")
+  (express-message-popup  "It really is time to take a break")
   ;;(org-timer-set-timer 5)
 ;;  (setq org-mode-line-string "休息中...")
 )

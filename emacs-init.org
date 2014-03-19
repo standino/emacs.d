@@ -1,6 +1,46 @@
+* Emacs Org Configuration
+
+* Description
+  This file is tangled using =org-babel-load-file=. What this does is generate
+  a =emacs-init.el= from the =emacs-lisp= source blocks.
+
+  This emacs.d is currently  designed for Emacs 24.3 and above.
+
+* 设置路径
+
+#+BEGIN_SRC emacs-lisp
+
+;;; package --- 设置路径
+;;; code
+
+(setq my-idea-home "~/ideas/")
+(setq my-emacs-home "~/ideas/emacs/")
+(add-to-list 'load-path (concat my-emacs-home "lib"))
+
+(defun cw/open-host-file ()
+   (interactive)
+   (find-file (concat "/cygdrive/c/Windows/System32/drivers/etc/"  "hosts"))
+ )
+
+(require 'require-or-install)
+
+(defun my-require-or-install (feature)
+  (require-or-install feature  (format "%s.el" feature) )
+  )
+
+(defun my-require (feature)
+  " put the ~/.emacs.d/$feature to path"
+    (add-to-list 'load-path  (format "~/.emacs.d/%s"   feature) )
+  (my-require-or-install feature)
+)
+
+(require 'wc)
+
+
+#+END_SRC
 * Mysql  (require 'cw-mysql)
 
-#+BEGIN_SRC  emacs-lisp
+#+BEGIN_SRC emacs-lisp
 
 ;; 加载 mysql
 ;;(my-require-or-install 'sql)
@@ -115,7 +155,7 @@
 
 #+END_SRC
 * Org
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 ;;; added by standino
 ;; Remove empty LOGBOOK drawers on clock out
 ;;(defun bh/remove-empty-drawer-on-clock-out ()
@@ -485,7 +525,7 @@ last month with the Category Foo."
   #+END_SRC
 
 ** Org 写文档和记笔记 (require 'init-org-page)
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 
 ;;; package --- 配置org page
 ;;; Commentary: 配置org page
@@ -578,7 +618,7 @@ last month with the Category Foo."
 * 常用函数 init
 
 
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 (defun djcb-duplicate-line (&optional commentfirst)
   "comment line at point; if COMMENTFIRST is non-nil, comment the original"
   (interactive)
@@ -668,8 +708,8 @@ Including indent-buffer, which should not be called automatically on save."
 ;;(require 'pretty-mode)
 ;;(global-pretty-mode 1)
 
-(require 'init-reminder)
-(org-agenda nil  "a")
+;;(require 'init-reminder)
+;;(org-agenda nil  "a")
 
 ;;(provide 'init-local)
 
@@ -678,7 +718,7 @@ Including indent-buffer, which should not be called automatically on save."
 
 * init-reminder
 
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 ;;; cw-reminder.el --- popup window to reminde me.
 
 ;; Copyright (C) 2008  Will
@@ -828,7 +868,7 @@ Including indent-buffer, which should not be called automatically on save."
 #+END_SRC
 
 * 快捷键设置 (require 'init-hotkey)
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 ;;; Hotkey options
 (defalias 'tt 'toggle-truncate-lines)
 (defalias 'yas  'yas/expand)
@@ -864,7 +904,7 @@ Including indent-buffer, which should not be called automatically on save."
 
 #+END_SRC
 * 格式化xml 文件(require 'cw-nxhml)
-  #+BEGIN_SRC
+  #+BEGIN_SRC emacs-lisp
 
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . anjsp-mode))
 
@@ -910,7 +950,7 @@ Including indent-buffer, which should not be called automatically on save."
   #+END_SRC
 
 *(require 'cw-load-path)
-  #+BEGIN_SRC
+  #+BEGIN_SRC emacs-lisp
 
 ;;; package --- 设置路径
 ;;; code
@@ -942,7 +982,7 @@ Including indent-buffer, which should not be called automatically on save."
 
   #+END_SRC
 * (require 'cw-file)
-  #+BEGIN_SRC
+  #+BEGIN_SRC emacs-lisp
 
 
 (defun set-clipboard-contents-from-string (str)
@@ -1023,7 +1063,7 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 
 
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 
 (setq backup-directory-alist '(("" . "~/backup/emacs/backup")))
 (setq-default make-backup-file t)
@@ -1042,7 +1082,7 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 
 * (require 'init-dict)
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 (require-package 'dic-lookup-w3m)
 (require 'dic-lookup-w3m)
 (require 'dic-lookup-w3m-zh)

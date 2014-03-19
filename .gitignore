@@ -31,3 +31,4 @@ abbrev_defs
 session*
 projectile-bookmarks.eld
 semanticdb
+emacs-init.el
