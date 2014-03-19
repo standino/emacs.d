@@ -27,3 +27,7 @@ site-lisp/package/
 /.achievements
 /.bookmarks.el
 /history
+abbrev_defs
+session*
+projectile-bookmarks.eld
+semanticdb
