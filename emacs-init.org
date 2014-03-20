@@ -1,6 +1,14 @@
 * Emacs Org Configuration
 
+   - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org][一年成为Emacs高手(像神一样使用编辑器)]]
+
 ** init.el
+
+**  M-. : 获得Java变量和方法的引用或声明
+**  M-x swoop-multi : 在打开的 buffer 查找某个关键字
+**  M-x projectile-grep: searching for a string inside your project
+**  C-cf : 打开文件
+
 
 #+BEGIN_SRC
 
@@ -437,7 +445,12 @@
 (defun have-a-rest ()
   "alert a have a rest msg"
   (interactive)
-  (express-message-popup  "It really is time to take a break")
+  (shell-command (concat zendisp
+                  " --text='"
+                  "休息一下吧。"
+                  "'"
+                  ))
+;;  (express-message-popup  "It really is time to take a break")
   ;;(org-timer-set-timer 5)
 ;;  (setq org-mode-line-string "休息中...")
 )
@@ -725,13 +738,9 @@ Including indent-buffer, which should not be called automatically on save."
 ;;启动调试信息
 ;;(setq debug-on-error t)
 
-;;(require 'pretty-mode)
-;;(global-pretty-mode 1)
 
-;;(require 'init-reminder)
-;;(org-agenda nil  "a")
 
-;;(provide 'init-local)
+
 
 
 #+END_SRC
@@ -739,73 +748,43 @@ Including indent-buffer, which should not be called automatically on save."
 * init-reminder
 
 #+BEGIN_SRC emacs-lisp
-;;; cw-reminder.el --- popup window to reminde me.
 
-;; Copyright (C) 2008  Will
 
-;; Author: Will <will@will-laptop>
-;; Keywords:
+(setq appt-display-format 'popup)
+(defvar zendisp "zenity --info --title='Appointment' ")
+(defun appt-display-message (string mins)
+  "Display a reminder about an appointment.
+The string STRING describes the appointment, due in integer MINS minutes.
+The format of the visible reminder is controlled by `appt-display-format'.
+The variable `appt-audible' controls the audible reminder."
+  ;; let binding for backwards compatability. Remove when obsolete
+  ;; vars appt-msg-window and appt-visible are dropped.
+  (let ((appt-display-format
+         (if (eq appt-display-format 'ignore)
+         (cond (appt-msg-window 'window)
+           (appt-visible 'echo))
+           appt-display-format)))
+    (cond ((eq appt-display-format 'window)
+           (funcall appt-disp-window-function
+                    (number-to-string mins)
+                    ;; TODO - use calendar-month-abbrev-array rather
+                    ;; than %b?
+                    (format-time-string "%a %b %e " (current-time))
+                    string)
+           (run-at-time (format "%d sec" appt-display-duration)
+                        nil
+                        appt-delete-window-function))
+          ((eq appt-display-format 'echo)
+           (message "%s" string))
+          ((eq appt-display-format 'popup)
+           (shell-command (concat zendisp
+                  " --text='"
+                  string
+                  "'"
+                  )))
 
-;; This program is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-;;; Commentary:
-
-;; ;;
-;; cw-reminder.el
-;;
-;; Made by Will
-;; Login   <will@will-laptop>
-;;
-;; Started on  Thu Dec 11 11:25:33 2008 Will
-;; Last update Wed May  5 14:58:06 2010 Will
-;;
-
-;;(setq appt-display-format 'popup)
-;;(defvar zendisp "zenity --info --title='Appointment' ")
-;;(defun appt-display-message (string mins)
-;;  "Display a reminder about an appointment.
-;;The string STRING describes the appointment, due in integer MINS minutes.
-;;The format of the visible reminder is controlled by `appt-display-format'.
-;;The variable `appt-audible' controls the audible reminder."
-;;  ;; let binding for backwards compatability. Remove when obsolete
-;;  ;; vars appt-msg-window and appt-visible are dropped.
-;;  (let ((appt-display-format
-;;         (if (eq appt-display-format 'ignore)
-;;         (cond (appt-msg-window 'window)
-;;           (appt-visible 'echo))
-;;           appt-display-format)))
-;;    (cond ((eq appt-display-format 'window)
-;;           (funcall appt-disp-window-function
-;;                    (number-to-string mins)
-;;                    ;; TODO - use calendar-month-abbrev-array rather
-;;                    ;; than %b?
-;;                    (format-time-string "%a %b %e " (current-time))
-;;                    string)
-;;           (run-at-time (format "%d sec" appt-display-duration)
-;;                        nil
-;;                        appt-delete-window-function))
-;;          ((eq appt-display-format 'echo)
-;;           (message "%s" string))
-;;          ((eq appt-display-format 'popup)
-;;           (shell-command (concat zendisp
-;;                  " --text='"
-;;                  string
-;;                  "'"
-;;                  )))
-;;
-;;      )
-;;    (if appt-audible (beep 1))))
+      )
+    (if appt-audible (beep 1))))
 ;;
 ;;; Code:
 
@@ -813,33 +792,33 @@ Including indent-buffer, which should not be called automatically on save."
 ;;Setting up appointment reminders in Org
 
 ;; Make appt aware of appointments from the agenda
-;;(defun org-agenda-to-appt ()
-;;  "Activate appointments found in `org-agenda-files'."
-;;  (interactive)
-;;  (require 'org)
-;;  (let* ((today (org-date-to-gregorian
-;;               (time-to-days (current-time))))
-;;       (files org-agenda-files) entries file)
-;;    (while (setq file (pop files))
-;;      (setq entries (append entries (org-agenda-get-day-entries
-;;                                   file today :timestamp))))
-;;    (setq entries (delq nil entries))
-;;    (mapc (lambda(x)
-;;          (let* ((event (org-trim (get-text-property 1 'txt x)))
-;;                 (time-of-day (get-text-property 1 'time-of-day x)) tod)
-;;            (when time-of-day
-;;              (setq tod (number-to-string time-of-day)
-;;                    tod (when (string-match
-;;                                "\\([0-9]\\{1,2\\}\\)\\([0-9]\\{2\\}\\)" tod)
-;;                           (concat (match-string 1 tod) ":"
-;;                                   (match-string 2 tod))))
-;;              (if tod (appt-add tod event))))) entries)))
-;;
-;;(org-agenda-to-appt)
-;;
-;;(defadvice org-agenda-to-appt (before wickedcool activate)
-;;  "Clear the appt-time-msg-list."
-;;  (setq appt-time-msg-list nil))
+(defun org-agenda-to-appt ()
+  "Activate appointments found in `org-agenda-files'."
+  (interactive)
+  (require 'org)
+  (let* ((today (org-date-to-gregorian
+               (time-to-days (current-time))))
+       (files org-agenda-files) entries file)
+    (while (setq file (pop files))
+      (setq entries (append entries (org-agenda-get-day-entries
+                                   file today :timestamp))))
+    (setq entries (delq nil entries))
+    (mapc (lambda(x)
+          (let* ((event (org-trim (get-text-property 1 'txt x)))
+                 (time-of-day (get-text-property 1 'time-of-day x)) tod)
+            (when time-of-day
+              (setq tod (number-to-string time-of-day)
+                    tod (when (string-match
+                                "\\([0-9]\\{1,2\\}\\)\\([0-9]\\{2\\}\\)" tod)
+                           (concat (match-string 1 tod) ":"
+                                   (match-string 2 tod))))
+              (if tod (appt-add tod event))))) entries)))
+
+(org-agenda-to-appt)
+
+(defadvice org-agenda-to-appt (before wickedcool activate)
+  "Clear the appt-time-msg-list."
+  (setq appt-time-msg-list nil))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -869,20 +848,12 @@ Including indent-buffer, which should not be called automatically on save."
 (setq appt-display-format 'window)
 (setq appt-disp-window-function (function my-appt-disp-window))
 
-(require-package 'express)
-(express-install-aliases)
-
-;;(express-message-popup "teste")
 
 (defun my-appt-disp-window (min-to-app new-time msg)
   (save-window-excursion
-    (express-message-popup (string-replace-all "<" "[]" msg))
+    (appt-display-message (string-replace-all "<" "[]" msg))
     )
   )
-
-
-(provide 'init-reminder)
-;;; cw-reminder.el ends here
 
 
 #+END_SRC
@@ -1108,6 +1079,27 @@ specifies the list of buffers to kill, asking for approval for each one."
 (require 'dic-lookup-w3m-zh)
 
 (provide 'init-dict)
+
+
+#+END_SRC
+
+* 通过数字选择窗口
+
+#+BEGIN_SRC emacs-lisp
+
+;; http://tapoueh.org/emacs/switch-window.html
+(require 'switch-window)
+
+;; move window
+(require-package 'window-numbering)
+(custom-set-faces '(window-numbering-face ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold)))))
+(window-numbering-mode 1)
+
+;; buffer-move.el
+(global-set-key (kbd "C-c C-b C-k")     'buf-move-up)
+(global-set-key (kbd "C-c C-b C-j")   'buf-move-down)
+(global-set-key (kbd "C-c C-b C-h")   'buf-move-left)
+(global-set-key (kbd "C-c C-b C-l")  'buf-move-right)
 
 
 #+END_SRC
