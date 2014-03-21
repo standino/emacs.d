@@ -7,6 +7,7 @@
 **  M-. : 获得Java变量和方法的引用或声明
 **  M-x swoop-multi : 在打开的 buffer 查找某个关键字
 **  M-x projectile-grep: searching for a string inside your project
+**  M-x helm-imenu: 查看当前文件的结构
 **  C-cf : 打开文件
 
 
@@ -180,40 +181,6 @@
 #+END_SRC
 * Org
 #+BEGIN_SRC emacs-lisp
-;;; added by standino
-;; Remove empty LOGBOOK drawers on clock out
-;;(defun bh/remove-empty-drawer-on-clock-out ()
-;;  (interactive)
-;;  (save-excursion
-;;    (beginning-of-line 0)
-;;    (org-remove-empty-drawer-at "LOGBOOK" (point))))
-;;
-;;(add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
-;;
-;;; Enable habit tracking (and a bunch of other modules)
-;;(setq org-modules (quote (org-bbdb
-;;                          org-bibtex
-;;                          org-crypt
-;;                          org-gnus
-;;                          org-id
-;;                          org-info
-;;                          org-jsinfo
-;;                          org-habit
-;;                          org-inlinetask
-;;                          org-irc
-;;                          org-mew
-;;                          org-mhe
-;;                          org-protocol
-;;                          org-rmail
-;;                          org-vm
-;;                          org-wl
-;;                          org-w3m)))
-;;
-;;; position the habit graph on the agenda to the right of the default
-;;(setq org-habit-graph-column 50)
-;;
-;;(run-at-time "09:00" 86400 '(lambda () (setq org-habit-show-habits t)))
-
 
 (defun sacha/org-agenda-clock (match)
   ;; Find out when today is
@@ -547,45 +514,19 @@ last month with the Category Foo."
                                                   (seconds-to-time (* 365 24 60 60))))
            (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
 
-
-
-;;; end added by standino
-
-
-
-
-
-  #+END_SRC
+#+END_SRC
 
 ** Org 写文档和记笔记 (require 'init-org-page)
 #+BEGIN_SRC emacs-lisp
-
-;;; package --- 配置org page
-;;; Commentary: 配置org page
-
-
 (require 'org-page)
-
-
 (setq op/site-main-title "Keep going")
-
 (setq op/site-sub-title "努力超越自己！")
-
 (setq op/site-domain "http://standino.github.io/")
-
-
 (setq op/personal-github-link "https://github.com/standino")
-
-
 (setq op/personal-disqus-shortname "standino")
-
-
 (setq op/personal-google-analytics-id "UA-46515756-1")
-
 (setq op/repository-org-branch "master")  ;; default is "source"
-
 (setq op/repository-html-branch "master") ;; default is "master"
-
 (setq op/category-config-alist
       '(("blog" ;; this is the default configuration
          :show-meta t
@@ -617,23 +558,20 @@ last month with the Category Foo."
          :category-index nil)))
 
 (defun cw/commit-pub ()
-;;    (shell-command  "st ci")
-;;    (op/do-publication t nil nil t)
+    (shell-command  "st ci")
+    (op/do-publication t nil nil t)
   )
-
 (defun cw/pub-blog-git ()
   (interactive)
   (setq op/repository-directory (concat my-idea-home "standino.github.com") )
   (cw/commit-pub)
-  (op/do-publication)
-
-
+ ;; (op/do-publication)
   )
 (defun cw/pub-notes-local ()
   (interactive)
   (setq op/repository-directory (concat my-idea-home "orgpage") )
   (cw/commit-pub)
-  (op/do-publication)
+;;  (op/do-publication)
 )
 
 (defun cw/pub-all ()
@@ -643,13 +581,9 @@ last month with the Category Foo."
  ;; (shell-command  "st site")
 
   )
-
-(provide 'init-org-page)
-
-
 #+END_SRC
-* 常用函数 init
 
+* 常用函数 init
 
 #+BEGIN_SRC emacs-lisp
 (defun djcb-duplicate-line (&optional commentfirst)
@@ -738,17 +672,11 @@ Including indent-buffer, which should not be called automatically on save."
 ;;启动调试信息
 ;;(setq debug-on-error t)
 
-
-
-
-
-
 #+END_SRC
 
 * init-reminder
 
 #+BEGIN_SRC emacs-lisp
-
 
 (setq appt-display-format 'popup)
 (defvar zendisp "zenity --info --title='Appointment' ")
@@ -788,38 +716,6 @@ The variable `appt-audible' controls the audible reminder."
 ;;
 ;;; Code:
 
-;;---------------------------------------------------------------------------------
-;;Setting up appointment reminders in Org
-
-;; Make appt aware of appointments from the agenda
-(defun org-agenda-to-appt ()
-  "Activate appointments found in `org-agenda-files'."
-  (interactive)
-  (require 'org)
-  (let* ((today (org-date-to-gregorian
-               (time-to-days (current-time))))
-       (files org-agenda-files) entries file)
-    (while (setq file (pop files))
-      (setq entries (append entries (org-agenda-get-day-entries
-                                   file today :timestamp))))
-    (setq entries (delq nil entries))
-    (mapc (lambda(x)
-          (let* ((event (org-trim (get-text-property 1 'txt x)))
-                 (time-of-day (get-text-property 1 'time-of-day x)) tod)
-            (when time-of-day
-              (setq tod (number-to-string time-of-day)
-                    tod (when (string-match
-                                "\\([0-9]\\{1,2\\}\\)\\([0-9]\\{2\\}\\)" tod)
-                           (concat (match-string 1 tod) ":"
-                                   (match-string 2 tod))))
-              (if tod (appt-add tod event))))) entries)))
-
-(org-agenda-to-appt)
-
-(defadvice org-agenda-to-appt (before wickedcool activate)
-  "Clear the appt-time-msg-list."
-  (setq appt-time-msg-list nil))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; For org appointment reminders
@@ -841,17 +737,21 @@ The variable `appt-audible' controls the audible reminder."
 (setq appt-display-interval '1)
 
 (setq org-deadline-warning-days '1)
-                                        ; Update appt each time agenda opened.
+; Update appt each time agenda opened.
 (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
 
-                                        ; Setup zenify, we tell appt to use window, and replace default function
+; Setup zenify, we tell appt to use window, and replace default function
 (setq appt-display-format 'window)
 (setq appt-disp-window-function (function my-appt-disp-window))
 
 
 (defun my-appt-disp-window (min-to-app new-time msg)
   (save-window-excursion
-    (appt-display-message (string-replace-all "<" "[]" msg))
+  (shell-command (concat zendisp
+                  " --text='"
+                  (string-replace-all "<" "[]" msg)
+                  "'"
+                  ))
     )
   )
 
@@ -1085,6 +985,8 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 * 通过数字选择窗口
 
+  - C-x 0 : 关闭窗口，不是关闭buffer
+
 #+BEGIN_SRC emacs-lisp
 
 ;; http://tapoueh.org/emacs/switch-window.html
@@ -1101,5 +1003,15 @@ specifies the list of buffers to kill, asking for approval for each one."
 (global-set-key (kbd "C-c C-b C-h")   'buf-move-left)
 (global-set-key (kbd "C-c C-b C-l")  'buf-move-right)
 
+
+#+END_SRC
+
+* web开发
+
+#+BEGIN_SRC emacs-lisp
+
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.vm\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 
 #+END_SRC
