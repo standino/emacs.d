@@ -949,7 +949,8 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 * 通过数字选择窗口
 
-  - C-x 0 : 关闭窗口，不是关闭buffer
+  - C-x 0 : 关闭窗口，不是关闭buffer。
+  - M-1: 选择第一个窗口。
 
 #+BEGIN_SRC emacs-lisp
 
@@ -987,7 +988,7 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 #+END_SRC
 * 代码提示
- - Cc-k : 模板插入。使用yasnippet定义的模板，输入模板简称，然后使用该快捷键插入预定义的模板。
+ - C-c k : 模板插入。使用yasnippet定义的模板，输入模板简称，然后使用该快捷键插入预定义的模板。
 #+BEGIN_SRC emacs-lisp
 (dolist (mode '(magit-log-edit-mode
                 log-edit-mode org-mode text-mode haml-mode
