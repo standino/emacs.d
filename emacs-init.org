@@ -674,50 +674,16 @@ Including indent-buffer, which should not be called automatically on save."
 
 #+END_SRC
 
-* init-reminder
+* 提醒
+
+在 org文件中设定的任务，到时会弹出框提醒
 
 #+BEGIN_SRC emacs-lisp
 
 (setq appt-display-format 'popup)
+
 (defvar zendisp "zenity --info --title='Appointment' ")
-(defun appt-display-message (string mins)
-  "Display a reminder about an appointment.
-The string STRING describes the appointment, due in integer MINS minutes.
-The format of the visible reminder is controlled by `appt-display-format'.
-The variable `appt-audible' controls the audible reminder."
-  ;; let binding for backwards compatability. Remove when obsolete
-  ;; vars appt-msg-window and appt-visible are dropped.
-  (let ((appt-display-format
-         (if (eq appt-display-format 'ignore)
-         (cond (appt-msg-window 'window)
-           (appt-visible 'echo))
-           appt-display-format)))
-    (cond ((eq appt-display-format 'window)
-           (funcall appt-disp-window-function
-                    (number-to-string mins)
-                    ;; TODO - use calendar-month-abbrev-array rather
-                    ;; than %b?
-                    (format-time-string "%a %b %e " (current-time))
-                    string)
-           (run-at-time (format "%d sec" appt-display-duration)
-                        nil
-                        appt-delete-window-function))
-          ((eq appt-display-format 'echo)
-           (message "%s" string))
-          ((eq appt-display-format 'popup)
-           (shell-command (concat zendisp
-                  " --text='"
-                  string
-                  "'"
-                  )))
 
-      )
-    (if appt-audible (beep 1))))
-;;
-;;; Code:
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; For org appointment reminders
 ;;
 ;;;; Get appointments for today
@@ -754,8 +720,6 @@ The variable `appt-audible' controls the audible reminder."
                   ))
     )
   )
-
-
 #+END_SRC
 
 * 快捷键设置 (require 'init-hotkey)
@@ -1014,4 +978,31 @@ specifies the list of buffers to kill, asking for approval for each one."
 (add-to-list 'auto-mode-alist '("\\.vm\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 
+(add-hook 'web-mode-hook
+  '(lambda()
+     (setq tab-width 4)
+     (setq indent-tabs-mode nil)
+     (setq c-basic-offset 4)
+   ))
+
+#+END_SRC
+* 代码提示
+ - Cc-k : 模板插入。使用yasnippet定义的模板，输入模板简称，然后使用该快捷键插入预定义的模板。
+#+BEGIN_SRC emacs-lisp
+(dolist (mode '(magit-log-edit-mode
+                log-edit-mode org-mode text-mode haml-mode
+                git-commit-mode
+                sass-mode yaml-mode csv-mode espresso-mode haskell-mode
+                html-mode nxml-mode sh-mode smarty-mode clojure-mode
+                lisp-mode java-mode textile-mode markdown-mode tuareg-mode
+                js3-mode css-mode less-css-mode sql-mode web-mode
+                sql-interactive-mode org-mode
+                inferior-emacs-lisp-mode))
+  (add-to-list 'ac-modes mode))
+(require-package 'dropdown-list)
+(require-package 'yasnippet)
+(require-package 'go-snippets)
+(require-package 'java-snippets)
+(require-package 'yasnippet-bundle)
+(require 'init-yasnippet)
 #+END_SRC
