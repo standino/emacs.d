@@ -15,7 +15,7 @@
 ;;(setq ac-auto-start 3)
 ;;(require 'auto-complete-ruby)
 (require 'init-auto-complete)
-;;(setq ac-sources '(ac-source-yasnippet ac-source-abbrev ac-source-words-in-buffer))
+(setq ac-sources '(ac-source-yasnippet ac-source-abbrev ac-source-words-in-buffer))
 
 (add-to-list 'ac-modes 'shell-mode)
 (add-to-list 'ac-modes 'sql-mode)

@@ -406,8 +406,6 @@
 ))
 (add-hook 'org-timer-done-hook 'have-a-rest)
 
-(require-package 'express)
-(express-install-aliases)
 
 (defun have-a-rest ()
   "alert a have a rest msg"
@@ -678,14 +676,25 @@ Including indent-buffer, which should not be called automatically on save."
 
 在 org文件中设定的任务，到时会弹出框提醒
 
+** 使用linux下的zentiy明来弹消息
 #+BEGIN_SRC emacs-lisp
-
-(setq appt-display-format 'popup)
 
 (defvar zendisp "zenity --info --title='Appointment' ")
 
-;;; For org appointment reminders
-;;
+(defun my-appt-disp-window (min-to-app new-time msg)
+  (save-window-excursion
+  (shell-command (concat zendisp
+                  " --text='"
+                  (string-replace-all "<" "[]" msg)
+                  "'"
+                  ))
+    )
+  )
+#+END_SRC
+
+** 获得org agenda 中的TODO，到时提醒
+
+#+BEGIN_SRC emacs-lisp
 ;;;; Get appointments for today
 (defun my-org-agenda-to-appt ()
   (interactive)
@@ -706,20 +715,10 @@ Including indent-buffer, which should not be called automatically on save."
 ; Update appt each time agenda opened.
 (add-hook 'org-finalize-agenda-hook 'my-org-agenda-to-appt)
 
-; Setup zenify, we tell appt to use window, and replace default function
+ ; Setup zenify, we tell appt to use window, and replace default function
 (setq appt-display-format 'window)
 (setq appt-disp-window-function (function my-appt-disp-window))
 
-
-(defun my-appt-disp-window (min-to-app new-time msg)
-  (save-window-excursion
-  (shell-command (concat zendisp
-                  " --text='"
-                  (string-replace-all "<" "[]" msg)
-                  "'"
-                  ))
-    )
-  )
 #+END_SRC
 
 * 快捷键设置 (require 'init-hotkey)
@@ -1002,8 +1001,9 @@ specifies the list of buffers to kill, asking for approval for each one."
   (add-to-list 'ac-modes mode))
 (require-package 'dropdown-list)
 (require-package 'yasnippet)
+(require 'init-yasnippet)
 (require-package 'go-snippets)
 (require-package 'java-snippets)
-(require-package 'yasnippet-bundle)
-(require 'init-yasnippet)
+;;(require-package 'yasnippet-bundle)
+
 #+END_SRC

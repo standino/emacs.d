@@ -1,88 +1,3 @@
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-mvn jetty:run
-mvn jetty:run
-mvn jetty:run
-clear
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-ls
-cd ..
-mvn install
-mvn -f retail_portal/pom.xml jetty:run &
-mvn clean install
-mvn -f retail_portal/pom.xml jetty:stop
-mvn -f retail_portal/pom.xml jetty:run
-cd projects/retail/branches/retail_2_0_2/
-cd ..
-cd retail_2_0_0/
-ls
-mvn -f retail_portal/pom.xml jetty:run
-mvn -f retail_portal/pom.xml jetty:run
-mvn install
-mvn -f retail_portal/pom.xml jetty:run
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-c ..
-cd ..
-mvn jetty:run
-mvn jetty:run
-mvn clean install 
-cd ..
-mvn clean install
-mvn -f retail_portal/pom.xml jetty:run
-mvn clean install
-mvn -f retail_portal/pom.xml jetty:run
-mvn clean install && mvn -f retail_portal/pom.xml jetty:run
-cd ..
-ls
-cd jone
-ls
-mvn install
-mvn install
-mvn install
-mvn -f jone-web/pom.xml jetty:run
-mvn -f jone-web/pom.xml jetty:run
-mvn -f jone-web/pom.xml jetty:run
-cd ..
-ls
-cd salesone/
-ls
-mvn install
-mvn -f salesone-web/pom.xml jetty:run
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-mvn clean install
-mvn -f retail_portal/pom.xml jetty:run
-mvn -f retail_portal/pom.xml jetty:run
-mvn -f retail_portal/pom.xml jetty:run
-cd ..
-ls
-cd sone_1_0_0/
-ls
-mvn clean install
-mvn -f retail_portal/pom.xml jetty:run
-mvn clean install
-mvn clean install
-mvn -f retail_portal/pom.xml jetty:run&
-cd common/
-mvn -f retail_portal/pom.xml jetty:stop
-lsof -i:80
-lsof -i:8080
 mvn clean install
 mvn -f retail_portal/pom.xml jetty:run&
 mvn -f retail_portal/pom.xml jetty:run&
@@ -126,3 +41,88 @@ svn up
 svn st
 sudo yum upgrade
 svn up
+st push
+cd
+cd JD/projects/retail/branches/
+ls
+cd sone_1_0_0/
+svn up
+svn up
+svn up
+svn up
+cd ..
+cd ..
+svn st
+svn up
+svn st
+svn ci -m " BUG #32802 IE浏览器】我的任务新发布任务描述超长时，提示发布成功但后台报错"
+cd trunk/
+svn ci -m " BUG #32802 IE浏览器】我的任务新发布任务描述超长时，提示发布成功但后台报错"
+cd ..
+cd branches/
+ls
+rm -rf retail_2_0_0/
+svn st
+cd sone_1_0_0/
+svns t
+svn st
+svn ci -m " BUG #32802 IE浏览器】我的任务新发布任务描述超长时，提示发布成功但后台报错"
+svn up
+svn ci -m " BUG #32802 IE浏览器】我的任务新发布任务描述超长时，提示发布成功但后台报错"
+svn up
+svn st
+svn up
+cd ..
+cd ..
+svn up
+rm  branches/retail_2_0_0/salesone-core/salesone-core.iml
+svn rm  branches/retail_2_0_0/salesone-core/salesone-core.iml
+svn st
+svn resolve branches/retail_2_0_0/salesone-core/salesone-core.iml
+svns t
+svn st
+export EDITOR=gedit
+svn propedit svn:ignore .
+svn st
+svn propedit svn:ignore .
+svn st
+svn propedit svn:ignore .
+svn propedit svn:ignore branches/
+svns t
+svn st
+svn propedit svn:ignore branches/
+svn st
+svn add branches/jd-ralasafe/src/main/webapp/WEB-INF/jetty-context.xml
+svn up
+svn up
+svn st
+svn up
+svn st
+svn st
+svn st
+svn ci -m "jetty 配置"
+svn up
+svn ci -m "jetty 配置"
+svn up
+svn st
+svn st
+svn up
+svn up
+svn up
+svn up
+svn st
+cd trunk/
+svn st
+svn up
+cd ..
+svn up
+svn st
+svn ci -m "BUG #31766 我发布的任务最大化没有新增和更多按钮"
+svn st
+svn ci -m "BUG #31766 我发布的任务最大化没有新增和更多按钮"
+svn up
+svn st
+svn up
+svn st
+svn up
+svn st
