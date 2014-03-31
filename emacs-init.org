@@ -1007,3 +1007,24 @@ specifies the list of buffers to kill, asking for approval for each one."
 ;;(require-package 'yasnippet-bundle)
 
 #+END_SRC
+* 统计使用的快捷键频率
+ use keyfreq-show to see how many times you used a command.
+
+ #+BEGIN_SRC emacs-lisp
+(require-package 'keyfreq)
+(keyfreq-mode 1)
+(keyfreq-autosave-mode 1)
+ #+END_SRC
+
+* 智能注释代码
+
+`M-x evilnc-default-hotkeys` assigns hotkey `M-;` to `evilnc-comment-or-uncomment-lines`
+`M-x evilnc-comment-or-uncomment-lines` comment or uncomment lines.
+`M-x evilnc-comment-or-uncomment-to-the-line` will comment/uncomment from current line to
+the specified line number. The line number is passed as parameter of the command.
+For example, `C-u 99 evilnc-comment-or-uncomment-to-the-line` will comment code from
+current line to line 99.
+
+#+BEGIN_SRC emacs-lisp
+(require-package 'evil-nerd-commenter)
+#+END_SR
