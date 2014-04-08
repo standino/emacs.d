@@ -1,9 +1,3 @@
-mvn clean install
-mvn -f retail_portal/pom.xml jetty:run&
-mvn -f retail_portal/pom.xml jetty:run&
-mvn -f retail_portal/pom.xml install
-mvn -f retail_portal/pom.xml jetty:stop
-mvn clean install && mvn -f retail_portal/pom.xml jetty:run 7
 mvn -f retail_portal/pom.xml jetty:run&
 clear
 mvn -f retail_portal/pom.xml install
@@ -126,3 +120,9 @@ svn up
 svn st
 svn up
 svn st
+cd ..
+cd ..
+cd ..
+cd branches/sone_14_2_0/
+ls
+mvn dependency:tree
