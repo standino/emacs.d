@@ -104,6 +104,14 @@
          (sql-password "123456")
          (sql-database "sone")
          (sql-port 3306))
+         (pool-ras-dev
+         (sql-product 'mysql)
+         (sql-server "192.168.229.76")
+         (sql-user "root")
+         (sql-password "123456")
+         (sql-database "JDHR")
+         (sql-port 3306))
+
         (pool-retail-dev
          (sql-product 'mysql)
          (sql-server "192.168.206.120")
@@ -121,6 +129,10 @@
 (defun sql-pool-sone-dev ()
   (interactive)
   (sql-connect-preset 'pool-sone-dev))
+
+(defun sql-pool-ras-dev ()
+  (interactive)
+  (sql-connect-preset 'pool-ras-dev))
 
 (defun sql-pool-retail-dev ()
   (interactive)
@@ -164,6 +176,17 @@
   (other-window -1)
   (sql-set-sqli-buffer-generally)
   (cw-update-db-name "sone-dev" "")
+)
+(defun cw-mysql-ras-dev ()
+  "connect to a mysql server with interactiv sql-Buffer"
+  (interactive)
+  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
+  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
+  (find-file-other-window xdb-mysql-sqli-file)
+  (sql-pool-ras-dev)
+  (other-window -1)
+  (sql-set-sqli-buffer-generally)
+  (cw-update-db-name "ras-dev" "")
 )
 
 (defun cw-mysql-retail-dev ()
@@ -581,7 +604,53 @@ last month with the Category Foo."
   )
 #+END_SRC
 
-* 常用函数 init
+* 常用函数
+
+** 去除重复行
+
+Lisp commands removing consecutive duplicates
+
+The command ‘M-x uniquify-buffer-lines’ will remove identical adjacent lines in the current buffer, similar to what is obtained
+with the unix uniq command.
+
+#+BEGIN_SRC emacs-lisp
+ (defun uniquify-region-lines (beg end)
+    "Remove duplicate adjacent lines in region."
+    (interactive "*r")
+    (save-excursion
+      (goto-char beg)
+      (while (re-search-forward "^\\(.*\n\\)\\1+" end t)
+        (replace-match "\\1"))))
+
+  (defun uniquify-buffer-lines ()
+    "Remove duplicate adjacent lines in the current buffer."
+    (interactive)
+    (uniquify-region-lines (point-min) (point-max)))
+#+END_SRC
+
+It is important to note that functions which find duplicate lines don’t always sort lines before looking for dups as this may or may not be what one expects or desires of a particular function.
+
+** Lisp command to retrieve duplicates
+Where the lines of a file are presorted it can be convenient to use something like this:
+#+BEGIN_SRC emacs-lisp
+
+  (defun find-duplicate-lines (&optional insertp interp)
+    (interactive "i\np")
+    (let ((max-pon (line-number-at-pos (point-max)))
+          (gather-dups))
+      (while (< (line-number-at-pos) max-pon) (= (forward-line) 0)
+             (let ((this-line (buffer-substring-no-properties (line-beginning-position 1) (line-end-position 1)))
+                   (next-line (buffer-substring-no-properties (line-beginning-position 2) (line-end-position 2))))
+               (when  (equal this-line next-line)  (setq gather-dups (cons this-line gather-dups)))))
+      (if (or insertp interp)
+          (save-excursion (new-line) (princ gather-dups (current-buffer)))
+        gather-dups)))
+
+#+END_SRC
+
+This function, while inefficient (note cons in tail of while form) is quite handy for locating duplicates before removing them,
+    i.e. situations of type: ‘uniquify-maybe’. Extend ‘find-duplicate-lines’ by comparing its result list with one or more of
+    the list comparison procedures ‘set-difference’, ‘union’, ‘intersection’, etc. from the CL package (require ‘cl).
 
 #+BEGIN_SRC emacs-lisp
 (defun djcb-duplicate-line (&optional commentfirst)
@@ -1043,7 +1112,7 @@ current line to line 99.
 (require 'go-autocomplete)
 ;; speedbar
 ;;(speedbar 1)
-(speedbar-add-supported-extension ".go")
+;;(speedbar-add-supported-extension ".go")
 (add-hook
 'go-mode-hook
 '(lambda ()
