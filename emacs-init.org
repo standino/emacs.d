@@ -605,10 +605,12 @@ last month with the Category Foo."
 #+END_SRC
 
 *** 设置自己的的主题
+
 #+BEGIN_SRC emacs-lisp
 (setq op/theme-root-directory "~/.emacs.d/themes")
 (setq op/theme 'my)
 #+END_SRC
+
 * 常用函数
 
 ** 去除重复行
