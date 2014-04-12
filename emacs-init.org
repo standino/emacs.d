@@ -537,7 +537,7 @@ last month with the Category Foo."
 
 #+END_SRC
 
-** Org 写文档和记笔记 (require 'init-org-page)
+** Org 写文档和记笔记
 #+BEGIN_SRC emacs-lisp
 (require 'org-page)
 (setq op/site-main-title "Keep going")
@@ -604,6 +604,11 @@ last month with the Category Foo."
   )
 #+END_SRC
 
+*** 设置自己的的主题
+#+BEGIN_SRC emacs-lisp
+(setq op/theme-root-directory "~/.emacs.d/themes")
+(setq op/theme 'my)
+#+END_SRC
 * 常用函数
 
 ** 去除重复行
