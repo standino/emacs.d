@@ -1199,3 +1199,67 @@ current line to line 99.
     (show-all)
     (shell-command-on-region (point-min) (point-max) "go tool fix -diff"))
 #+END_SRC
+
+* 邮件(mutt)
+
+  1. http://docs.huihoo.com/homepage/shredderyin/mutt_frame.html
+  2. http://heim.ifi.uio.no/~jani/mutt/muttemacs.html
+  3. http://emacs-fu.blogspot.com/2009/01/e-mail-with-emacs-using-mutt.html
+  4. http://upsilon.cc/~zack/blog/posts/2010/02/integrating_Mutt_with_Org-mode/
+
+emacs-conf.sample :
+
+#+BEGIN_SRC
+;; standard org <-> remember stuff, RTFM
+(require 'org-capture)
+(require 'org-protocol)
+
+(setq org-default-notes-file "~/org/gtd.org")
+
+(setq org-capture-templates
+      (quote
+       (("m"
+         "Mail"
+         entry
+         (file+headline "~/org/gtd.org" "Incoming")
+         "* TODO %^{Title}\n\n  Source: %u, %c\n\n  %i"
+         :empty-lines 1)
+        ;; ... more templates here ...
+        )))
+;; ensure that emacsclient will show just the note to be edited when invoked
+;; from Mutt, and that it will shut down emacsclient once finished;
+;; fallback to legacy behavior when not invoked via org-protocol.
+(add-hook 'org-capture-mode-hook 'delete-other-windows)
+(setq my-org-protocol-flag nil)
+(defadvice org-capture-finalize (after delete-frame-at-end activate)
+  "Delete frame at remember finalization"
+  (progn (if my-org-protocol-flag (delete-frame))
+         (setq my-org-protocol-flag nil)))
+(defadvice org-capture-kill (after delete-frame-at-end activate)
+  "Delete frame at remember abort"
+  (progn (if my-org-protocol-flag (delete-frame))
+         (setq my-org-protocol-flag nil)))
+(defadvice org-protocol-capture (before set-org-protocol-flag activate)
+  (setq my-org-protocol-flag t))
+
+(defun open-mail-in-mutt (message)
+  "Open a mail message in Mutt, using an external terminal.
+
+Message can be specified either by a path pointing inside a
+Maildir, or by Message-ID."
+  (interactive "MPath or Message-ID: ")
+  (shell-command
+   (format "gnome-terminal -e \"%s %s\""
+           (substitute-in-file-name "$HOME/bin/mutt-open") message)))
+
+;; add support for "mutt:ID" links
+(org-add-link-type "mutt" 'open-mail-in-mutt)
+#+END_SRC
+
+mutt-conf.sample:
+
+#+BEGIN_SRC
+macro index \eR "|~/bin/remember-mail\n"
+#+END_SRC
+
+mutt-open
