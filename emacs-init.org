@@ -62,7 +62,15 @@
 (require 'wc)
 
 
+
 #+END_SRC
+
+** [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
+
+#+BEGIN_SRC
+(require-package 'elpa-mirror)
+#+END_SRC
+
 * Mysql  (require 'cw-mysql)
 
 #+BEGIN_SRC emacs-lisp
@@ -1048,6 +1056,10 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 * web开发
 
+  1. https://github.com/fxbois/web-mode
+  2. https://github.com/fgallina/multi-web-mode
+  3. http://web-mode.org/
+
 #+BEGIN_SRC emacs-lisp
 
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
@@ -1263,3 +1275,73 @@ macro index \eR "|~/bin/remember-mail\n"
 #+END_SRC
 
 mutt-open
+* Java
+  - https://github.com/senny/emacs-eclim
+  - http://www.skybert.net/emacs/java/
+
+#+BEGIN_SRC
+
+wget -c http://jaist.dl.sourceforge.net/project/eclim/eclim/2.3.4/eclim_2.3.4.jar? -O eclim_2.3.4.jar
+java -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=8087 -jar eclim_2.3.4.jar
+
+## .eclimrc
+
+osgi.instance.area.default=@user.home/JD/projects
+
+# increase heap size
+-Xmx256M
+
+# increase perm gen size
+-XX:PermSize=64m
+-XX:MaxPermSize=128m
+
+-XX:-UseCompressedOops
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+
+(require 'eclim)
+(global-eclim-mode)
+
+(require 'eclimd)
+
+(custom-set-variables
+ '(eclim-eclipse-dirs '("/home/will/JD/tools/springsource/sts-3.4.0.RELEASE"))
+ '(eclimd-default-workspace "/home/will/JD/projects/sone/branches" )
+ '(eclim-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclim" )
+ )
+(setq help-at-pt-display-when-idle t)
+(setq help-at-pt-timer-delay 0.1)
+(help-at-pt-set-timer)
+
+(require 'company)
+(require 'company-emacs-eclim)
+(company-emacs-eclim-setup)
+(global-company-mode t)
+
+(require 'flymake)
+(defun my-flymake-init ()
+  (list "my-java-flymake-checks"
+        (list (flymake-init-create-temp-buffer-copy
+               'flymake-create-temp-with-folder-structure))))
+(add-to-list 'flymake-allowed-file-name-masks
+             '("\\.java$" my-flymake-init flymake-simple-cleanup))
+
+
+(defun eclim-run-test ()
+  (interactive)
+  (if (not (string= major-mode "java-mode"))
+    (message "Sorry cannot run current buffer."))
+  (compile (concat eclim-executable " -command java_junit -p " eclim--project-name " -t " (eclim-package-and-class))))
+
+
+#+END_SRC
+
+* 书签操作：
+
+  | C-x r m Bookmark | bookmark-set         | 设置一个名为 Bookmark 的书签。              |
+  | C-x r l          | bookmarks-bmenu-list | 列出所有已保存的书签。                      |
+  |                  | bookmark-delete      | 删除一个书签。                              |
+  | C-x r b Bookmark | bookmark-jump        | 跳转至名为 Bookmark 的书签中所设置的位置。  |
+  |                  | bookmark-save        | 将所有的书签保存到书签文件 ~/.emac.bmk 中。 |
