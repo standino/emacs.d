@@ -837,10 +837,23 @@ Including indent-buffer, which should not be called automatically on save."
 ;;(global-set-key (kbd "M-8") 'extend-selection)
 ;;(global-set-key (kbd "M-*") 'select-text-in-quote)
 
-(provide 'init-hotkey)
-
 
 #+END_SRC
+** Java 开发快捷键
+#+BEGIN_SRC emacs-lisp
+(require 'cc-mode)
+(define-key c-mode-base-map (kbd "<f2>") 'eclim-problems)
+(define-key c-mode-base-map "\C-\M-g" 'eclim-java-find-declaration)
+(define-key c-mode-base-map "\C-\M-o" 'eclim-java-import-organize)
+(define-key c-mode-base-map "\C-q" 'eclim-java-show-documentation-for-current-element)
+(define-key c-mode-base-map "\M-i" 'eclim-java-implement) ;; IDEA is C-i
+(define-key c-mode-base-map (kbd "<M-RET>") 'eclim-problems-correct)
+(define-key c-mode-base-map (kbd "<M-f7>") 'eclim-java-find-references)
+(define-key c-mode-base-map (kbd "<S-f6>") 'eclim-java-refactor-rename-symbol-at-point)
+(define-key c-mode-base-map (kbd "<S-f7>") 'gtags-find-tag-from-here)
+
+#+END_SRC
+
 * 格式化xml 文件(require 'cw-nxhml)
   #+BEGIN_SRC emacs-lisp
 
@@ -1300,19 +1313,30 @@ osgi.instance.area.default=@user.home/JD/projects
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-
 (require 'eclim)
 (global-eclim-mode)
 
+
 (require 'eclimd)
+
+;;(add-to-list 'auto-mode-alist '("\\.java\\'" . java-mode))
+;;(add-to-list 'auto-mode-alist '("\\.java\\'" . eclim-mode))
+
+
+(setq eclim-auto-save t
+      eclimd-wait-for-process nil
+      eclim-use-yasnippet t
+      help-at-pt-display-when-idle t
+      help-at-pt-timer-delay 0.1
+)
 
 (custom-set-variables
  '(eclim-eclipse-dirs '("/home/will/JD/tools/springsource/sts-3.4.0.RELEASE"))
  '(eclimd-default-workspace "/home/will/JD/projects/sone/branches" )
  '(eclim-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclim" )
+ '(eclimd-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclimd" )
  )
-(setq help-at-pt-display-when-idle t)
-(setq help-at-pt-timer-delay 0.1)
+
 (help-at-pt-set-timer)
 
 (require 'company)
