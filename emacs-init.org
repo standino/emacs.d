@@ -547,7 +547,7 @@ last month with the Category Foo."
 
 ** Org 写文档和记笔记
 #+BEGIN_SRC emacs-lisp
-(require 'org-page)
+(require-package 'org-page)
 (setq op/site-main-title "Keep going")
 (setq op/site-sub-title "努力超越自己！")
 (setq op/site-domain "http://standino.github.io/")
@@ -1141,7 +1141,7 @@ current line to line 99.
 (require-package 'go-mode)
 ;; golang mode
 (require 'go-mode-load)
-(require 'go-autocomplete)
+(require-package 'go-autocomplete)
 ;; speedbar
 ;;(speedbar 1)
 ;;(speedbar-add-supported-extension ".go")
