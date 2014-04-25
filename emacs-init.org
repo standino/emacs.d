@@ -116,151 +116,8 @@
 
 #+END_SRC
 
-** [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
-
-#+BEGIN_SRC
-(require-package 'elpa-mirror)
-#+END_SRC
-
-* Mysql  (require 'cw-mysql)
-
-#+BEGIN_SRC emacs-lisp
-
-;; 加载 mysql
-;;(my-require-or-install 'sql)
-(require 'sql)
-;;(my-require-or-install 'mysql)
-(require 'mysql)
-
-(setq sql-product 'mysql)
-(add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
-(add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
-
-;;保存历史
-(add-hook 'sql-interactive-mode-hook
-         (lambda ()
-           (setq sql-input-ring-file-name "~/sql_history")
-           (setq comint-scroll-to-bottom-on-output t)
-           (setq tab-width 4)
-           (set (make-local-variable 'truncate-lines) t)
-
-           ))
-;;
-
-(add-hook 'sql-mode-hook
-         (lambda ()
-           (setq tab-width 4)
-           (setq indent-tabs-mode nil)
-           ))
-
-(setq sql-mysql-options '("-C" "-t" "-f" "-n"))
-
-(setq sql-connection-alist
-      '((pool-sone-dev
-         (sql-product 'mysql)
-         (sql-server "192.168.229.76")
-         (sql-user "root")
-         (sql-password "123456")
-         (sql-database "sone")
-         (sql-port 3306))
-         (pool-ras-dev
-         (sql-product 'mysql)
-         (sql-server "192.168.229.76")
-         (sql-user "root")
-         (sql-password "123456")
-         (sql-database "JDHR")
-         (sql-port 3306))
-
-        (pool-retail-dev
-         (sql-product 'mysql)
-         (sql-server "192.168.206.120")
-         (sql-user "ipc")
-         (sql-password "ipc")
-         (sql-database "retail")
-         (sql-port 3358))))
-
-(defun sql-connect-preset (name)
-  "Connect to a predefined SQL connection listed in `sql-connection-alist'"
-  (eval `(let ,(cdr (assoc name sql-connection-alist))
-           (flet ((sql-get-login (&rest what)))
-             (sql-product-interactive sql-product)))))
-
-(defun sql-pool-sone-dev ()
-  (interactive)
-  (sql-connect-preset 'pool-sone-dev))
-
-(defun sql-pool-ras-dev ()
-  (interactive)
-  (sql-connect-preset 'pool-ras-dev))
-
-(defun sql-pool-retail-dev ()
-  (interactive)
-  (sql-connect-preset 'pool-retail-dev))
-
-(setq sql-send-terminator ";")
-
-(eval-after-load "sql"
-   '(load-library "sql-indent"))
-
-(defgroup xdb-connect nil
-  "interactiv db-sessions"
-  :prefix "xdb-"
-  :group 'local)
-
-(defcustom xdb-mysql-sqli-file "~/mysqlSQL-log.sql"
-  "Default SQLi file for mysql-sessions"
-  :type 'string
-  :group 'xdb-connect)
-
-(setq global-mode-string
-      (append global-mode-string
-              '(" " cw-my-sql-str
-                " "))
-)
 
 
-(defun cw-update-db-name(dbname  userName)
-  (setq cw-my-sql-str (format "DB:%s" dbname))
-
-)
-
-
-(defun cw-mysql-sone-dev ()
-  "connect to a mysql server with interactiv sql-Buffer"
-  (interactive)
-  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
-  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
-  (find-file-other-window xdb-mysql-sqli-file)
-  (sql-pool-sone-dev)
-  (other-window -1)
-  (sql-set-sqli-buffer-generally)
-  (cw-update-db-name "sone-dev" "")
-)
-(defun cw-mysql-ras-dev ()
-  "connect to a mysql server with interactiv sql-Buffer"
-  (interactive)
-  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
-  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
-  (find-file-other-window xdb-mysql-sqli-file)
-  (sql-pool-ras-dev)
-  (other-window -1)
-  (sql-set-sqli-buffer-generally)
-  (cw-update-db-name "ras-dev" "")
-)
-
-(defun cw-mysql-retail-dev ()
-  "connect to a mysql server with interactiv sql-Buffer"
-  (interactive)
-  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
-  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
-  (find-file-other-window xdb-mysql-sqli-file)
-  (sql-pool-retail-dev)
-  (other-window -1)
-  (sql-set-sqli-buffer-generally)
-  (cw-update-db-name "retail-dev" "")
-)
-
-#+END_SRC
 * Org
 #+BEGIN_SRC emacs-lisp
 
@@ -411,39 +268,6 @@
         ("f" occur-tree "\\<FIXME\\>")
         )
       )
-;;; writing presentation
-
-;; {{ export org-mode in Chinese into PDF
-;; @see http://freizl.github.io/posts/tech/2012-04-06-export-orgmode-file-in-Chinese.html
-;; and you need install texlive-xetex on different platforms
-;; To install texlive-xetex:
-;;    `sudo USE="cjk" emerge texlive-xetex` on Gentoo Linux
-(setq org-latex-to-pdf-process
-      '("xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"))
-(setq org-latex-pdf-process
-      '("xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"))
-
-  ;; Install a default set-up for Beamer export.
-(require 'ox-beamer)
-  (unless (assoc "beamer-cn" org-latex-classes)
-  (add-to-list 'org-latex-classes
-               '("beamer-cn"
-                 "\\documentclass[presentation]{beamer}
-\\usepackage{xeCJK}
-\\setCJKmainfont{SimSun}
-\[DEFAULT-PACKAGES]
-\[PACKAGES]
-\[EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
-
-
-;; }}
 
 
 ;;; GTD 提醒
@@ -596,6 +420,51 @@ last month with the Category Foo."
 
 #+END_SRC
 
+** TODO Org 写 PPT
+
+*** ubuntu 上安装软件
+
+#+BEGIN_SRC
+
+sudo apt-get install texlive-xetex
+
+#+END_SRC
+#+BEGIN_SRC emacs-lisp
+
+;;; writing presentation
+
+;; {{ export org-mode in Chinese into PDF
+;; @see http://freizl.github.io/posts/tech/2012-04-06-export-orgmode-file-in-Chinese.html
+;; and you need install texlive-xetex on different platforms
+;; To install texlive-xetex:
+;;    `sudo USE="cjk" emerge texlive-xetex` on Gentoo Linux
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+(setq org-latex-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+
+  ;; Install a default set-up for Beamer export.
+(require 'ox-beamer)
+  (unless (assoc "beamer-cn" org-latex-classes)
+  (add-to-list 'org-latex-classes
+               '("beamer-cn"
+                 "\\documentclass[presentation]{beamer}
+\\usepackage{xeCJK}
+\\setCJKmainfont{SimSun}
+\[DEFAULT-PACKAGES]
+\[PACKAGES]
+\[EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+
+
+;; }}
+#+END_SRC
 ** Org 写文档和记笔记
 #+BEGIN_SRC emacs-lisp
 (require-package 'org-page)
@@ -903,17 +772,14 @@ Including indent-buffer, which should not be called automatically on save."
 
   #+END_SRC
 
-*(require 'cw-load-path)
-  #+BEGIN_SRC emacs-lisp
-
-;;; package --- 设置路径
-;;; code
+* 设置路径
+#+BEGIN_SRC emacs-lisp
 
 (setq my-idea-home "~/ideas/")
 (setq my-emacs-home "~/ideas/emacs/")
 (add-to-list 'load-path (concat my-emacs-home "lib"))
 
-(defun cw/open-host-file ()
+(defun cw-win-open-host-file ()
    (interactive)
    (find-file (concat "/cygdrive/c/Windows/System32/drivers/etc/"  "hosts"))
  )
@@ -922,7 +788,7 @@ Including indent-buffer, which should not be called automatically on save."
 
 (defun my-require-or-install (feature)
   (require-or-install feature  (format "%s.el" feature) )
-  )
+ )
 
 (defun my-require (feature)
   " put the ~/.emacs.d/$feature to path"
@@ -931,10 +797,7 @@ Including indent-buffer, which should not be called automatically on save."
 )
 
 (require 'wc)
-
-
-
-  #+END_SRC
+#+END_SRC
 * 操作文件
   #+BEGIN_SRC emacs-lisp
 (defun set-clipboard-contents-from-string (str)
@@ -1349,4 +1212,144 @@ osgi.instance.area.default=@user.home/JD/projects
 
 #+BEGIN_SRC emacs-lisp
 (setq projectile-enable-caching t)
+#+END_SRC
+* [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
+
+#+BEGIN_SRC
+(require-package 'elpa-mirror)
+#+END_SRC
+
+* 数据库
+** Mysql
+#+BEGIN_SRC emacs-lisp
+(require 'sql)
+(require 'mysql)
+(setq sql-product 'mysql)
+(add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
+(add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
+
+;;保存历史
+(add-hook 'sql-interactive-mode-hook
+         (lambda ()
+           (setq sql-input-ring-file-name "~/sql_history")
+           (setq comint-scroll-to-bottom-on-output t)
+           (setq tab-width 4)
+           (set (make-local-variable 'truncate-lines) t)
+
+           ))
+;;
+
+(add-hook 'sql-mode-hook
+         (lambda ()
+           (setq tab-width 4)
+           (setq indent-tabs-mode nil)
+           ))
+
+(setq sql-mysql-options '("-C" "-t" "-f" "-n"))
+
+(setq sql-connection-alist
+      '((pool-sone-dev
+         (sql-product 'mysql)
+         (sql-server "192.168.229.76")
+         (sql-user "root")
+         (sql-password "123456")
+         (sql-database "sone")
+         (sql-port 3306))
+         (pool-ras-dev
+         (sql-product 'mysql)
+         (sql-server "192.168.229.76")
+         (sql-user "root")
+         (sql-password "123456")
+         (sql-database "JDHR")
+         (sql-port 3306))
+
+        (pool-retail-dev
+         (sql-product 'mysql)
+         (sql-server "192.168.206.120")
+         (sql-user "ipc")
+         (sql-password "ipc")
+         (sql-database "retail")
+         (sql-port 3358))))
+
+(defun sql-connect-preset (name)
+  "Connect to a predefined SQL connection listed in `sql-connection-alist'"
+  (eval `(let ,(cdr (assoc name sql-connection-alist))
+           (flet ((sql-get-login (&rest what)))
+             (sql-product-interactive sql-product)))))
+
+(defun sql-pool-sone-dev ()
+  (interactive)
+  (sql-connect-preset 'pool-sone-dev))
+
+(defun sql-pool-ras-dev ()
+  (interactive)
+  (sql-connect-preset 'pool-ras-dev))
+
+(defun sql-pool-retail-dev ()
+  (interactive)
+  (sql-connect-preset 'pool-retail-dev))
+
+(setq sql-send-terminator ";")
+
+(eval-after-load "sql"
+   '(load-library "sql-indent"))
+
+(defgroup xdb-connect nil
+  "interactiv db-sessions"
+  :prefix "xdb-"
+  :group 'local)
+
+(defcustom xdb-mysql-sqli-file "~/mysqlSQL-log.sql"
+  "Default SQLi file for mysql-sessions"
+  :type 'string
+  :group 'xdb-connect)
+
+(setq global-mode-string
+      (append global-mode-string
+              '(" " cw-my-sql-str
+                " "))
+)
+
+
+(defun cw-update-db-name(dbname  userName)
+  (setq cw-my-sql-str (format "DB:%s" dbname))
+
+)
+
+
+(defun cw-mysql-sone-dev ()
+  "connect to a mysql server with interactiv sql-Buffer"
+  (interactive)
+  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
+  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
+  (find-file-other-window xdb-mysql-sqli-file)
+  (sql-pool-sone-dev)
+  (other-window -1)
+  (sql-set-sqli-buffer-generally)
+  (cw-update-db-name "sone-dev" "")
+)
+(defun cw-mysql-ras-dev ()
+  "connect to a mysql server with interactiv sql-Buffer"
+  (interactive)
+  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
+  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
+  (find-file-other-window xdb-mysql-sqli-file)
+  (sql-pool-ras-dev)
+  (other-window -1)
+  (sql-set-sqli-buffer-generally)
+  (cw-update-db-name "ras-dev" "")
+)
+
+(defun cw-mysql-retail-dev ()
+  "connect to a mysql server with interactiv sql-Buffer"
+  (interactive)
+  (add-to-list 'auto-mode-alist '("\\.sql\\'" . sql-mode))
+  (add-to-list 'auto-mode-alist '("\\.SQL\\'" . sql-mode))
+  (find-file-other-window xdb-mysql-sqli-file)
+  (sql-pool-retail-dev)
+  (other-window -1)
+  (sql-set-sqli-buffer-generally)
+  (cw-update-db-name "retail-dev" "")
+)
+
 #+END_SRC
