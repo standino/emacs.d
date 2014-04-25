@@ -1,35 +1,86 @@
-* Emacs Org Configuration
-
    - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org][一年成为Emacs高手(像神一样使用编辑器)]]
 
-** init.el
-
-**  M-. : 获得Java变量和方法的引用或声明
-**  M-x swoop-multi : 在打开的 buffer 查找某个关键字
-**  M-x projectile-grep: searching for a string inside your project
-**  M-x helm-imenu: 查看当前文件的结构
-**  C-cf : 打开文件
-
-
-#+BEGIN_SRC
-
-(require 'ob-tangle)
-
-(org-babel-load-file
- (expand-file-name "emacs-init.org"
-                   user-emacs-directory))
-
-(org-agenda nil  "a")
-
-(provide 'init-local)
-
-
-#+END_SRC
 * Description
   This file is tangled using =org-babel-load-file=. What this does is generate
   a =emacs-init.el= from the =emacs-lisp= source blocks.
 
   This emacs.d is currently  designed for Emacs 24.3 and above.
+
+* 常用操作
+
+ -  M-./ C-Mg : 获得Java变量和方法的引用或声明
+ -  M-x swoop-multi : 在打开的 buffer 查找某个关键字
+ -  M-x projectile-grep: searching for a string inside your project
+ -  M-x helm-imenu: 查看当前文件的结构
+ - C-cf : 打开文件
+
+* 初始化
+
+#+BEGIN_SRC
+(require 'ob-tangle)
+(org-babel-load-file
+ (expand-file-name "emacs-init.org"
+                   user-emacs-directory))
+(org-agenda nil  "a")
+(provide 'init-local)
+#+END_SRC
+
+* 快捷键设置
+#+BEGIN_SRC emacs-lisp
+;;; Hotkey options
+(defalias 'tt 'toggle-truncate-lines)
+(defalias 'yas  'yas/expand)
+(defalias 'sql-org-table 'org-table-create-or-convert-from-region)
+(defalias 'sql-org-next  'orgtbl-tab)
+(global-set-key "\C-z" 'set-mark-command)
+(global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
+(global-set-key (kbd "C-c n") 'orgtbl-tab)
+
+(global-set-key "\C-o" 'scroll-down)
+;;(global-set-key "\C-i" 'my-tab)
+(global-set-key [(f3)] 'dired)
+(global-set-key [(f4)] 'eshell)
+(global-set-key [(f8)] 'highlight-symbol-at-point)
+
+(global-set-key (kbd "<f9>") 'list-bookmarks)
+(global-set-key [(f10)] 'bookmark-set)
+
+;;(global-set-key [(f11)] 'fullscreen)
+
+;;(define-key global-map (kbd "C-c f") 'wy-go-to-char)
+;;(define-key global-map (kbd "C-c b") 'my-back-to-char)
+;;
+;;(global-set-key [(control ?\.)] 'ska-point-to-register)
+;;(global-set-key [(control ?\,)] 'ska-jump-to-register)
+;;(global-set-key (kbd "M-X") 'anything)
+;;
+;;(keyboard-translate ?\C-h ?\C-?)
+;;(global-set-key (kbd "M-8") 'extend-selection)
+;;(global-set-key (kbd "M-*") 'select-text-in-quote)
+
+#+END_SRC
+** Java 开发快捷键
+#+BEGIN_SRC emacs-lisp
+(require 'cc-mode)
+(define-key c-mode-base-map (kbd "<f2>") 'eclim-problems)
+(define-key c-mode-base-map "\C-\M-g" 'eclim-java-find-declaration)
+(define-key c-mode-base-map "\C-\M-o" 'eclim-java-import-organize)
+(define-key c-mode-base-map "\C-q" 'eclim-java-show-documentation-for-current-element)
+(define-key c-mode-base-map "\M-i" 'eclim-java-implement) ;; IDEA is C-i
+(define-key c-mode-base-map (kbd "<M-RET>") 'eclim-problems-correct)
+(define-key c-mode-base-map (kbd "<M-f7>") 'eclim-java-find-references)
+(define-key c-mode-base-map (kbd "<S-f6>") 'eclim-java-refactor-rename-symbol-at-point)
+(define-key c-mode-base-map (kbd "<S-f7>") 'gtags-find-tag-from-here)
+
+#+END_SRC
+
+** 书签操作：
+
+  | C-x r m Bookmark | bookmark-set         | 设置一个名为 Bookmark 的书签。              |
+  | C-x r l          | bookmarks-bmenu-list | 列出所有已保存的书签。                      |
+  |                  | bookmark-delete      | 删除一个书签。                              |
+  | C-x r b Bookmark | bookmark-jump        | 跳转至名为 Bookmark 的书签中所设置的位置。  |
+  |                  | bookmark-save        | 将所有的书签保存到书签文件 ~/.emac.bmk 中。 |
 
 * 设置路径
 
@@ -805,56 +856,8 @@ Including indent-buffer, which should not be called automatically on save."
 
 #+END_SRC
 
-* 快捷键设置 (require 'init-hotkey)
-#+BEGIN_SRC emacs-lisp
-;;; Hotkey options
-(defalias 'tt 'toggle-truncate-lines)
-(defalias 'yas  'yas/expand)
-(defalias 'sql-org-table 'org-table-create-or-convert-from-region)
-(defalias 'sql-org-next  'orgtbl-tab)
-(global-set-key "\C-z" 'set-mark-command)
-(global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
-(global-set-key (kbd "C-c n") 'orgtbl-tab)
 
-(global-set-key "\C-o" 'scroll-down)
-;;(global-set-key "\C-i" 'my-tab)
-(global-set-key [(f3)] 'dired)
-(global-set-key [(f4)] 'eshell)
-(global-set-key [(f8)] 'highlight-symbol-at-point)
-
-(global-set-key (kbd "<f9>") 'list-bookmarks)
-(global-set-key [(f10)] 'bookmark-set)
-(global-set-key [(f11)] 'fullscreen)
-
-;;(define-key global-map (kbd "C-c f") 'wy-go-to-char)
-;;(define-key global-map (kbd "C-c b") 'my-back-to-char)
-;;
-;;(global-set-key [(control ?\.)] 'ska-point-to-register)
-;;(global-set-key [(control ?\,)] 'ska-jump-to-register)
-;;(global-set-key (kbd "M-X") 'anything)
-;;
-;;(keyboard-translate ?\C-h ?\C-?)
-;;(global-set-key (kbd "M-8") 'extend-selection)
-;;(global-set-key (kbd "M-*") 'select-text-in-quote)
-
-
-#+END_SRC
-** Java 开发快捷键
-#+BEGIN_SRC emacs-lisp
-(require 'cc-mode)
-(define-key c-mode-base-map (kbd "<f2>") 'eclim-problems)
-(define-key c-mode-base-map "\C-\M-g" 'eclim-java-find-declaration)
-(define-key c-mode-base-map "\C-\M-o" 'eclim-java-import-organize)
-(define-key c-mode-base-map "\C-q" 'eclim-java-show-documentation-for-current-element)
-(define-key c-mode-base-map "\M-i" 'eclim-java-implement) ;; IDEA is C-i
-(define-key c-mode-base-map (kbd "<M-RET>") 'eclim-problems-correct)
-(define-key c-mode-base-map (kbd "<M-f7>") 'eclim-java-find-references)
-(define-key c-mode-base-map (kbd "<S-f6>") 'eclim-java-refactor-rename-symbol-at-point)
-(define-key c-mode-base-map (kbd "<S-f7>") 'gtags-find-tag-from-here)
-
-#+END_SRC
-
-* 格式化xml 文件(require 'cw-nxhml)
+* 格式化xml 文件
   #+BEGIN_SRC emacs-lisp
 
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . anjsp-mode))
@@ -932,10 +935,8 @@ Including indent-buffer, which should not be called automatically on save."
 
 
   #+END_SRC
-* (require 'cw-file)
+* 操作文件
   #+BEGIN_SRC emacs-lisp
-
-
 (defun set-clipboard-contents-from-string (str)
   "Copy the value of string STR into the clipboard."
   (let ((x-select-enable-clipboard t))
@@ -1010,39 +1011,23 @@ specifies the list of buffers to kill, asking for approval for each one."
 
   #+END_SRC
 
-* 备份设置 (require 'cw-backup)
-
-
-
+* 备份设置
 #+BEGIN_SRC emacs-lisp
-
 (setq backup-directory-alist '(("" . "~/backup/emacs/backup")))
 (setq-default make-backup-file t)
 (setq make-backup-file t)
-
 (setq make-backup-files t)
 (setq version-control t)
 (setq kept-old-versions 2)
 (setq kept-new-versions 10)
 (setq delete-old-versions t)
-
-
-
 #+END_SRC
-
-
-
-* (require 'init-dict)
+* 字典
 #+BEGIN_SRC emacs-lisp
 (require-package 'dic-lookup-w3m)
 (require 'dic-lookup-w3m)
 (require 'dic-lookup-w3m-zh)
-
-(provide 'init-dict)
-
-
 #+END_SRC
-
 * 通过数字选择窗口
 
   - C-x 0 : 关闭窗口，不是关闭buffer。
@@ -1292,6 +1277,8 @@ mutt-open
   - https://github.com/senny/emacs-eclim
   - http://www.skybert.net/emacs/java/
 
+** 安装eclimd
+
 #+BEGIN_SRC
 
 wget -c http://jaist.dl.sourceforge.net/project/eclim/eclim/2.3.4/eclim_2.3.4.jar? -O eclim_2.3.4.jar
@@ -1312,17 +1299,14 @@ osgi.instance.area.default=@user.home/JD/projects
 
 #+END_SRC
 
+** 设置emacs-eclim
+
 #+BEGIN_SRC emacs-lisp
 (require 'eclim)
 (global-eclim-mode)
-
-
 (require 'eclimd)
-
 ;;(add-to-list 'auto-mode-alist '("\\.java\\'" . java-mode))
 ;;(add-to-list 'auto-mode-alist '("\\.java\\'" . eclim-mode))
-
-
 (setq eclim-auto-save t
       eclimd-wait-for-process nil
       eclim-use-yasnippet t
@@ -1336,7 +1320,6 @@ osgi.instance.area.default=@user.home/JD/projects
  '(eclim-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclim" )
  '(eclimd-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclimd" )
  )
-
 (help-at-pt-set-timer)
 
 (require 'company)
@@ -1358,14 +1341,12 @@ osgi.instance.area.default=@user.home/JD/projects
   (if (not (string= major-mode "java-mode"))
     (message "Sorry cannot run current buffer."))
   (compile (concat eclim-executable " -command java_junit -p " eclim--project-name " -t " (eclim-package-and-class))))
-
-
 #+END_SRC
 
-* 书签操作：
+* Project
 
-  | C-x r m Bookmark | bookmark-set         | 设置一个名为 Bookmark 的书签。              |
-  | C-x r l          | bookmarks-bmenu-list | 列出所有已保存的书签。                      |
-  |                  | bookmark-delete      | 删除一个书签。                              |
-  | C-x r b Bookmark | bookmark-jump        | 跳转至名为 Bookmark 的书签中所设置的位置。  |
-  |                  | bookmark-save        | 将所有的书签保存到书签文件 ~/.emac.bmk 中。 |
+使用Project新建项目非常简单，在项目根目录新建一个名为".projectile"空白文件，打开该项目下的任一文件即打开了该项目。
+
+#+BEGIN_SRC emacs-lisp
+(setq projectile-enable-caching t)
+#+END_SRC

@@ -4,7 +4,10 @@
 /.session
 /custom.el
 *.elc
+*_flymake.el
+projectile.cache
 CVS
+eshell/alias
 .svn
 *~
 .cvsignore
