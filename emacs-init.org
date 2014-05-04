@@ -1213,6 +1213,13 @@ osgi.instance.area.default=@user.home/JD/projects
 #+BEGIN_SRC emacs-lisp
 (setq projectile-enable-caching t)
 #+END_SRC
+* UI
+
+#+BEGIN_SRC emacs-lisp
+(setq sml/theme 'respectful)
+(require-package 'smart-mode-line)
+(sml/setup)
+#+END_SRC
 * [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
 
 #+BEGIN_SRC
