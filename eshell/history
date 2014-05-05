@@ -1,29 +1,3 @@
-mvn -f retail_portal/pom.xml jetty:run&
-clear
-mvn -f retail_portal/pom.xml install
-mvn -f retail_portal/pom.xml install
-mvn -f retail_portal/pom.xml install
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-cd ..
-mvn clean install
-mvn -f retail_portal/pom.xml jetty:stop
-mvn -f retail_portal/pom.xml jetty:run &
-mvn install
-mvn -f retail_portal/pom.xml jetty:stop
-mvn -f retail_portal/pom.xml jetty:run &
-lsof -i:8080
-lsof -i:8080
-ps -A | grep java
-ps -ef | grep java
-pwd
-cd .emacs.d/
-git status
-git commit -a -m "可以弹出提醒休息的提示框了"
 git status
 cd
 cd JD/projects/retail/branches/sone_1_0_0/
@@ -126,3 +100,29 @@ cd ..
 cd branches/sone_14_2_0/
 ls
 mvn dependency:tree
+ls
+svn st
+git status
+cd ..
+ls
+mkdir easy-portal
+mv jquery-ui-portlet/demo/mix.html easy-portal/
+cp easy-portal/mix.html jquery-ui-portlet/demo/
+mv jquery-ui-portlet/demo/d3demo1.html easy-portal/
+cd jquery-ui-portlet/
+git status
+mv demo/bar-hierarchy.html ../easy-portal/
+mv demo/bar-hierarchy_files/ ../easy-portal/
+git status
+cp demo/angular.html ../easy-portal/
+cd ..
+cd ..
+git status
+git add static/easy-portal/
+git status
+git status
+git ci -m "Can display the first d3 chart"
+git commit -m "Can display the first d3 chart"
+git status
+git commit -a -m "Can display the first d3 chart"
+git status
