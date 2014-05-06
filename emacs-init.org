@@ -1306,7 +1306,7 @@ osgi.instance.area.default=@user.home/JD/projects
   :prefix "xdb-"
   :group 'local)
 
-(defcustom xdb-mysql-sqli-file "~/mysqlSQL-log.sql"
+(defcustom xdb-mysql-sqli-file "~/ideas/mysql/mysqlSQL-log.sql"
   "Default SQLi file for mysql-sessions"
   :type 'string
   :group 'xdb-connect)
