@@ -1179,7 +1179,7 @@ osgi.instance.area.default=@user.home/JD/projects
 
 (custom-set-variables
  '(eclim-eclipse-dirs '("/home/will/JD/tools/springsource/sts-3.4.0.RELEASE"))
- '(eclimd-default-workspace "/home/will/JD/projects/sone/branches" )
+;; '(eclimd-default-workspace "/home/will/JD/projects/sone/branches" )
  '(eclim-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclim" )
  '(eclimd-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclimd" )
  )
