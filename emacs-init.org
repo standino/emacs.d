@@ -1211,7 +1211,7 @@ osgi.instance.area.default=@user.home/JD/projects
 使用Project新建项目非常简单，在项目根目录新建一个名为".projectile"空白文件，打开该项目下的任一文件即打开了该项目。
 
 #+BEGIN_SRC emacs-lisp
-(setq projectile-enable-caching t)
+(setq projectile-enable-caching nil)
 #+END_SRC
 * UI
 
