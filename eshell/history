@@ -1,8 +1,3 @@
-git status
-cd
-cd JD/projects/retail/branches/sone_1_0_0/
-svn st
-svn up
 svn up
 svn up
 svn up
@@ -126,3 +121,8 @@ git commit -m "Can display the first d3 chart"
 git status
 git commit -a -m "Can display the first d3 chart"
 git status
+ls
+cat beamer.log 
+sudo apt-cache search everypage.sty
+sudo apt-cache search everypage.sty
+cat beamer.log 

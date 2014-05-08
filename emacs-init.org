@@ -119,6 +119,8 @@
 
 
 * Org
+
+** 常用配置，大部分来自 sacha
 #+BEGIN_SRC emacs-lisp
 
 (defun sacha/org-agenda-clock (match)
@@ -420,15 +422,22 @@ last month with the Category Foo."
 
 #+END_SRC
 
-** TODO Org 写 PPT
+** OKTODAY Org 写 PPT
+   CLOSED: [2014-05-07 三 19:12]
+   - State "OKTODAY"    from "STARTED"    [2014-05-07 三 19:12]
+   :LOGBOOK:
+   CLOCK: [2014-05-07 三 17:44]--[2014-05-07 三 19:12] =>  1:28
+   :END:
 
 *** ubuntu 上安装软件
 
 #+BEGIN_SRC
 
-sudo apt-get install texlive-xetex
+sudo apt-get install texlive-xetex latex-beamer texlive-latex-extra
 
 #+END_SRC
+
+*** Emacs 配置
 #+BEGIN_SRC emacs-lisp
 
 ;;; writing presentation
@@ -448,6 +457,9 @@ sudo apt-get install texlive-xetex
         "xelatex -interaction nonstopmode -output-directory %o %f"))
 
   ;; Install a default set-up for Beamer export.
+(require 'org-install)
+(require 'org-latex)
+
 (require 'ox-beamer)
   (unless (assoc "beamer-cn" org-latex-classes)
   (add-to-list 'org-latex-classes
@@ -466,6 +478,9 @@ sudo apt-get install texlive-xetex
 ;; }}
 #+END_SRC
 ** Org 写文档和记笔记
+
+  - [[http://orgmode.org/manual/JavaScript-support.html][Exporting org-mode documents to HTML offers 3 styles]]
+
 #+BEGIN_SRC emacs-lisp
 (require-package 'org-page)
 (setq op/site-main-title "Keep going")
@@ -1179,7 +1194,7 @@ osgi.instance.area.default=@user.home/JD/projects
 
 (custom-set-variables
  '(eclim-eclipse-dirs '("/home/will/JD/tools/springsource/sts-3.4.0.RELEASE"))
-;; '(eclimd-default-workspace "/home/will/JD/projects/sone/branches" )
+ '(eclimd-default-workspace "/home/will/JD/projects/sone/branches" )
  '(eclim-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclim" )
  '(eclimd-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclimd" )
  )
