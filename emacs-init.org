@@ -1152,10 +1152,11 @@ macro index \eR "|~/bin/remember-mail\n"
 
 mutt-open
 * Java
+** eclimd
   - https://github.com/senny/emacs-eclim
   - http://www.skybert.net/emacs/java/
 
-** 安装eclimd
+*** 安装eclimd
 
 #+BEGIN_SRC
 
@@ -1177,9 +1178,9 @@ osgi.instance.area.default=@user.home/JD/projects
 
 #+END_SRC
 
-** 设置emacs-eclim
+*** 设置emacs-eclim
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC
 (require 'eclim)
 (global-eclim-mode)
 (require 'eclimd)
@@ -1219,6 +1220,68 @@ osgi.instance.area.default=@user.home/JD/projects
   (if (not (string= major-mode "java-mode"))
     (message "Sorry cannot run current buffer."))
   (compile (concat eclim-executable " -command java_junit -p " eclim--project-name " -t " (eclim-package-and-class))))
+#+END_SRC
+
+
+** TODO malabar-mode
+  - http://software-ninja-ninja.blogspot.com/2014/03/using-malabar-mode-to-auto-populate-new.html
+  - https://github.com/m0smith/malabar-mode#Installation
+  - http://www.skybert.net/emacs/using-malabar-for-java-development/
+  -
+*** 安装
+
+#+BEGIN_SRC
+cd
+
+git clone https://github.com/m0smith/malabar-mode-jar.git
+cd malabar-mode-jar/
+
+mvn package -Pdevel
+
+cd
+
+git clone https://github.com/m0smith/malabar-mode.git
+
+sudo apt-get install groovy
+
+#+END_SRC
+*** 配置
+#+BEGIN_SRC emacs-lisp
+
+(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
+                                  global-semanticdb-minor-mode
+                                  global-semantic-idle-summary-mode
+                                  global-semantic-mru-bookmark-mode))
+(semantic-mode 1)
+
+ (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
+;; (require-package 'malabar-mode)
+
+;;(require 'cask "~/.cask/cask.el")
+;;(cask-initialize)
+
+(require 'malabar-mode)
+
+(setq malabar-groovy-lib-dir "/home/will/malabar-mode-jar/target/lib")
+
+(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+
+
+(defun my-java-malabar-mode-hook ()
+  ;; IDEA default for jump to source
+  (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
+  (global-set-key "\M-n" 'semantic-ia-complete-symbol)
+  )
+(add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
+
+
+;; Compiling the file on save makes malabar display the errors in the
+;; Java source code.
+(add-hook 'malabar-mode-hook
+          (lambda ()
+            (add-hook 'after-save-hook 'malabar-compile-file-silently
+                      nil t)))
+
 #+END_SRC
 
 * Project

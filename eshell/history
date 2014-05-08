@@ -1,6 +1,5 @@
 svn up
 svn up
-svn up
 svn st
 sudo yum upgrade
 svn up
@@ -126,3 +125,4 @@ cat beamer.log
 sudo apt-cache search everypage.sty
 sudo apt-cache search everypage.sty
 cat beamer.log 
+ls
