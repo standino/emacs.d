@@ -1248,23 +1248,17 @@ sudo apt-get install groovy
 *** 配置
 #+BEGIN_SRC emacs-lisp
 
-(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-                                  global-semanticdb-minor-mode
-                                  global-semantic-idle-summary-mode
-                                  global-semantic-mru-bookmark-mode))
-(semantic-mode 1)
+;; (semantic-mode 1)
 
- (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
+
 ;; (require-package 'malabar-mode)
 
 ;;(require 'cask "~/.cask/cask.el")
 ;;(cask-initialize)
 
-(require 'malabar-mode)
+;; (require 'malabar-mode)
 
-(setq malabar-groovy-lib-dir "/home/will/malabar-mode-jar/target/lib")
-
-(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
 
 
 (defun my-java-malabar-mode-hook ()
@@ -1281,6 +1275,28 @@ sudo apt-get install groovy
           (lambda ()
             (add-hook 'after-save-hook 'malabar-compile-file-silently
                       nil t)))
+
+
+(defun malabar-mode-bootstrap ()
+(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
+                                  global-semanticdb-minor-mode
+                                  global-semantic-idle-summary-mode
+                                  global-semantic-mru-bookmark-mode))
+
+  (require 'cedet)
+  (require 'semantic)
+;;  (load "semantic/loaddefs.el")
+  (semantic-mode 1);;
+  (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
+  (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
+  (setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
+  (require 'malabar-mode)
+  (load "malabar-flycheck")
+
+  (malabar-mode)
+  (flycheck-mode))
+
+(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode-bootstrap))
 
 #+END_SRC
 
