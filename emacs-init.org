@@ -8,13 +8,34 @@
   This emacs.d is currently  designed for Emacs 24.3 and above.
 
 * 常用操作
-
+** Common 
  -  M-./ C-Mg : 获得Java变量和方法的引用或声明
  -  M-x swoop-multi : 在打开的 buffer 查找某个关键字
- -  M-x projectile-grep: searching for a string inside your project
- -  M-x helm-imenu: 查看当前文件的结构
+ -  C-cpg: 在项目中查找字段
+ -  C-ci或S-M t或M-x helm-imenu: 查看当前文件的结构
  - C-cf : 打开文件
 
+** textmate 
+
+#+BEGIN_SRC
+;;    ⌘T - Go to File
+;;  ⇧⌘T - Go to Symbol
+;;    ⌘L - Go to Line
+;;  ⇧⌘L - Select Line (or expand Selection to select lines)
+;;    ⌘/ - Comment Line (or Selection/Region)
+;;    ⌘] - Shift Right (currently indents region)
+;;    ⌘[ - Shift Left  (not yet implemented)
+;;  ⌥⌘] - Align Assignments
+;;  ⌥⌘[ - Indent Line
+;;    ⌥↑ - Column Up
+;;    ⌥↓ - Column Down
+;;  ⌘RET - Insert Newline at Line's End
+;;  ⌥⌘T - Reset File Cache (for Go to File)
+
+#+END_SRC
+
+** malabar
+   - https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org
 * 初始化
 
 #+BEGIN_SRC
@@ -723,7 +744,7 @@ Including indent-buffer, which should not be called automatically on save."
   (interactive)
   (untabify (point-min) (point-max)))
 ;;启动调试信息
-;;(setq debug-on-error t)
+;; (setq debug-on-error t)
 
 #+END_SRC
 
@@ -1033,7 +1054,7 @@ current line to line 99.
 
 * go 语言
 
-** TODO http://yousefourabi.com/blog/2014/05/emacs-for-go/
+** TODO [#C] http://yousefourabi.com/blog/2014/05/emacs-for-go/
 
 ** 配置从这个 [[https://github.com/astaxie/build-web-application-with-golang/blob/master/ebook/01.4.md][页面]]拷贝的。
 
@@ -1218,7 +1239,7 @@ osgi.instance.area.default=@user.home/JD/projects
 
 *** 设置emacs-eclim
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC
 (require 'eclim)
 (global-eclim-mode)
 (require 'eclimd)
@@ -1295,16 +1316,47 @@ sudo apt-get install groovy
 
 *** 配置
 
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 
-;;(require 'cask "~/.cask/cask.el")
-;;(cask-initialize)
+;; Or enable more if you wish
+(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
+                                  global-semanticdb-minor-mode
+                                  global-semantic-idle-summary-mode
+                                  global-semantic-mru-bookmark-mode))
+(semantic-mode 1)
+(add-to-list 'load-path "~/malabar-mode/src/main/lisp")
+(require 'malabar-mode)
+(setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
+(setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
+(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+
+(add-hook 'malabar-mode-hook
+     (lambda () 
+       (add-hook 'after-save-hook 'malabar-compile-file-silently
+                  nil t)))
+
 
 (defun my-java-malabar-mode-hook ()
-  ;; IDEA default for jump to source
   (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
   (global-set-key "\M-n" 'semantic-ia-complete-symbol)
-  )
+  (define-key c-mode-base-map "." 'semantic-complete-self-insert)
+)
+
+(add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
+
+#+END_SRC
+#+BEGIN_SRC 
+
+(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
+                                  global-semanticdb-minor-mode
+                                  global-semantic-idle-summary-mode
+                                  global-semantic-mru-bookmark-mode))
+
+(defun my-java-malabar-mode-hook ()
+  (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
+  (global-set-key "\M-n" 'semantic-ia-complete-symbol)
+  (define-key c-mode-base-map "." 'semantic-complete-self-insert)
+)
 
 (add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
 
@@ -1316,13 +1368,8 @@ sudo apt-get install groovy
             (add-hook 'after-save-hook 'malabar-compile-file-silently
                       nil t)))
 
-(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-                                  global-semanticdb-minor-mode
-                                  global-semantic-idle-summary-mode
-                                  global-semantic-mru-bookmark-mode))
 
 (defun malabar-mode-bootstrap ()
-
   (require 'cedet)
   (require 'semantic)
   (load "semantic/loaddefs.el")
@@ -1332,9 +1379,9 @@ sudo apt-get install groovy
   (setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
   (require 'malabar-mode)
   (load "malabar-flycheck")
-
   (malabar-mode)
-  (flycheck-mode))
+;;  (flycheck-mode)
+)
 
 (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode-bootstrap))
 
@@ -1343,14 +1390,14 @@ sudo apt-get install groovy
 
 Display line number in Malabar and Java mode.
 
-#+begin_src emacs-lisp
+#+begin_src 
 (add-hook 'malabar-mode-hook 'linum-mode)
 (add-hook 'c-mode-common-hook 'linum-mode)
 #+end_src
 
 Use textmate mode with Malabar mode.
 
-#+begin_src
+#+begin_src 
 (require-package 'textmate)
 (add-hook 'malabar-mode-hook 'textmate-mode)
 (add-hook 'c-mode-common-hook 'textmate-mode)
@@ -1364,7 +1411,7 @@ Use auto-complete mode with Malabar mode.
 
 Display JavaDoc at point
 
-#+begin_src emacs-lisp
+#+begin_src 
 (eval-after-load 'malabar-mode
                  '(define-key malabar-mode-map (kbd "C-x ?") 'malabar-show-javadoc))
 #+end_src
@@ -1372,7 +1419,7 @@ Display JavaDoc at point
 Support for re-factoring under Malabar mode. These functions are
 missing.
 
-#+begin_src emacs-lisp
+#+begin_src 
 (defun c-forward-subword-internal ()
   (if (and
        (save-excursion
