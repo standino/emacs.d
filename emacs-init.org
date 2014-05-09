@@ -1,4 +1,5 @@
    - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org][一年成为Emacs高手(像神一样使用编辑器)]]
+   - http://emacslife.com/
 
 * Description
   This file is tangled using =org-babel-load-file=. What this does is generate
@@ -422,14 +423,19 @@ last month with the Category Foo."
 
 #+END_SRC
 
-** OKTODAY Org 写 PPT
-   CLOSED: [2014-05-07 三 19:12]
+**  Org 写 PPT
+   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 14:37]
    - State "OKTODAY"    from "STARTED"    [2014-05-07 三 19:12]
    :LOGBOOK:
+   CLOCK: [2014-05-09 五 15:37]--[2014-05-09 五 16:04] =>  0:27
+   CLOCK: [2014-05-09 五 14:09]--[2014-05-09 五 14:24] =>  0:15
    CLOCK: [2014-05-07 三 17:44]--[2014-05-07 三 19:12] =>  1:28
    :END:
-
-*** ubuntu 上安装软件
+ 
+  - http://orgmode.org/worg/org-tutorials/non-beamer-presentations.html#sec-3
+  - https://github.com/yjwen/org-reveal/blob/master/Readme.org  
+*** beamer (停止使用)
+ubuntu 上安装软件
 
 #+BEGIN_SRC
 
@@ -437,7 +443,7 @@ sudo apt-get install texlive-xetex latex-beamer texlive-latex-extra
 
 #+END_SRC
 
-*** Emacs 配置
+Emacs 配置
 #+BEGIN_SRC emacs-lisp
 
 ;;; writing presentation
@@ -477,6 +483,36 @@ sudo apt-get install texlive-xetex latex-beamer texlive-latex-extra
 
 ;; }}
 #+END_SRC
+
+
+*** ox-reveal
+
+  - 安装文档： https://github.com/yjwen/org-reveal/blob/master/Readme.org
+
+下载 reveal 
+#+BEGIN_SRC 
+ git clone https://github.com/hakimel/reveal.js.git
+
+ mv reveal.js to the org file folder 
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+
+(require-package 'ox-reveal)
+
+#+END_SRC
+
+ “C-c C-e R R” : 导出html 文件
+
+To wake-up Org-reveal now, type “M-x load-library”, then type “ox-reveal”.
+
+Now you can export this manual into Reveal.js presentation by typing “C-c C-e R R”.
+
+Open the generated “Readme.html” in your browser and enjoy the cool slides.
+
+
+具体编写出的演示文档，可以参考 [[https://github.com/yjwen/org-reveal/blob/master/Readme.org][这个例子]]
+
 ** Org 写文档和记笔记
 
   - [[http://orgmode.org/manual/JavaScript-support.html][Exporting org-mode documents to HTML offers 3 styles]]
@@ -997,7 +1033,9 @@ current line to line 99.
 
 * go 语言
 
- 配置从这个 [[https://github.com/astaxie/build-web-application-with-golang/blob/master/ebook/01.4.md][页面]]拷贝的。
+** TODO http://yousefourabi.com/blog/2014/05/emacs-for-go/
+
+** 配置从这个 [[https://github.com/astaxie/build-web-application-with-golang/blob/master/ebook/01.4.md][页面]]拷贝的。
 
 #+BEGIN_SRC emacs-lisp
 
@@ -1180,7 +1218,7 @@ osgi.instance.area.default=@user.home/JD/projects
 
 *** 设置emacs-eclim
 
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 (require 'eclim)
 (global-eclim-mode)
 (require 'eclimd)
@@ -1223,7 +1261,15 @@ osgi.instance.area.default=@user.home/JD/projects
 #+END_SRC
 
 
-** TODO malabar-mode
+** OKTODAY malabar-mode
+   CLOSED: [2014-05-09 五 09:47]
+   - State "OKTODAY"    from "OKTODAY"    [2014-05-09 五 16:04]
+   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:47]
+   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:05]
+   :LOGBOOK:
+   CLOCK: [2014-05-09 五 09:05]--[2014-05-09 五 09:11] =>  0:06
+   CLOCK: [2014-05-09 五 09:00]--[2014-05-09 五 09:05] =>  0:05
+   :END:
   - http://software-ninja-ninja.blogspot.com/2014/03/using-malabar-mode-to-auto-populate-new.html
   - https://github.com/m0smith/malabar-mode#Installation
   - http://www.skybert.net/emacs/using-malabar-for-java-development/
@@ -1244,28 +1290,22 @@ git clone https://github.com/m0smith/malabar-mode.git
 
 sudo apt-get install groovy
 
-#+END_SRC
+#+END_SRC  
+
+
 *** 配置
-#+BEGIN_SRC emacs-lisp
 
-;; (semantic-mode 1)
-
-
-;; (require-package 'malabar-mode)
+#+BEGIN_SRC
 
 ;;(require 'cask "~/.cask/cask.el")
 ;;(cask-initialize)
-
-;; (require 'malabar-mode)
-
-;; (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
-
 
 (defun my-java-malabar-mode-hook ()
   ;; IDEA default for jump to source
   (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
   (global-set-key "\M-n" 'semantic-ia-complete-symbol)
   )
+
 (add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
 
 
@@ -1276,16 +1316,16 @@ sudo apt-get install groovy
             (add-hook 'after-save-hook 'malabar-compile-file-silently
                       nil t)))
 
-
-(defun malabar-mode-bootstrap ()
 (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
                                   global-semanticdb-minor-mode
                                   global-semantic-idle-summary-mode
                                   global-semantic-mru-bookmark-mode))
 
+(defun malabar-mode-bootstrap ()
+
   (require 'cedet)
   (require 'semantic)
-;;  (load "semantic/loaddefs.el")
+  (load "semantic/loaddefs.el")
   (semantic-mode 1);;
   (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
   (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
@@ -1299,6 +1339,95 @@ sudo apt-get install groovy
 (add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode-bootstrap))
 
 #+END_SRC
+
+
+Display line number in Malabar and Java mode.
+
+#+begin_src emacs-lisp
+(add-hook 'malabar-mode-hook 'linum-mode)
+(add-hook 'c-mode-common-hook 'linum-mode)
+#+end_src
+
+Use textmate mode with Malabar mode.
+
+#+begin_src
+(require-package 'textmate)
+(add-hook 'malabar-mode-hook 'textmate-mode)
+(add-hook 'c-mode-common-hook 'textmate-mode)
+#+end_src
+
+Use auto-complete mode with Malabar mode.
+
+#+begin_src
+(add-hook 'malabar-mode-hook 'auto-complete-mode)
+#+end_src
+
+Display JavaDoc at point
+
+#+begin_src emacs-lisp
+(eval-after-load 'malabar-mode
+                 '(define-key malabar-mode-map (kbd "C-x ?") 'malabar-show-javadoc))
+#+end_src
+
+Support for re-factoring under Malabar mode. These functions are
+missing.
+
+#+begin_src emacs-lisp
+(defun c-forward-subword-internal ()
+  (if (and
+       (save-excursion
+         (let ((case-fold-search nil))
+           (re-search-forward
+            (concat "\\W*\\(\\([" c-upper "]*\\W?\\)[" c-lower c-digit "]*\\)")
+            nil t)))
+       (> (match-end 0) (point))) ; So we don't get stuck at a
+                                  ; "word-constituent" which isn't c-upper,
+                                  ; c-lower or c-digit
+      (goto-char
+       (cond
+        ((< 1 (- (match-end 2) (match-beginning 2)))
+         (1- (match-end 2)))
+        (t
+         (match-end 0))))
+    (forward-word 1)))
+
+(defun c-forward-subword (&optional arg)
+  "Do the same as `forward-word' but on subwords.
+See the command `c-subword-mode' for a description of subwords.
+Optional argument ARG is the same as for `forward-word'."
+  (interactive "p")
+  (unless arg (setq arg 1))
+  (c-keep-region-active)
+  (cond
+   ((< 0 arg)
+    (dotimes (i arg (point))
+      (c-forward-subword-internal)))
+   ((> 0 arg)
+    (dotimes (i (- arg) (point))
+      (c-backward-subword-internal)))
+   (t
+    (point))))
+
+(defun subword-capitalize (arg)
+  "Do the same as `capitalize-word' but on subwords.
+See the command `c-subword-mode' for a description of subwords.
+Optional argument ARG is the same as for `capitalize-word'."
+  (interactive "p")
+  (let ((count (abs arg))
+        (direction (if (< 0 arg) 1 -1)))
+    (dotimes (i count)
+      (when (re-search-forward
+             (concat "[" c-alpha "]")
+             nil t)
+        (goto-char (match-beginning 0)))
+      (let* ((p (point))
+             (pp (1+ p))
+             (np (c-forward-subword direction)))
+        (upcase-region p pp)
+        (downcase-region pp np)
+        (goto-char np)))))
+#+end_src
+
 
 * Project
 
