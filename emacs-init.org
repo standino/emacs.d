@@ -465,7 +465,7 @@ sudo apt-get install texlive-xetex latex-beamer texlive-latex-extra
 #+END_SRC
 
 Emacs 配置
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC 
 
 ;;; writing presentation
 
