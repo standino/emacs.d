@@ -12,11 +12,12 @@
 
 * 常用操作
 ** Common 
- -  M-./ C-Mg : 获得Java变量和方法的引用或声明
- -  M-x swoop-multi : 在打开的 buffer 查找某个关键字
- -  C-cpg: 在项目中查找字段
- -  C-ci或S-M t或M-x helm-imenu: 查看当前文件的结构
- -  C-cf : 打开文件
+ - M-./ C-Mg : 获得Java变量和方法的引用或声明
+ - M-x swoop-multi : 在打开的 buffer 查找某个关键字
+ - C-cpg: 在项目中查找字段
+ - C-ci或S-M t或M-x helm-imenu: 查看当前文件的结构
+ - C-cf : 打开文件
+ - M-; : 注释代码
 
 ** textmate 
 
