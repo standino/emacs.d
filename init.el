@@ -55,6 +55,7 @@
 
 (require 'init-editing-utils)
 
+(require 'init-vc)
 (require 'init-darcs)
 (require 'init-git)
 
@@ -78,7 +79,13 @@
 
 (require 'init-paredit)
 (require 'init-lisp)
-(require 'init-elisp)
+
+(require 'init-slime)
+(require 'init-clojure)
+(when (>= emacs-major-version 24)
+  (require 'init-clojure-cider))
+(require 'init-common-lisp)
+
 
 (when *spell-check-support-enabled*
   (require 'init-spelling))
