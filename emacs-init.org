@@ -1,11 +1,14 @@
+#+STARTUP: content
+#+STARTUP: indent
+#+STARTUP: hidestars
+
    - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org][一年成为Emacs高手(像神一样使用编辑器)]]
    - http://emacslife.com/
 
-* Description
-  This file is tangled using =org-babel-load-file=. What this does is generate
-  a =emacs-init.el= from the =emacs-lisp= source blocks.
+* 说明
 
-  This emacs.d is currently  designed for Emacs 24.3 and above.
+  通过使用 =org-babel-load-file=把=emacs-lisp= 代码块中的配置代码生成到=emacs-init.el=文件中。通过这种方式，可以把配置使用说明和配
+  置很好的放到这一个文件里。
 
 * 常用操作
 ** Common 
@@ -13,7 +16,7 @@
  -  M-x swoop-multi : 在打开的 buffer 查找某个关键字
  -  C-cpg: 在项目中查找字段
  -  C-ci或S-M t或M-x helm-imenu: 查看当前文件的结构
- - C-cf : 打开文件
+ -  C-cf : 打开文件
 
 ** textmate 
 
@@ -245,7 +248,6 @@
           (sacha/org-agenda-clock)
           (todo "OKTODAY" )
           (todo "STARTED")
-
           (org-agenda-list nil nil 1)
 ;;          (sacha/org-agenda-load)
           (todo "WAITING")
@@ -1211,6 +1213,7 @@ macro index \eR "|~/bin/remember-mail\n"
 
 mutt-open
 * Java
+eclim在我机器上太慢了，改用malabar-mode
 ** eclimd
   - https://github.com/senny/emacs-eclim
   - http://www.skybert.net/emacs/java/
@@ -1282,7 +1285,7 @@ osgi.instance.area.default=@user.home/JD/projects
 #+END_SRC
 
 
-** OKTODAY malabar-mode
+**  malabar-mode
    CLOSED: [2014-05-09 五 09:47]
    - State "OKTODAY"    from "OKTODAY"    [2014-05-09 五 16:04]
    - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:47]
@@ -1345,29 +1348,9 @@ sudo apt-get install groovy
 (add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
 
 #+END_SRC
+
+下面的代码是在打开java程序的时候才加载malabar mode
 #+BEGIN_SRC 
-
-(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-                                  global-semanticdb-minor-mode
-                                  global-semantic-idle-summary-mode
-                                  global-semantic-mru-bookmark-mode))
-
-(defun my-java-malabar-mode-hook ()
-  (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
-  (global-set-key "\M-n" 'semantic-ia-complete-symbol)
-  (define-key c-mode-base-map "." 'semantic-complete-self-insert)
-)
-
-(add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
-
-
-;; Compiling the file on save makes malabar display the errors in the
-;; Java source code.
-(add-hook 'malabar-mode-hook
-          (lambda ()
-            (add-hook 'after-save-hook 'malabar-compile-file-silently
-                      nil t)))
-
 
 (defun malabar-mode-bootstrap ()
   (require 'cedet)
@@ -1483,17 +1466,14 @@ Optional argument ARG is the same as for `capitalize-word'."
 #+BEGIN_SRC emacs-lisp
 (setq projectile-enable-caching nil)
 #+END_SRC
-* UI
 
-#+BEGIN_SRC emacs-lisp
-(setq sml/theme 'respectful)
-(require-package 'smart-mode-line)
-(sml/setup)
-#+END_SRC
 * [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
-
-#+BEGIN_SRC
+all-to-list will not override default elpa, so now you have to repositories, one is elpa, another is myelpa
+#+BEGIN_SRC emacs-lisp
 (require-package 'elpa-mirror)
+(add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
+(add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
+
 #+END_SRC
 
 * 数据库
@@ -1629,4 +1609,26 @@ Optional argument ARG is the same as for `capitalize-word'."
   (cw-update-db-name "retail-dev" "")
 )
 
+#+END_SRC
+
+
+* UI
+
+
+#+BEGIN_SRC emacs-lisp
+(setq sml/theme 'respectful)
+(require-package 'smart-mode-line)
+(sml/setup)
+
+#+END_SRC
+
+光标不闪烁
+
+#+BEGIN_SRC emacs-lisp
+(blink-cursor-mode -1)
+#+END_SRC
+
+高亮当前行
+#+BEGIN_SRC emacs-lisp
+(global-hl-line-mode)
 #+END_SRC
