@@ -2,11 +2,13 @@
 /.emacs.desktop
 /auto-save-list
 /.session
+.cask
 /custom.el
 *.elc
 *_flymake.el
 projectile.cache
 CVS
+elpa
 eshell/alias
 .svn
 *~
