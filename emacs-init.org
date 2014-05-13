@@ -581,7 +581,7 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 
 (defun cw/commit-pub ()
     (shell-command  "st ci")
-    (op/do-publication t nil nil t)
+    (op/do-publication)
   )
 (defun cw/pub-blog-git ()
   (interactive)
