@@ -7,7 +7,7 @@
 
 * 说明
 
-  通过使用 =org-babel-load-file=把=emacs-lisp= 代码块中的配置代码生成到=emacs-init.el=文件中。通过这种方式，可以把配置使用说明和配
+  通过使用 =org-babel-load-file= 把 =emacs-lisp= 代码块中的配置代码生成到 =emacs-init.el= 文件中。通过这种方式，可以把配置使用说明和配
   置很好的放到这一个文件里。
 
 * 常用操作
@@ -145,10 +145,11 @@
 
 
 * Org
+- =C-c a o= : 获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。目前这个视图基本可用，但是还需要手
+  动删除一部分东西。目前还没有研究如何改写该函数来优化输出格式。
 
 ** 常用配置，大部分来自 sacha
 #+BEGIN_SRC emacs-lisp
-
 (defun sacha/org-agenda-clock (match)
   ;; Find out when today is
   (let* ((inhibit-read-only t))
@@ -241,8 +242,12 @@
            :narrow 150!
 ;;           :link t
        ))))
+#+END_SRC
 
-;; Change your existing org-agenda-custom-commands
+- =C-c a a= : 显示自定义视图
+
+#+BEGIN_SRC emacs-lisp
+
 (setq org-agenda-custom-commands
       '(("a" "My custom agenda"
          (
@@ -296,14 +301,16 @@
         )
       )
 
+#+END_SRC
 
-;;; GTD 提醒
+GTD 提醒
+
+#+BEGIN_SRC emacs-lisp
 
 (defun sacha/org-clock-in-if-starting ()
   "Clock in when the task is marked STARTED."
   (when  (string= org-state "STARTED")
     (org-clock-in)
-;;    (org-pomodoro)
 ))
 
 (add-hook 'org-after-todo-state-change-hook
@@ -343,16 +350,8 @@
 (defun have-a-rest ()
   "alert a have a rest msg"
   (interactive)
-  (shell-command (concat zendisp
-                  " --text='"
-                  "休息一下吧。"
-                  "'"
-                  ))
-;;  (express-message-popup  "It really is time to take a break")
-  ;;(org-timer-set-timer 5)
-;;  (setq org-mode-line-string "休息中...")
+  (shell-command (concat zendisp   " --text='" "休息一下吧。" "'" ))
 )
-
 
 (setq org-agenda-span 'day)
 
@@ -365,7 +364,6 @@
   (lambda () (interactive) (org-capture nil "d")))
 
 (global-set-key (kbd "<f12>") (lambda () (interactive)(switch-to-buffer "*Org Agenda*")(org-agenda-redo)))
-
 
 
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
@@ -688,6 +686,10 @@ This function, while inefficient (note cons in tail of while form) is quite hand
 ;; 当backspace用
 (keyboard-translate ?\C-h ?\C-?)
 
+
+#+END_SRC
+
+#+BEGIN_SRC 
 (defun cygwin-or-linux (cyg ln)
   "cyg is the function for cygwin, ln is the function for linux."
   (interactive)
@@ -731,6 +733,11 @@ This function, while inefficient (note cons in tail of while form) is quite hand
 ;;上下分屏
 ;;(setq split-width-threshold most-positive-fixnum)
 
+
+#+END_SRC
+
+* 格式化文件 
+#+BEGIN_SRC  emacs-lisp
 (defun indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
@@ -853,6 +860,11 @@ Including indent-buffer, which should not be called automatically on save."
 (setq my-idea-home "~/ideas/")
 (setq my-emacs-home "~/ideas/emacs/")
 (add-to-list 'load-path (concat my-emacs-home "lib"))
+(require 'wc)
+#+END_SRC
+
+#+BEGIN_SRC 
+
 
 (defun cw-win-open-host-file ()
    (interactive)
@@ -871,7 +883,7 @@ Including indent-buffer, which should not be called automatically on save."
   (my-require-or-install feature)
 )
 
-(require 'wc)
+
 #+END_SRC
 * 操作文件
   #+BEGIN_SRC emacs-lisp
