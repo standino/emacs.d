@@ -541,6 +541,7 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 
 #+BEGIN_SRC emacs-lisp
 (require-package 'org-page)
+(require 'org-page)
 (setq op/site-main-title "Keep going")
 (setq op/site-sub-title "努力超越自己！")
 (setq op/site-domain "http://standino.github.io/")
@@ -581,7 +582,7 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 
 (defun cw/commit-pub ()
     (shell-command  "st ci")
-    (op/do-publication)
+    (op/do-publication t nil nil t)
   )
 (defun cw/pub-blog-git ()
   (interactive)
