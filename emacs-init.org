@@ -1723,3 +1723,15 @@ all-to-list will not override default elpa, so now you have to repositories, one
 (global-hl-line-mode)
 #+END_SRC
 
+* pig
+
+#+BEGIN_SRC 
+
+cd 
+git clone https://github.com/cloudera/piglatin-mode.git
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(load-file "~/piglatin-mode/piglatin.el")
+#+END_SRC
