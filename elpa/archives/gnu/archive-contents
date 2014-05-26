@@ -34,7 +34,7 @@
 			((:url . "http://elpa.gnu.org/packages/ascii-art-to-unicode.html")
 			 (:keywords "ascii" "unicode" "box-drawing"))])
  (auctex .
-	 [(11 87 4)
+	 [(11 87 5)
 	  nil "Integrated environment for *TeX*" tar
 	  ((:url . "http://www.gnu.org/software/auctex/"))])
  (cl-lib .
@@ -250,6 +250,11 @@
  (org .
       [(20140519)
        nil "Outline-based notes management and organizer" tar nil])
+ (osc .
+      [(0 1)
+       nil "Open Sound Control protocol library" single
+       ((:url . "http://elpa.gnu.org/packages/osc.html")
+	(:keywords "comm" "processes" "multimedia"))])
  (poker .
 	[(0 1)
 	 nil "Texas hold'em poker" single
