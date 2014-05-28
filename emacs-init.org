@@ -108,42 +108,12 @@
   | C-x r b Bookmark | bookmark-jump        | 跳转至名为 Bookmark 的书签中所设置的位置。  |
   |                  | bookmark-save        | 将所有的书签保存到书签文件 ~/.emac.bmk 中。 |
 
-* 设置路径
 
+
+* 统计字数
 #+BEGIN_SRC emacs-lisp
-
-;;; package --- 设置路径
-;;; code
-
-(setq my-idea-home "~/ideas/")
-(setq my-emacs-home "~/ideas/emacs/")
-(add-to-list 'load-path (concat my-emacs-home "lib"))
-
-(defun cw/open-host-file ()
-   (interactive)
-   (find-file (concat "/cygdrive/c/Windows/System32/drivers/etc/"  "hosts"))
- )
-
-(require 'require-or-install)
-
-(defun my-require-or-install (feature)
-  (require-or-install feature  (format "%s.el" feature) )
-  )
-
-(defun my-require (feature)
-  " put the ~/.emacs.d/$feature to path"
-    (add-to-list 'load-path  (format "~/.emacs.d/%s"   feature) )
-  (my-require-or-install feature)
-)
-
 (require 'wc)
-
-
-
 #+END_SRC
-
-
-
 * Org
 - =C-c a o= : 获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。目前这个视图基本可用，但是还需要手
   动删除一部分东西。目前还没有研究如何改写该函数来优化输出格式。
@@ -1304,75 +1274,6 @@ macro index \eR "|~/bin/remember-mail\n"
 mutt-open
 * Java
 eclim在我机器上太慢了，改用malabar-mode
-** eclimd
-  - https://github.com/senny/emacs-eclim
-  - http://www.skybert.net/emacs/java/
-
-*** 安装eclimd
-
-#+BEGIN_SRC
-
-wget -c http://jaist.dl.sourceforge.net/project/eclim/eclim/2.3.4/eclim_2.3.4.jar? -O eclim_2.3.4.jar
-java -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=8087 -jar eclim_2.3.4.jar
-
-## .eclimrc
-
-osgi.instance.area.default=@user.home/JD/projects
-
-# increase heap size
--Xmx256M
-
-# increase perm gen size
--XX:PermSize=64m
--XX:MaxPermSize=128m
-
--XX:-UseCompressedOops
-
-#+END_SRC
-
-*** 设置emacs-eclim
-
-#+BEGIN_SRC
-(require 'eclim)
-(global-eclim-mode)
-(require 'eclimd)
-;;(add-to-list 'auto-mode-alist '("\\.java\\'" . java-mode))
-;;(add-to-list 'auto-mode-alist '("\\.java\\'" . eclim-mode))
-(setq eclim-auto-save t
-      eclimd-wait-for-process nil
-      eclim-use-yasnippet t
-      help-at-pt-display-when-idle t
-      help-at-pt-timer-delay 0.1
-)
-
-(custom-set-variables
- '(eclim-eclipse-dirs '("/home/will/JD/tools/springsource/sts-3.4.0.RELEASE"))
- '(eclimd-default-workspace "/home/will/JD/projects/sone/branches" )
- '(eclim-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclim" )
- '(eclimd-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclimd" )
- )
-(help-at-pt-set-timer)
-
-(require 'company)
-(require 'company-emacs-eclim)
-(company-emacs-eclim-setup)
-(global-company-mode t)
-
-(require 'flymake)
-(defun my-flymake-init ()
-  (list "my-java-flymake-checks"
-        (list (flymake-init-create-temp-buffer-copy
-               'flymake-create-temp-with-folder-structure))))
-(add-to-list 'flymake-allowed-file-name-masks
-             '("\\.java$" my-flymake-init flymake-simple-cleanup))
-
-
-(defun eclim-run-test ()
-  (interactive)
-  (if (not (string= major-mode "java-mode"))
-    (message "Sorry cannot run current buffer."))
-  (compile (concat eclim-executable " -command java_junit -p " eclim--project-name " -t " (eclim-package-and-class))))
-#+END_SRC
 
 
 **  malabar-mode
@@ -1734,4 +1635,112 @@ git clone https://github.com/cloudera/piglatin-mode.git
 
 #+BEGIN_SRC emacs-lisp
 (load-file "~/piglatin-mode/piglatin.el")
+#+END_SRC
+
+
+
+====
+
+* 设置路径
+
+#+BEGIN_SRC 
+
+
+
+(setq my-idea-home "~/ideas/")
+(setq my-emacs-home "~/ideas/emacs/")
+(add-to-list 'load-path (concat my-emacs-home "lib"))
+
+(defun cw/open-host-file ()
+   (interactive)
+   (find-file (concat "/cygdrive/c/Windows/System32/drivers/etc/"  "hosts"))
+ )
+
+(require 'require-or-install)
+
+(defun my-require-or-install (feature)
+  (require-or-install feature  (format "%s.el" feature) )
+  )
+
+(defun my-require (feature)
+  " put the ~/.emacs.d/$feature to path"
+    (add-to-list 'load-path  (format "~/.emacs.d/%s"   feature) )
+  (my-require-or-install feature)
+)
+
+
+
+
+
+#+END_SRC
+
+
+* eclimd
+  - https://github.com/senny/emacs-eclim
+  - http://www.skybert.net/emacs/java/
+
+*** 安装eclimd
+
+#+BEGIN_SRC
+
+wget -c http://jaist.dl.sourceforge.net/project/eclim/eclim/2.3.4/eclim_2.3.4.jar? -O eclim_2.3.4.jar
+java -Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=8087 -jar eclim_2.3.4.jar
+
+## .eclimrc
+
+osgi.instance.area.default=@user.home/JD/projects
+
+# increase heap size
+-Xmx256M
+
+# increase perm gen size
+-XX:PermSize=64m
+-XX:MaxPermSize=128m
+
+-XX:-UseCompressedOops
+
+#+END_SRC
+
+*** 设置emacs-eclim
+
+#+BEGIN_SRC
+(require 'eclim)
+(global-eclim-mode)
+(require 'eclimd)
+;;(add-to-list 'auto-mode-alist '("\\.java\\'" . java-mode))
+;;(add-to-list 'auto-mode-alist '("\\.java\\'" . eclim-mode))
+(setq eclim-auto-save t
+      eclimd-wait-for-process nil
+      eclim-use-yasnippet t
+      help-at-pt-display-when-idle t
+      help-at-pt-timer-delay 0.1
+)
+
+(custom-set-variables
+ '(eclim-eclipse-dirs '("/home/will/JD/tools/springsource/sts-3.4.0.RELEASE"))
+ '(eclimd-default-workspace "/home/will/JD/projects/sone/branches" )
+ '(eclim-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclim" )
+ '(eclimd-executable "/home/will/JD/tools/springsource/sts-3.4.0.RELEASE/eclimd" )
+ )
+(help-at-pt-set-timer)
+
+(require 'company)
+(require 'company-emacs-eclim)
+(company-emacs-eclim-setup)
+(global-company-mode t)
+
+(require 'flymake)
+(defun my-flymake-init ()
+  (list "my-java-flymake-checks"
+        (list (flymake-init-create-temp-buffer-copy
+               'flymake-create-temp-with-folder-structure))))
+(add-to-list 'flymake-allowed-file-name-masks
+             '("\\.java$" my-flymake-init flymake-simple-cleanup))
+
+
+(defun eclim-run-test ()
+  (interactive)
+  (if (not (string= major-mode "java-mode"))
+    (message "Sorry cannot run current buffer."))
+  (compile (concat eclim-executable " -command java_junit -p " eclim--project-name " -t " (eclim-package-and-class))))
 #+END_SRC
