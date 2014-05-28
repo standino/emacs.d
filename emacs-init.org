@@ -583,6 +583,14 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 (setq op/theme 'my)
 #+END_SRC
 
+*** nikola
+- http://getnikola.com/handbook.html
+
+**** 安装
+#+BEGIN_SRC
+sudo apt-get install python-dev python-pip
+sudo pip install nikola
+#+END_SRC
 ** 每周回顾
 
 - =C-c a e= : 导出到~/review/目录下。
@@ -1638,8 +1646,6 @@ git clone https://github.com/cloudera/piglatin-mode.git
 #+END_SRC
 
 
-
-====
 
 * 设置路径
 
