@@ -622,11 +622,15 @@ sudo pip install nikola
 (defvar zendisp "zenity --info --title='Appointment' ")
 (defun my-appt-disp-window (min-to-app new-time msg)
   (save-window-excursion
-  (shell-command (concat zendisp
-                  " --text='"
-                  (string-replace-all "<" "[]" msg)
-                  "'"
-                  ))
+    (shell-command(concat "notify-send '" 
+                          (string-replace-all "<" "[]" msg)
+                          "'"
+                          ))
+    (shell-command (concat zendisp
+                           " --text='"
+                           (string-replace-all "<" "[]" msg)
+                           "'"
+                           ))
     )
   )
 #+END_SRC
@@ -1210,7 +1214,7 @@ current line to line 99.
     (shell-command-on-region (point-min) (point-max) "go tool fix -diff"))
 #+END_SRC
 
-* TODO 邮件(mutt)
+* TODO [#C] 邮件(mutt)
 :LOGBOOK:
 CLOCK: [2014-05-13 二 11:00]--[2014-05-13 二 11:12] =>  0:12
 :END:
