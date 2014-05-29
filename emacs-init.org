@@ -130,7 +130,8 @@
               :block today
               :formula %
               :compact t
-              :narrow 150!
+             :fileskip0
+             :narrow 150!
               ))))
 
 (defun cw/org-agenda-clock (match)
@@ -304,24 +305,6 @@ GTD 提醒
 (add-hook 'org-after-todo-state-change-hook
           'sacha/org-clock-out-if-oktoday)
 
-;; Pomodoro and org-mode
-
-(add-to-list 'org-modules' org-timer)
-(setq org-timer-default-timer 25)
-(add-hook 'org-clock-in-hook' (lambda ()
-       (if (not org-timer-current-timer)
-       (org-timer-set-timer '(16)))))
-(add-hook 'org-clock-out-hook' (lambda ()
-       (setq org-mode-line-string nil)
-))
-(add-hook 'org-timer-done-hook 'have-a-rest)
-
-
-(defun have-a-rest ()
-  "alert a have a rest msg"
-  (interactive)
-  (shell-command (concat zendisp   " --text='" "休息一下吧。" "'" ))
-)
 
 (setq org-agenda-span 'day)
 
@@ -362,6 +345,7 @@ GTD 提醒
 ;;I skip multiple timestamps for the same entry in the agenda view with the following setting.
 
 (setq org-agenda-skip-additional-timestamps-same-entry t)
+(setq org-crypt-disable-auto-save nil)
 
 (require 'org-crypt)
 ; Encrypt all entries before saving
@@ -426,55 +410,6 @@ last month with the Category Foo."
  
   - http://orgmode.org/worg/org-tutorials/non-beamer-presentations.html#sec-3
   - https://github.com/yjwen/org-reveal/blob/master/Readme.org  
-*** beamer (停止使用)
-ubuntu 上安装软件
-
-#+BEGIN_SRC
-
-sudo apt-get install texlive-xetex latex-beamer texlive-latex-extra
-
-#+END_SRC
-
-Emacs 配置
-#+BEGIN_SRC 
-
-;;; writing presentation
-
-;; {{ export org-mode in Chinese into PDF
-;; @see http://freizl.github.io/posts/tech/2012-04-06-export-orgmode-file-in-Chinese.html
-;; and you need install texlive-xetex on different platforms
-;; To install texlive-xetex:
-;;    `sudo USE="cjk" emerge texlive-xetex` on Gentoo Linux
-(setq org-latex-to-pdf-process
-      '("xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"))
-(setq org-latex-pdf-process
-      '("xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"
-        "xelatex -interaction nonstopmode -output-directory %o %f"))
-
-  ;; Install a default set-up for Beamer export.
-(require 'org-install)
-(require 'org-latex)
-
-(require 'ox-beamer)
-  (unless (assoc "beamer-cn" org-latex-classes)
-  (add-to-list 'org-latex-classes
-               '("beamer-cn"
-                 "\\documentclass[presentation]{beamer}
-\\usepackage{xeCJK}
-\\setCJKmainfont{SimSun}
-\[DEFAULT-PACKAGES]
-\[PACKAGES]
-\[EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
-
-
-;; }}
-#+END_SRC
 
 
 *** ox-reveal
@@ -658,6 +593,28 @@ sudo pip install nikola
                 ("~/review/month.html")
                 ))
 #+END_SRC
+** GTD & Pomodoro
+#+BEGIN_SRC emacs-lisp
+
+(add-to-list 'org-modules' org-timer)
+
+(setq org-timer-default-timer 25)
+(add-hook 'org-clock-in-hook' (lambda ()
+       (if (not org-timer-current-timer)
+       (org-timer-set-timer '(16)))))
+(add-hook 'org-clock-out-hook' (lambda ()
+       (setq org-mode-line-string nil)
+))
+(add-hook 'org-timer-done-hook 'have-a-rest)
+
+
+(defun have-a-rest ()
+  "alert a have a rest msg"
+  (interactive)
+  (shell-command (concat zendisp   " --text='" "休息一下吧。" "'" ))
+)
+
+#+END_SRC
 ** 提醒 在org文件中设定的任务，到时会弹出框提醒
 *** 使用linux下的zentiy明来弹消息
 
@@ -703,6 +660,54 @@ sudo pip install nikola
 
 #+END_SRC
 
+** Clock Setup
+
+- http://doc.norang.ca/org-mode.html#ClockSetup
+
+#+BEGIN_SRC 
+(setq org-clock-into-drawer t)
+(setq org-log-into-drawer t) 
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;;
+;; Resume clocking task when emacs is restarted
+(org-clock-persistence-insinuate)
+;;
+;; Show lot of clocking history so it's easy to pick items off the C-F11 list
+(setq org-clock-history-length 23)
+;; Resume clocking task on clock-in if the clock is open
+(setq org-clock-in-resume t)
+
+;; Separate drawers for clocking and logs
+(setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
+;; Save clock data and state changes and notes in the LOGBOOK drawer
+(setq org-clock-into-drawer t)
+;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
+(setq org-clock-out-remove-zero-time-clocks t)
+;; Clock out when moving task to a done state
+(setq org-clock-out-when-done t)
+;; Save the running clock and all clock history when exiting Emacs, load it on startup
+(setq org-clock-persist t)
+;; Do not prompt to resume an active clock
+(setq org-clock-persist-query-resume nil)
+;; Enable auto clock resolution for finding open clocks
+(setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+;; Include current clocking task in clock reports
+(setq org-clock-report-include-clocking-task t)
+
+(setq org-log-done (quote time))
+(setq org-log-into-drawer t)
+(setq org-log-state-notes-insert-after-drawers nil)
+
+
+
+#+END_SRC
+
+** 自动保存
+#+BEGIN_SRC emacs-lisp
+(setq org-crypt-disable-auto-save nil)
+#+END_SRC
 * 常用函数
 
 ** 去除重复行
@@ -1646,8 +1651,8 @@ git clone https://github.com/cloudera/piglatin-mode.git
 #+END_SRC
 
 
-
-* 设置路径
+* 停用配置
+** 设置路径
 
 #+BEGIN_SRC 
 
@@ -1681,7 +1686,7 @@ git clone https://github.com/cloudera/piglatin-mode.git
 #+END_SRC
 
 
-* eclimd
+** eclimd
   - https://github.com/senny/emacs-eclim
   - http://www.skybert.net/emacs/java/
 
@@ -1749,4 +1754,53 @@ osgi.instance.area.default=@user.home/JD/projects
   (if (not (string= major-mode "java-mode"))
     (message "Sorry cannot run current buffer."))
   (compile (concat eclim-executable " -command java_junit -p " eclim--project-name " -t " (eclim-package-and-class))))
+#+END_SRC
+** beamer (停止使用)
+ubuntu 上安装软件
+
+#+BEGIN_SRC
+
+sudo apt-get install texlive-xetex latex-beamer texlive-latex-extra
+
+#+END_SRC
+
+Emacs 配置
+#+BEGIN_SRC 
+
+;;; writing presentation
+
+;; {{ export org-mode in Chinese into PDF
+;; @see http://freizl.github.io/posts/tech/2012-04-06-export-orgmode-file-in-Chinese.html
+;; and you need install texlive-xetex on different platforms
+;; To install texlive-xetex:
+;;    `sudo USE="cjk" emerge texlive-xetex` on Gentoo Linux
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+(setq org-latex-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+
+  ;; Install a default set-up for Beamer export.
+(require 'org-install)
+(require 'org-latex)
+
+(require 'ox-beamer)
+  (unless (assoc "beamer-cn" org-latex-classes)
+  (add-to-list 'org-latex-classes
+               '("beamer-cn"
+                 "\\documentclass[presentation]{beamer}
+\\usepackage{xeCJK}
+\\setCJKmainfont{SimSun}
+\[DEFAULT-PACKAGES]
+\[PACKAGES]
+\[EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+
+
+;; }}
 #+END_SRC
