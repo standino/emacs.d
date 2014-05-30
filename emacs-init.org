@@ -110,6 +110,13 @@
 
 
 
+* Package 
+#+BEGIN_SRC emacs-lisp
+
+(add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
+(add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
+
+#+END_SRC
 * 统计字数
 #+BEGIN_SRC emacs-lisp
 (require 'wc)

@@ -39,3 +39,4 @@ emacs-init.el
 /helm-adaptive-history
 /thumbs/
 /emms/
+/.smex-items
