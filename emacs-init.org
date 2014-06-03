@@ -125,6 +125,104 @@
 - =C-c a o= : 获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。目前这个视图基本可用，但是还需要手
   动删除一部分东西。目前还没有研究如何改写该函数来优化输出格式。
 
+** 使用org总结
+#+BEGIN_SRC emacs-lisp
+(defun clocktable-by-tag/insert-tag (params)
+  (insert "\n")
+  (let ((total 0))
+    (mapcar
+     (lambda (file)
+       (let ((clock-data (with-current-buffer (find-file-noselect file)
+                           (org-clock-get-table-data (buffer-name) params))))
+         (when (> (nth 1 clock-data) 0)
+           (setq total (+ total (nth 1 clock-data)))
+
+           (dolist (entry (nth 2 clock-data))
+             (insert (format "  %s%s\n"
+                             (org-clocktable-indent-string (nth 0 entry))
+                             (nth 1 entry)
+                             ))))))
+     (org-agenda-files))
+    )
+  )
+
+(defun cw-org-agenda-clock-by-tag (match)
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (clocktable-by-tag/insert-tag
+     `(:scope agenda
+              :block today
+              ))))
+
+
+(defun cw/org-agenda-clock-daily-report (match)
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\n今天完成的工作:\n")
+    (clocktable-by-tag/insert-tag
+     `(:scope agenda
+              :block today
+              )
+     )
+    )
+  )
+
+(defun cw/org-agenda-clock-thisweek (match)
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\n这周完成的工作:\n")
+    (clocktable-by-tag/insert-tag
+     `(:scope agenda
+              :block thisweek
+              )
+     )
+    )
+  )
+
+
+(defun cw/org-agenda-clock-lastweek (match)
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\n上周完成的工作:\n")
+    (clocktable-by-tag/insert-tag
+     `(:scope agenda
+              :block lastweek
+              )
+     )
+    )
+  )
+
+(defun cw/org-agenda-clock-thismonth (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this month:\n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thismonth
+           :formula %
+           :compact t
+           :fileskip0
+           :narrow 150!
+;;           :link t
+       ))))
+(defun cw/org-agenda-clock-thisyear (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this year:\n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thisyear
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+#+END_SRC
 ** 常用配置，大部分来自 sacha
 #+BEGIN_SRC emacs-lisp
 (defun sacha/org-agenda-clock (match)
@@ -150,76 +248,11 @@
               :maxlevel 8
               :block today
               :compact t
+             :fileskip0
               :narrow 150!
               ))))
 
-(defun cw/org-agenda-clock-daily-report (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (org-dblock-write:clocktable
-     `(:scope agenda
-       :maxlevel 8
-       :block today
 
-       ))))
-(defun cw/org-agenda-clock-thisweek (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (org-dblock-write:clocktable
-     `(:scope agenda
-       :maxlevel 8
-           :block thisweek
-           :formula %
-           :compact t
-           :narrow 150!
-;;           :link t
-       ))))
-
-(defun cw/org-agenda-clock-lastweek (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (insert  "\n\nTasks done in this week: \n")
-    (org-dblock-write:clocktable
-     `(:scope agenda
-       :maxlevel 8
-           :block lastweek
-           :formula %
-           :compact t
-           :narrow 150!
-;;           :link t
-       ))))
-
-(defun cw/org-agenda-clock-thismonth (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (insert  "\n\nTasks done in this month: \n")
-    (org-dblock-write:clocktable
-     `(:scope agenda
-       :maxlevel 8
-           :block thismonth
-           :formula %
-           :compact t
-           :narrow 150!
-;;           :link t
-       ))))
-(defun cw/org-agenda-clock-thisyear (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (insert  "\n\nTasks done in this year: \n")
-    (org-dblock-write:clocktable
-     `(:scope agenda
-       :maxlevel 8
-           :block thisyear
-           :formula %
-           :compact t
-           :narrow 150!
-;;           :link t
-       ))))
 #+END_SRC
 
 - =C-c a a= : 显示自定义视图
@@ -719,6 +752,61 @@ sudo pip install nikola
 #+BEGIN_SRC emacs-lisp
 (setq org-crypt-disable-auto-save nil)
 #+END_SRC
+
+** DONE 根据 org-clock.el中的 org-clocktable-write-default 编写自己的fomater
+CLOSED: [2014-06-03 二 10:47]
+:LOGBOOK:
+- State "DONE"       from "STARTED"    [2014-06-03 二 10:47]
+CLOCK: [2014-06-03 二 10:04]--[2014-06-03 二 10:47] =>  0:43
+:END:
+** 根据tag显示
+#+BEGIN_SRC
+
+(defun clocktable-by-tag/shift-cell (n)
+  (let ((str ""))
+    (dotimes (i n)
+      (setq str (concat str "| ")))
+    str))
+ 
+(defun clocktable-by-tag/insert-tag (params)
+  (let ((tag (plist-get params :tags)))
+    (insert "|--\n")
+    (insert (format "| %s | *Tag time* |\n" tag))
+    (let ((total 0))
+      (mapcar
+       (lambda (file)
+         (let ((clock-data (with-current-buffer (find-file-noselect file)
+                             (org-clock-get-table-data (buffer-name) params))))
+           (when (> (nth 1 clock-data) 0)
+             (setq total (+ total (nth 1 clock-data)))
+             (insert (format "| | File *%s* | %.2f |\n"
+                             (file-name-nondirectory file)
+                             (/ (nth 1 clock-data) 60.0)))
+             (dolist (entry (nth 2 clock-data))
+               (insert (format "| | . %s%s | %s %.2f |\n"
+                               (org-clocktable-indent-string (nth 0 entry))
+                               (nth 1 entry)
+                               (clocktable-by-tag/shift-cell (nth 0 entry))
+                               (/ (nth 3 entry) 60.0)))))))
+       (org-agenda-files))
+      (save-excursion
+        (re-search-backward "*Tag time*")
+        (org-table-next-field)
+        (org-table-blank-field)
+        (insert (format "*%.2f*" (/ total 60.0)))))
+    (org-table-align)))
+ 
+(defun org-dblock-write:clocktable-by-tag (params)
+  (insert "| Tag | Headline | Time (h) |\n")
+  (insert "|     |          | <r>  |\n")
+  (let ((tags (plist-get params :tags)))
+    (mapcar (lambda (tag)
+              (setq params (plist-put params :tags tag))
+              (clocktable-by-tag/insert-tag params))
+            tags)))
+
+#+END_SRC
+
 * 常用函数
 
 ** 去除重复行
