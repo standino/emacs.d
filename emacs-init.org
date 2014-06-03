@@ -11,35 +11,89 @@
   置很好的放到这一个文件里。
 
 * 常用操作
-** Common 
- - M-./ C-Mg : 获得Java变量和方法的引用或声明
- - M-x swoop-multi : 在打开的 buffer 查找某个关键字
- - C-cpg: 在项目中查找字段
- - C-ci或S-M t或M-x helm-imenu: 查看当前文件的结构
- - C-cf : 打开文件
- - M-; : 注释代码
+|-------------+-------------+--------------------------------|
+| 快捷键      | 命令        | 说明                           |
+|-------------+-------------+--------------------------------|
+| M-./ C-Mg   |             | 获得Java变量和方法的引用或声明 |
+|             | swoop-multi | 在打开的 buffer 查找某个关键字 |
+| C-cpg       |             | 在项目中查找字段               |
+| C-ci或S-M t | helm-imenu  | 查看当前文件的结构             |
+| C-cf或C-cpf |             | 打开文件                       |
+| M-;         |             | 注释代码                       |
+|             |             |                                |
 
-** textmate 
+** [[https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org][ malabar-mode cheat sheet]]
 
-#+BEGIN_SRC
-;;    ⌘T - Go to File
-;;  ⇧⌘T - Go to Symbol
-;;    ⌘L - Go to Line
-;;  ⇧⌘L - Select Line (or expand Selection to select lines)
-;;    ⌘/ - Comment Line (or Selection/Region)
-;;    ⌘] - Shift Right (currently indents region)
-;;    ⌘[ - Shift Left  (not yet implemented)
-;;  ⌥⌘] - Align Assignments
-;;  ⌥⌘[ - Indent Line
-;;    ⌥↑ - Column Up
-;;    ⌥↓ - Column Down
-;;  ⌘RET - Insert Newline at Line's End
-;;  ⌥⌘T - Reset File Cache (for Go to File)
+*** Abbrevs
 
-#+END_SRC
+| Abbrev | Expansion  | Abbrev | Expansion                 |
+|--------+------------+--------+---------------------------|
+| pu     | public     | main   | Create a main method      |
+| pri    | private    | #Test  | @Test template            |
+| pro    | protected  | sysout | System.out.printf("_%n"); |
+| st     | static     |        |                           |
+| vo     | void       |        |                           |
+| ab     | abstract   |        |                           |
+| bo     | boolean    |        |                           |
+| cl     | class      |        |                           |
+| impl   | implements |        |                           |
+| ext    | extends    |        |                           |
+| pa     | package    |        |                           |
+| re     | return     |        |                           |
 
-** malabar
-   - https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org
+*** Building
+
+| Binding     | Function                | Description                            |
+|-------------+-------------------------+----------------------------------------|
+| C-c C-v C-c | malabar-compile-file    | Compile the file in the current buffer |
+| C-c C-v p   | malabar-package-project | Run 'mvn package'                      |
+| C-c C-v C-b | malabar-install-project | Run 'mvn install'                      |
+| C-c C-v M-t | malabar-run-all-tests   | Run 'mvn test'                         |
+
+*** Class Inspection
+
+| Binding   | Function                                          | Description                                                 |
+|-----------+---------------------------------------------------+-------------------------------------------------------------|
+| C-c C-v * | malabar-fully-qualified-class-name-kill-ring-save | Copy the binary class name current buffer to the kill ring  |
+| C-c C-v w | malabar-which                                     | Copy the location of the binary class name to the kill ring |
+|           |                                                   |                                                             |
+
+*** Navigation
+
+| Binding     | Function                             | Description                                                              |
+|-------------+--------------------------------------+--------------------------------------------------------------------------|
+| C-M-f       | forward-sexp                         | Move to next interesting thing                                           |
+| C-M-b       | backward-sexp                        | Move to previous interesting thing                                   |
+| C-c , m     | semantic-complete-jump-local-members | Jump to a method, variable or class.  Use space to cycle between methods |
+| C-c , J     | semantic-complete-jump               | Jump to a method, variable or class.  Use space to cycle between methods |
+| c-c , ,     | semantic-force-refresh               | Refresh the navigation tags                                              |
+| c-c , n     | senator-next-tag                     | Navigate to the next semantic tags                                       |
+| c-c , p     | senator-previous-tag                 | Navigate to the previous semantic tags                                   |
+| C-c C-v C-y | malabar-jump-to-thing                | Jump to the definition of the thing at point                             |
+| C-x C-SPACE | pop-global-mark                      | Use after malabar-jump-to-thing to pop back to previous point            | 
+| C-c C-v C-p | malabar-visit-project-file           | Open the project file for this buffer, ei nearest pom.xml                |
+
+*** Code Generation
+
+| Binding     | Function                         | Description                                                                                                                                                 |
+|-------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| C-c C-v C-e | malabar-extend-class             | Prompts for a class, adds stub implementations of all that class’s abstract methods and accessible constructors and inserts the appropriate extends clause. |
+| C-c C-v C-i | malabar-implement-interface      | Prompts for an interface, adds stub implementations of all that interface’s methods and adds the interface to the class’s implements clause.                |
+| C-c C-v C-g | malabar-insert-getset            | Insert a getter/setter for a field, adding the field if needed                                                                                              |
+| C-c C-v C-. | semantic-ia-complete-symbol      | Complete the current symbol                                                                                                                                 |
+| C-c C-v .   | semantic-ia-complete-symbol-menu | Complete the current symbol with menu                                                                                                                       |
+|             | malabar-delegate-interface       | Similar to malabar-implement-interface and creates a delegate field                                                                                         |
+|             | malabar-update-package           | Add or update the package statement to match the current directory                                                                                          |
+|             |                                  |                                                                                                                                                             |
+
+
+*** Developing malabar-mode
+
+**** Debug logging
+
+Turn on debug logging with 'malabar-project-logging-debug'
+Turn off debug logging with 'malabar-project-logging-info'
+
 * 初始化
 
 #+BEGIN_SRC
@@ -635,18 +689,19 @@ sudo pip install nikola
 #+END_SRC
 ** GTD & Pomodoro
 #+BEGIN_SRC emacs-lisp
-
 (add-to-list 'org-modules' org-timer)
 
 (setq org-timer-default-timer 25)
+
 (add-hook 'org-clock-in-hook' (lambda ()
        (if (not org-timer-current-timer)
        (org-timer-set-timer '(16)))))
+
 (add-hook 'org-clock-out-hook' (lambda ()
        (setq org-mode-line-string nil)
 ))
-(add-hook 'org-timer-done-hook 'have-a-rest)
 
+(add-hook 'org-timer-done-hook 'have-a-rest)
 
 (defun have-a-rest ()
   "alert a have a rest msg"
@@ -673,6 +728,11 @@ sudo pip install nikola
                            ))
     )
   )
+
+(defun gohome ()
+  (interactive)
+    (x-popup-dialog t '("Time to home already!" ("okay" . t)) t))
+
 #+END_SRC
 
 *** 获得org agenda 中的TODO，到时提醒
