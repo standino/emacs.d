@@ -13,7 +13,7 @@
 
 
 ;; See: http://sinewalker.wordpress.com/2008/06/26/pretty-printing-xml-with-emacs-nxml-mode/
-(defun pp-xml-region (begin end)
+(defun sanityinc/pp-xml-region (begin end)
   "Pretty format XML markup in region. The function inserts
 linebreaks to separate tags that have nothing but whitespace
 between them.  It then indents the markup by using nxml's
@@ -31,10 +31,6 @@ indentation rules."
 ;;----------------------------------------------------------------------------
 (require-package 'tidy)
 (add-hook 'nxml-mode-hook (lambda () (tidy-build-menu nxml-mode-map)))
-(add-hook 'html-mode-hook (lambda () (tidy-build-menu html-mode-map)))
-
-
-(add-auto-mode 'html-mode "\\.(jsp|tmpl)\\'")
 
 
 (provide 'init-nxml)
