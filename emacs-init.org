@@ -2,25 +2,38 @@
 #+STARTUP: indent
 #+STARTUP: hidestars
 
-   - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org][一年成为Emacs高手(像神一样使用编辑器)]]
-   - http://emacslife.com/
-
-* 说明
+* 初始化
 
   通过使用 =org-babel-load-file= 把 =emacs-lisp= 代码块中的配置代码生成到 =emacs-init.el= 文件中。通过这种方式，可以把配置使用说明和配
   置很好的放到这一个文件里。
 
-* 常用操作
-|-------------+-------------+--------------------------------|
-| 快捷键      | 命令        | 说明                           |
-|-------------+-------------+--------------------------------|
-| M-./ C-Mg   |             | 获得Java变量和方法的引用或声明 |
-|             | swoop-multi | 在打开的 buffer 查找某个关键字 |
-| C-cpg       |             | 在项目中查找字段               |
-| C-ci或S-M t | helm-imenu  | 查看当前文件的结构             |
-| C-cf或C-cpf |             | 打开文件                       |
-| M-;         |             | 注释代码                       |
-|             |             |                                |
+#+BEGIN_SRC
+(require 'ob-tangle)
+(org-babel-load-file
+ (expand-file-name "emacs-init.org"
+                   user-emacs-directory))
+(org-agenda nil  "a")
+(provide 'init-local)
+#+END_SRC
+
+* 如何使用emacs
+
+   - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org][一年成为Emacs高手(像神一样使用编辑器)]]
+   - http://emacslife.com/
+
+|------+-------------+-------------+-------------------------------------------------------------------------------------------------------|
+| 分类 | 快捷键      | 命令        | 说明                                                                                                  |
+|------+-------------+-------------+-------------------------------------------------------------------------------------------------------|
+| 编程   | M-./ C-Mg   |             | 获得Java变量和方法的引用或声明                                                                        |
+|      |             | swoop-multi | 在打开的 buffer 查找某个关键字                                                                        |
+|      | C-cpg       |             | 在项目中查找字段                                                                                      |
+|      | C-ci或S-M t | helm-imenu  | 查看当前文件的结构                                                                                    |
+|      | C-cf或C-cpf |             | 打开文件                                                                                              |
+|      | M-;         |             | 注释代码                                                                                              |
+| GTD  | C-caa或F12  |             | 打开TODO视图                                                                                          |
+|      | C-cao       |             | 打开任务总结视图.获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。 |
+| 写作 | C-c C-e R R |             | 导出演示文稿                                                                                          |
+
 
 ** [[https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org][ malabar-mode cheat sheet]]
 
@@ -94,18 +107,20 @@
 Turn on debug logging with 'malabar-project-logging-debug'
 Turn off debug logging with 'malabar-project-logging-info'
 
-* 初始化
 
-#+BEGIN_SRC
-(require 'ob-tangle)
-(org-babel-load-file
- (expand-file-name "emacs-init.org"
-                   user-emacs-directory))
-(org-agenda nil  "a")
-(provide 'init-local)
-#+END_SRC
 
-* 快捷键设置
+** 书签操作：
+
+  | C-x r m Bookmark | bookmark-set         | 设置一个名为 Bookmark 的书签。              |
+  | C-x r l          | bookmarks-bmenu-list | 列出所有已保存的书签。                      |
+  |                  | bookmark-delete      | 删除一个书签。                              |
+  | C-x r b Bookmark | bookmark-jump        | 跳转至名为 Bookmark 的书签中所设置的位置。  |
+  |                  | bookmark-save        | 将所有的书签保存到书签文件 ~/.emac.bmk 中。 |
+
+
+* 如何配置emacs
+
+** 快捷键设置
 #+BEGIN_SRC emacs-lisp
 ;;; Hotkey options
 (defalias 'tt 'toggle-truncate-lines)
@@ -139,177 +154,28 @@ Turn off debug logging with 'malabar-project-logging-info'
 ;;(global-set-key (kbd "M-*") 'select-text-in-quote)
 
 #+END_SRC
-** Java 开发快捷键
-#+BEGIN_SRC emacs-lisp
-(require 'cc-mode)
-(define-key c-mode-base-map (kbd "<f2>") 'eclim-problems)
-(define-key c-mode-base-map "\C-\M-g" 'eclim-java-find-declaration)
-(define-key c-mode-base-map "\C-\M-o" 'eclim-java-import-organize)
-(define-key c-mode-base-map "\C-q" 'eclim-java-show-documentation-for-current-element)
-(define-key c-mode-base-map "\M-i" 'eclim-java-implement) ;; IDEA is C-i
-(define-key c-mode-base-map (kbd "<M-RET>") 'eclim-problems-correct)
-(define-key c-mode-base-map (kbd "<M-f7>") 'eclim-java-find-references)
-(define-key c-mode-base-map (kbd "<S-f6>") 'eclim-java-refactor-rename-symbol-at-point)
-(define-key c-mode-base-map (kbd "<S-f7>") 'gtags-find-tag-from-here)
-
-#+END_SRC
-
-** 书签操作：
-
-  | C-x r m Bookmark | bookmark-set         | 设置一个名为 Bookmark 的书签。              |
-  | C-x r l          | bookmarks-bmenu-list | 列出所有已保存的书签。                      |
-  |                  | bookmark-delete      | 删除一个书签。                              |
-  | C-x r b Bookmark | bookmark-jump        | 跳转至名为 Bookmark 的书签中所设置的位置。  |
-  |                  | bookmark-save        | 将所有的书签保存到书签文件 ~/.emac.bmk 中。 |
 
 
 
-* Package 
+** Package 
 #+BEGIN_SRC emacs-lisp
 
 (add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
 (add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
 
 #+END_SRC
-* 统计字数
+** 统计字数
 #+BEGIN_SRC emacs-lisp
 (require 'wc)
 #+END_SRC
-* Org
-- =C-c a o= : 获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。目前这个视图基本可用，但是还需要手
-  动删除一部分东西。目前还没有研究如何改写该函数来优化输出格式。
-
-** 使用org总结
-#+BEGIN_SRC emacs-lisp
-(defun clocktable-by-tag/insert-tag (params)
-  (insert "\n")
-  (let ((total 0))
-    (mapcar
-     (lambda (file)
-       (let ((clock-data (with-current-buffer (find-file-noselect file)
-                           (org-clock-get-table-data (buffer-name) params))))
-         (when (> (nth 1 clock-data) 0)
-           (setq total (+ total (nth 1 clock-data)))
-
-           (dolist (entry (nth 2 clock-data))
-             (insert (format "  %s%s\n"
-                             (org-clocktable-indent-string (nth 0 entry))
-                             (nth 1 entry)
-                             ))))))
-     (org-agenda-files))
-    )
-  )
-
-(defun cw-org-agenda-clock-by-tag (match)
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (clocktable-by-tag/insert-tag
-     `(:scope agenda
-              :block today
-              ))))
+** Org
 
 
-(defun cw/org-agenda-clock-daily-report (match)
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (insert  "\n\n今天完成的工作:\n")
-    (clocktable-by-tag/insert-tag
-     `(:scope agenda
-              :block today
-              )
-     )
-    )
-  )
-
-(defun cw/org-agenda-clock-thisweek (match)
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (insert  "\n\n这周完成的工作:\n")
-    (clocktable-by-tag/insert-tag
-     `(:scope agenda
-              :block thisweek
-              )
-     )
-    )
-  )
-
-
-(defun cw/org-agenda-clock-lastweek (match)
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (insert  "\n\n上周完成的工作:\n")
-    (clocktable-by-tag/insert-tag
-     `(:scope agenda
-              :block lastweek
-              )
-     )
-    )
-  )
-
-(defun cw/org-agenda-clock-thismonth (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (insert  "\n\nTasks done in this month:\n")
-    (org-dblock-write:clocktable
-     `(:scope agenda
-       :maxlevel 8
-           :block thismonth
-           :formula %
-           :compact t
-           :fileskip0
-           :narrow 150!
-;;           :link t
-       ))))
-(defun cw/org-agenda-clock-thisyear (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (insert  "\n\nTasks done in this year:\n")
-    (org-dblock-write:clocktable
-     `(:scope agenda
-       :maxlevel 8
-           :block thisyear
-           :formula %
-           :compact t
-           :narrow 150!
-;;           :link t
-       ))))
-
+*** toc
+#+BEGIN_SRC
+(require-package 'org-toc)
 #+END_SRC
-** 常用配置，大部分来自 sacha
-#+BEGIN_SRC emacs-lisp
-(defun sacha/org-agenda-clock (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (org-dblock-write:clocktable
-     `(:scope agenda
-              :maxlevel 8
-              :block today
-              :formula %
-              :compact t
-             :fileskip0
-             :narrow 150!
-              ))))
-
-(defun cw/org-agenda-clock (match)
-  ;; Find out when today is
-  (let* ((inhibit-read-only t))
-    (goto-char (point-max))
-    (org-dblock-write:clocktable
-     `(:scope agenda
-              :maxlevel 8
-              :block today
-              :compact t
-             :fileskip0
-              :narrow 150!
-              ))))
-
-
-#+END_SRC
-
-- =C-c a a= : 显示自定义视图
+*** 常用配置，大部分来自 sacha
 
 #+BEGIN_SRC emacs-lisp
 
@@ -413,26 +279,6 @@ GTD 提醒
 (global-set-key (kbd "<f12>") (lambda () (interactive)(switch-to-buffer "*Org Agenda*")(org-agenda-redo)))
 
 
-;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
-(setq org-capture-templates
-      (quote (("t" "todo" entry (file (concat my-idea-home "org/mygtd.org"))
-               "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("r" "respond" entry (file (concat my-idea-home "org/mygtd.org"))
-               "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-              ("n" "note" entry (file (concat my-idea-home "org/mygtd.org"))
-               "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-              ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
-               "* %?\n%U\n" :clock-in t :clock-resume t)
-              ("w" "org-protocol" entry (file (concat my-idea-home "org/mygtd.org"))
-               "* TODO Review %c\n%U\n" :immediate-finish t)
-              ("m" "Meeting" entry (file+headline (concat my-idea-home "org/mygtd.org") "Meeting")
-               "* [#A] [/]   %?  SCHEDULED:%t   :MEETING:\n%U" )
-              ("p" "Phone call" entry (file (concat my-idea-home "org/mygtd.org"))
-               "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-              ("d" "Development" entry (file+headline (concat my-idea-home "org/mygtd.org") "Development")
-               "* TODO [#A] [/] %? %u SCHEDULED:%t:OFFICE:\n" )
-              ("h" "Habit" entry (file (concat my-idea-home "org/mygtd.org"))
-               "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
 
 ;;http://doc.norang.ca/org-mode.html
 ;;18.38 Remove Multiple State Change Log Details From The Agenda
@@ -457,43 +303,10 @@ GTD 提醒
 
 (add-hook 'org-mode-hook 'my-org-mode-hook)
 
-(defun cw/tasks-last-week ()
-  "Produces an org agenda tags view list of all the tasks completed
-last week."
-
-  (interactive)
-    (org-tags-view nil
-          (concat
-
-           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
-                                                  (seconds-to-time (* 7 24 60 60))))
-           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
-
-(defun cw/tasks-last-month ()
-  "Produces an org agenda tags view list of all the tasks completed
-last month with the Category Foo."
-  (interactive)
-    (org-tags-view nil
-          (concat
-           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
-                                                  (seconds-to-time (* 30 24 60 60))))
-           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
-
-(defun cw/tasks-last-year ()
-  "Produces an org agenda tags view list of all the tasks completed
-last month with the Category Foo."
-
-  (interactive)
-    (org-tags-view nil
-          (concat
-
-           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
-                                                  (seconds-to-time (* 365 24 60 60))))
-           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
 
 #+END_SRC
 
-**  Org 写 PPT
+***  Org 写 PPT
    - State "OKTODAY"    from "STARTED"    [2014-05-09 五 14:37]
    - State "OKTODAY"    from "STARTED"    [2014-05-07 三 19:12]
    :LOGBOOK:
@@ -506,7 +319,7 @@ last month with the Category Foo."
   - https://github.com/yjwen/org-reveal/blob/master/Readme.org  
 
 
-*** ox-reveal
+**** ox-reveal
 
   - 安装文档： https://github.com/yjwen/org-reveal/blob/master/Readme.org
 
@@ -534,7 +347,7 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 
 具体编写出的演示文档，可以参考 [[https://github.com/yjwen/org-reveal/blob/master/Readme.org][这个例子]]
 
-** Org 写文档和记笔记
+*** Org 写文档和记笔记
 
   - [[http://orgmode.org/manual/JavaScript-support.html][Exporting org-mode documents to HTML offers 3 styles]]
 
@@ -554,14 +367,14 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
          :show-meta t
          :show-comment t
          :uri-generator op/generate-uri
-         :uri-template "/blog/%y/%m/%d/%t/"
+         :uri-template "/blog/html/%y/%m/%d/%t/"
          :sort-by :date       ;; how to sort the posts
          :category-index t)   ;; generate category index or not
         ("wiki"
          :show-meta t
          :show-comment t
          :uri-generator op/generate-uri
-         :uri-template "/wiki/%t/"
+         :uri-template "/wiki/html/%t/"
          :sort-by :mod-date
          :category-index t)
         ("index"
@@ -605,22 +418,22 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
   )
 #+END_SRC
 
-*** 设置自己的的主题
+**** 设置自己的的主题
 
 #+BEGIN_SRC emacs-lisp
 (setq op/theme-root-directory "~/.emacs.d/themes")
 (setq op/theme 'my)
 #+END_SRC
 
-*** nikola
+**** nikola
 - http://getnikola.com/handbook.html
 
-**** 安装
+***** 安装
 #+BEGIN_SRC
 sudo apt-get install python-dev python-pip
 sudo pip install nikola
 #+END_SRC
-** 每周回顾
+*** 每周回顾
 
 - =C-c a e= : 导出到~/review/目录下。
 - =C-c a R : 按天/周/月回顾任务
@@ -687,7 +500,7 @@ sudo pip install nikola
                 ("~/review/month.html")
                 ))
 #+END_SRC
-** GTD & Pomodoro
+*** GTD & Pomodoro
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'org-modules' org-timer)
 
@@ -710,8 +523,8 @@ sudo pip install nikola
 )
 
 #+END_SRC
-** 提醒 在org文件中设定的任务，到时会弹出框提醒
-*** 使用linux下的zentiy明来弹消息
+*** 提醒 在org文件中设定的任务，到时会弹出框提醒
+**** 使用linux下的zentiy明来弹消息
 
 #+BEGIN_SRC emacs-lisp
 (defvar zendisp "zenity --info --title='Appointment' ")
@@ -735,7 +548,7 @@ sudo pip install nikola
 
 #+END_SRC
 
-*** 获得org agenda 中的TODO，到时提醒
+**** 获得org agenda 中的TODO，到时提醒
 
 #+BEGIN_SRC emacs-lisp
 ;;;; Get appointments for today
@@ -764,7 +577,7 @@ sudo pip install nikola
 
 #+END_SRC
 
-** Clock Setup
+*** Clock Setup
 
 - http://doc.norang.ca/org-mode.html#ClockSetup
 
@@ -808,18 +621,13 @@ sudo pip install nikola
 
 #+END_SRC
 
-** 自动保存
+*** 自动保存
 #+BEGIN_SRC emacs-lisp
 (setq org-crypt-disable-auto-save nil)
 #+END_SRC
 
-** DONE 根据 org-clock.el中的 org-clocktable-write-default 编写自己的fomater
-CLOSED: [2014-06-03 二 10:47]
-:LOGBOOK:
-- State "DONE"       from "STARTED"    [2014-06-03 二 10:47]
-CLOCK: [2014-06-03 二 10:04]--[2014-06-03 二 10:47] =>  0:43
-:END:
-** 根据tag显示
+
+*** 根据tag显示
 #+BEGIN_SRC
 
 (defun clocktable-by-tag/shift-cell (n)
@@ -867,131 +675,8 @@ CLOCK: [2014-06-03 二 10:04]--[2014-06-03 二 10:47] =>  0:43
 
 #+END_SRC
 
-* 常用函数
 
-** 去除重复行
-
-Lisp commands removing consecutive duplicates
-
-The command ‘M-x uniquify-buffer-lines’ will remove identical adjacent lines in the current buffer, similar to what is obtained
-with the unix uniq command.
-
-#+BEGIN_SRC emacs-lisp
- (defun uniquify-region-lines (beg end)
-    "Remove duplicate adjacent lines in region."
-    (interactive "*r")
-    (save-excursion
-      (goto-char beg)
-      (while (re-search-forward "^\\(.*\n\\)\\1+" end t)
-        (replace-match "\\1"))))
-
-  (defun uniquify-buffer-lines ()
-    "Remove duplicate adjacent lines in the current buffer."
-    (interactive)
-    (uniquify-region-lines (point-min) (point-max)))
-#+END_SRC
-
-It is important to note that functions which find duplicate lines don’t always sort lines before looking for dups as this may or may not be what one expects or desires of a particular function.
-
-** Lisp command to retrieve duplicates
-Where the lines of a file are presorted it can be convenient to use something like this:
-#+BEGIN_SRC emacs-lisp
-
-  (defun find-duplicate-lines (&optional insertp interp)
-    (interactive "i\np")
-    (let ((max-pon (line-number-at-pos (point-max)))
-          (gather-dups))
-      (while (< (line-number-at-pos) max-pon) (= (forward-line) 0)
-             (let ((this-line (buffer-substring-no-properties (line-beginning-position 1) (line-end-position 1)))
-                   (next-line (buffer-substring-no-properties (line-beginning-position 2) (line-end-position 2))))
-               (when  (equal this-line next-line)  (setq gather-dups (cons this-line gather-dups)))))
-      (if (or insertp interp)
-          (save-excursion (new-line) (princ gather-dups (current-buffer)))
-        gather-dups)))
-
-#+END_SRC
-
-This function, while inefficient (note cons in tail of while form) is quite handy for locating duplicates before removing them,
-    i.e. situations of type: ‘uniquify-maybe’. Extend ‘find-duplicate-lines’ by comparing its result list with one or more of
-    the list comparison procedures ‘set-difference’, ‘union’, ‘intersection’, etc. from the CL package (require ‘cl).
-
-#+BEGIN_SRC emacs-lisp
-(defun djcb-duplicate-line (&optional commentfirst)
-  "comment line at point; if COMMENTFIRST is non-nil, comment the original"
-  (interactive)
-  (beginning-of-line)
-  (push-mark)
-  (end-of-line)
-  (let ((str (buffer-substring (region-beginning) (region-end))))
-    (when commentfirst
-      (comment-region (region-beginning) (region-end)))
-    (insert-string
-     (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
-    (forward-line -1)))
-
-;; or choose some better bindings....
-
-;; duplicate a line
-(global-set-key (kbd "C-c y") 'djcb-duplicate-line)
-
-;; duplicate a line and comment the first
-(global-set-key (kbd "C-c c") (lambda()(interactive)(djcb-duplicate-line t)))
-
-
-;; 当backspace用
-(keyboard-translate ?\C-h ?\C-?)
-
-
-#+END_SRC
-
-#+BEGIN_SRC 
-(defun cygwin-or-linux (cyg ln)
-  "cyg is the function for cygwin, ln is the function for linux."
-  (interactive)
-  (if (equal system-type 'cygwin)
-      (if cyg (funcall cyg))
-    )
-  (if (equal system-type 'windows-nt)
-      (if cyg (funcall cyg))
-    )
-  (if (equal system-type 'gnu/linux)
-      (if ln (funcall ln))
-    )
-
-  )
-
-(defun cygwin-do (fn)
-  " only run for cygwin"
-  (interactive)
-  (if (equal system-type 'cygwin)
-      (if fn (funcall fn))
-    )
-  )
-
-(defun win-do (fn)
-  " only run for win"
-  (interactive)
-  (if (equal system-type 'windows-nt)
-      (if fn (funcall fn))
-    )
-  )
-
-(defun linux-do (fn)
-  " only run for linux"
-  (interactive)
-
-  (if (equal system-type 'gnu/linux)
-      (if fn (funcall fn))
-    )
-
-  )
-;;上下分屏
-;;(setq split-width-threshold most-positive-fixnum)
-
-
-#+END_SRC
-
-* 格式化文件 
+** 格式化文件 
 #+BEGIN_SRC  emacs-lisp
 (defun indent-buffer ()
   (interactive)
@@ -1015,7 +700,7 @@ Including indent-buffer, which should not be called automatically on save."
 
 
 
-* 格式化xml 文件
+** 格式化xml 文件
   #+BEGIN_SRC emacs-lisp
 
 (add-to-list 'auto-mode-alist '("\\.jsp\\'" . anjsp-mode))
@@ -1061,7 +746,7 @@ Including indent-buffer, which should not be called automatically on save."
 
   #+END_SRC
 
-* 设置路径
+** 设置路径
 #+BEGIN_SRC emacs-lisp
 
 (setq my-idea-home "~/ideas/")
@@ -1092,7 +777,7 @@ Including indent-buffer, which should not be called automatically on save."
 
 
 #+END_SRC
-* 操作文件
+** 操作文件
   #+BEGIN_SRC emacs-lisp
 (defun set-clipboard-contents-from-string (str)
   "Copy the value of string STR into the clipboard."
@@ -1168,7 +853,7 @@ specifies the list of buffers to kill, asking for approval for each one."
 
   #+END_SRC
 
-* 备份设置
+** 备份设置
 #+BEGIN_SRC emacs-lisp
 (setq backup-directory-alist '(("" . "~/backup/emacs/backup")))
 (setq-default make-backup-file t)
@@ -1179,13 +864,13 @@ specifies the list of buffers to kill, asking for approval for each one."
 (setq kept-new-versions 10)
 (setq delete-old-versions t)
 #+END_SRC
-* 字典
+** 字典
 #+BEGIN_SRC emacs-lisp
 (require-package 'dic-lookup-w3m)
 (require 'dic-lookup-w3m)
 (require 'dic-lookup-w3m-zh)
 #+END_SRC
-* 通过数字选择窗口
+** 通过数字选择窗口
 
   - C-x 0 : 关闭窗口，不是关闭buffer。
   - M-1: 选择第一个窗口。
@@ -1209,7 +894,7 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 #+END_SRC
 
-* web开发
+** web开发
 
   1. https://github.com/fxbois/web-mode
   2. https://github.com/fgallina/multi-web-mode
@@ -1229,7 +914,7 @@ specifies the list of buffers to kill, asking for approval for each one."
    ))
 
 #+END_SRC
-* 代码提示
+** 代码提示
  - C-c k : 模板插入。使用yasnippet定义的模板，输入模板简称，然后使用该快捷键插入预定义的模板。
 #+BEGIN_SRC emacs-lisp
 (dolist (mode '(magit-log-edit-mode
@@ -1250,7 +935,7 @@ specifies the list of buffers to kill, asking for approval for each one."
 ;;(require-package 'yasnippet-bundle)
 
 #+END_SRC
-* 统计使用的快捷键频率
+** 统计使用的快捷键频率
  use keyfreq-show to see how many times you used a command.
 
  #+BEGIN_SRC emacs-lisp
@@ -1259,7 +944,7 @@ specifies the list of buffers to kill, asking for approval for each one."
 (keyfreq-autosave-mode 1)
  #+END_SRC
 
-* 智能注释代码
+** 智能注释代码
 
 `M-x evilnc-default-hotkeys` assigns hotkey `M-;` to `evilnc-comment-or-uncomment-lines`
 `M-x evilnc-comment-or-uncomment-lines` comment or uncomment lines.
@@ -1274,11 +959,11 @@ current line to line 99.
 
 #+END_SRC
 
-* go 语言
+** go 语言
 
-** TODO [#C] http://yousefourabi.com/blog/2014/05/emacs-for-go/
+*** TODO [#C] http://yousefourabi.com/blog/2014/05/emacs-for-go/
 
-** 配置从这个 [[https://github.com/astaxie/build-web-application-with-golang/blob/master/ebook/01.4.md][页面]]拷贝的。
+*** 配置从这个 [[https://github.com/astaxie/build-web-application-with-golang/blob/master/ebook/01.4.md][页面]]拷贝的。
 
 #+BEGIN_SRC emacs-lisp
 
@@ -1369,7 +1054,7 @@ current line to line 99.
     (shell-command-on-region (point-min) (point-max) "go tool fix -diff"))
 #+END_SRC
 
-* TODO [#C] 邮件(mutt)
+** TODO [#C] 邮件(mutt)
 :LOGBOOK:
 CLOCK: [2014-05-13 二 11:00]--[2014-05-13 二 11:12] =>  0:12
 :END:
@@ -1444,11 +1129,11 @@ macro index \eR "|~/bin/remember-mail\n"
 #+END_SRC
 
 mutt-open
-* Java
+** Java
 eclim在我机器上太慢了，改用malabar-mode
 
 
-**  malabar-mode
+***  malabar-mode
    CLOSED: [2014-05-09 五 09:47]
    - State "OKTODAY"    from "OKTODAY"    [2014-05-09 五 16:04]
    - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:47]
@@ -1461,7 +1146,7 @@ eclim在我机器上太慢了，改用malabar-mode
   - https://github.com/m0smith/malabar-mode#Installation
   - http://www.skybert.net/emacs/using-malabar-for-java-development/
   -
-*** 安装
+**** 安装
 
 #+BEGIN_SRC
 cd
@@ -1480,7 +1165,7 @@ sudo apt-get install groovy
 #+END_SRC  
 
 
-*** 配置
+**** 配置
 
 #+BEGIN_SRC emacs-lisp
 
@@ -1622,7 +1307,7 @@ Optional argument ARG is the same as for `capitalize-word'."
 #+end_src
 
 
-* Project
+** Project
 
 使用Project新建项目非常简单，在项目根目录新建一个名为".projectile"空白文件，打开该项目下的任一文件即打开了该项目。
 
@@ -1630,7 +1315,7 @@ Optional argument ARG is the same as for `capitalize-word'."
 (setq projectile-enable-caching nil)
 #+END_SRC
 
-* [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
+** [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
 all-to-list will not override default elpa, so now you have to repositories, one is elpa, another is myelpa
 #+BEGIN_SRC emacs-lisp
 (require-package 'elpa-mirror)
@@ -1639,8 +1324,8 @@ all-to-list will not override default elpa, so now you have to repositories, one
 
 #+END_SRC
 
-* 数据库
-** Mysql
+** 数据库
+*** Mysql
 #+BEGIN_SRC emacs-lisp
 (require 'sql)
 (require 'mysql)
@@ -1775,7 +1460,7 @@ all-to-list will not override default elpa, so now you have to repositories, one
 #+END_SRC
 
 
-* UI
+** UI
 
 
 #+BEGIN_SRC emacs-lisp
@@ -1796,7 +1481,7 @@ all-to-list will not override default elpa, so now you have to repositories, one
 (global-hl-line-mode)
 #+END_SRC
 
-* pig
+** pig
 
 #+BEGIN_SRC 
 
@@ -1810,7 +1495,329 @@ git clone https://github.com/cloudera/piglatin-mode.git
 #+END_SRC
 
 
+* 常用函数
+
+** 去除重复行
+
+Lisp commands removing consecutive duplicates
+
+The command ‘M-x uniquify-buffer-lines’ will remove identical adjacent lines in the current buffer, similar to what is obtained
+with the unix uniq command.
+
+#+BEGIN_SRC emacs-lisp
+ (defun uniquify-region-lines (beg end)
+    "Remove duplicate adjacent lines in region."
+    (interactive "*r")
+    (save-excursion
+      (goto-char beg)
+      (while (re-search-forward "^\\(.*\n\\)\\1+" end t)
+        (replace-match "\\1"))))
+
+  (defun uniquify-buffer-lines ()
+    "Remove duplicate adjacent lines in the current buffer."
+    (interactive)
+    (uniquify-region-lines (point-min) (point-max)))
+#+END_SRC
+
+It is important to note that functions which find duplicate lines don’t always sort lines before looking for dups as this may or may not be what one expects or desires of a particular function.
+
+** Lisp command to retrieve duplicates
+Where the lines of a file are presorted it can be convenient to use something like this:
+#+BEGIN_SRC emacs-lisp
+
+  (defun find-duplicate-lines (&optional insertp interp)
+    (interactive "i\np")
+    (let ((max-pon (line-number-at-pos (point-max)))
+          (gather-dups))
+      (while (< (line-number-at-pos) max-pon) (= (forward-line) 0)
+             (let ((this-line (buffer-substring-no-properties (line-beginning-position 1) (line-end-position 1)))
+                   (next-line (buffer-substring-no-properties (line-beginning-position 2) (line-end-position 2))))
+               (when  (equal this-line next-line)  (setq gather-dups (cons this-line gather-dups)))))
+      (if (or insertp interp)
+          (save-excursion (new-line) (princ gather-dups (current-buffer)))
+        gather-dups)))
+
+#+END_SRC
+
+This function, while inefficient (note cons in tail of while form) is quite handy for locating duplicates before removing them,
+    i.e. situations of type: ‘uniquify-maybe’. Extend ‘find-duplicate-lines’ by comparing its result list with one or more of
+    the list comparison procedures ‘set-difference’, ‘union’, ‘intersection’, etc. from the CL package (require ‘cl).
+
+#+BEGIN_SRC emacs-lisp
+(defun djcb-duplicate-line (&optional commentfirst)
+  "comment line at point; if COMMENTFIRST is non-nil, comment the original"
+  (interactive)
+  (beginning-of-line)
+  (push-mark)
+  (end-of-line)
+  (let ((str (buffer-substring (region-beginning) (region-end))))
+    (when commentfirst
+      (comment-region (region-beginning) (region-end)))
+    (insert-string
+     (concat (if (= 0 (forward-line 1)) "" "\n") str "\n"))
+    (forward-line -1)))
+
+;; or choose some better bindings....
+
+;; duplicate a line
+(global-set-key (kbd "C-c y") 'djcb-duplicate-line)
+
+;; duplicate a line and comment the first
+(global-set-key (kbd "C-c c") (lambda()(interactive)(djcb-duplicate-line t)))
+
+
+;; 当backspace用
+(keyboard-translate ?\C-h ?\C-?)
+
+
+#+END_SRC
+
+#+BEGIN_SRC 
+(defun cygwin-or-linux (cyg ln)
+  "cyg is the function for cygwin, ln is the function for linux."
+  (interactive)
+  (if (equal system-type 'cygwin)
+      (if cyg (funcall cyg))
+    )
+  (if (equal system-type 'windows-nt)
+      (if cyg (funcall cyg))
+    )
+  (if (equal system-type 'gnu/linux)
+      (if ln (funcall ln))
+    )
+
+  )
+
+(defun cygwin-do (fn)
+  " only run for cygwin"
+  (interactive)
+  (if (equal system-type 'cygwin)
+      (if fn (funcall fn))
+    )
+  )
+
+(defun win-do (fn)
+  " only run for win"
+  (interactive)
+  (if (equal system-type 'windows-nt)
+      (if fn (funcall fn))
+    )
+  )
+
+(defun linux-do (fn)
+  " only run for linux"
+  (interactive)
+
+  (if (equal system-type 'gnu/linux)
+      (if fn (funcall fn))
+    )
+
+  )
+;;上下分屏
+;;(setq split-width-threshold most-positive-fixnum)
+
+
+#+END_SRC
+
+** 使用org总结
+#+BEGIN_SRC emacs-lisp
+(defun sacha/org-agenda-clock (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+              :maxlevel 8
+              :block today
+              :formula %
+              :compact t
+             :fileskip0
+             :narrow 150!
+              ))))
+
+(defun cw/org-agenda-clock (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (org-dblock-write:clocktable
+     `(:scope agenda
+              :maxlevel 8
+              :block today
+              :compact t
+             :fileskip0
+              :narrow 150!
+              ))))
+
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+
+(defun cw/tasks-last-week ()
+  "Produces an org agenda tags view list of all the tasks completed
+last week."
+
+  (interactive)
+    (org-tags-view nil
+          (concat
+
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 7 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+(defun cw/tasks-last-month ()
+  "Produces an org agenda tags view list of all the tasks completed
+last month with the Category Foo."
+  (interactive)
+    (org-tags-view nil
+          (concat
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 30 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+(defun cw/tasks-last-year ()
+  "Produces an org agenda tags view list of all the tasks completed
+last month with the Category Foo."
+
+  (interactive)
+    (org-tags-view nil
+          (concat
+
+           (format-time-string "+CLOSED>=\"[%Y-%m-%d]\"" (time-subtract (current-time)
+                                                  (seconds-to-time (* 365 24 60 60))))
+           (format-time-string "+CLOSED<=\"[%Y-%m-%d]\""  (current-time)))))
+
+
+(defun clocktable-by-tag/insert-tag (params)
+  (insert "\n")
+  (let ((total 0))
+    (mapcar
+     (lambda (file)
+       (let ((clock-data (with-current-buffer (find-file-noselect file)
+                           (org-clock-get-table-data (buffer-name) params))))
+         (when (> (nth 1 clock-data) 0)
+           (setq total (+ total (nth 1 clock-data)))
+
+           (dolist (entry (nth 2 clock-data))
+             (insert (format "  %s%s\n"
+                             (org-clocktable-indent-string (nth 0 entry))
+                             (nth 1 entry)
+                             ))))))
+     (org-agenda-files))
+    )
+  )
+
+(defun cw-org-agenda-clock-by-tag (match)
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (clocktable-by-tag/insert-tag
+     `(:scope agenda
+              :block today
+              ))))
+
+
+(defun cw/org-agenda-clock-daily-report (match)
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\n今天完成的工作:\n")
+    (clocktable-by-tag/insert-tag
+     `(:scope agenda
+              :block today
+              :maxlevel 8
+              )
+     )
+    )
+  )
+
+(defun cw/org-agenda-clock-thisweek (match)
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\n这周完成的工作:\n")
+    (clocktable-by-tag/insert-tag
+     `(:scope agenda
+              :block thisweek
+              :maxlevel 8
+              )
+     )
+    )
+  )
+
+
+(defun cw/org-agenda-clock-lastweek (match)
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\n上周完成的工作:\n")
+    (clocktable-by-tag/insert-tag
+     `(:scope agenda
+              :block lastweek
+              )
+     )
+    )
+  )
+
+(defun cw/org-agenda-clock-thismonth (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this month:\n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thismonth
+           :formula %
+           :compact t
+           :fileskip0
+           :narrow 150!
+;;           :link t
+       ))))
+(defun cw/org-agenda-clock-thisyear (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\nTasks done in this year:\n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block thisyear
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
+#+END_SRC
+** DONE 根据 org-clock.el中的 org-clocktable-write-default 编写自己的fomater
+CLOSED: [2014-06-03 二 10:47]
+:LOGBOOK:
+- State "DONE"       from "STARTED"    [2014-06-03 二 10:47]
+CLOCK: [2014-06-03 二 10:04]--[2014-06-03 二 10:47] =>  0:43
+:END:
 * 停用配置
+** Org capture 
+
+#+BEGIN_SRC
+;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
+(setq org-capture-templates
+      (quote (("t" "todo" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+              ("r" "respond" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+              ("n" "note" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+              ("j" "Journal" entry (file+datetree "~/git/org/diary.org")
+               "* %?\n%U\n" :clock-in t :clock-resume t)
+              ("w" "org-protocol" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* TODO Review %c\n%U\n" :immediate-finish t)
+              ("m" "Meeting" entry (file+headline (concat my-idea-home "org/mygtd.org") "Meeting")
+               "* [#A] [/]   %?  SCHEDULED:%t   :MEETING:\n%U" )
+              ("p" "Phone call" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
+              ("d" "Development" entry (file+headline (concat my-idea-home "org/mygtd.org") "Development")
+               "* TODO [#A] [/] %? %u SCHEDULED:%t:OFFICE:\n" )
+              ("h" "Habit" entry (file (concat my-idea-home "org/mygtd.org"))
+               "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"<%Y-%m-%d %a .+1d/3d>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
+
+#+END_SRC
 ** 设置路径
 
 #+BEGIN_SRC 
@@ -1962,4 +1969,18 @@ Emacs 配置
 
 
 ;; }}
+#+END_SRC
+*** Java 开发快捷键
+#+BEGIN_SRC emacs-lisp
+(require 'cc-mode)
+(define-key c-mode-base-map (kbd "<f2>") 'eclim-problems)
+(define-key c-mode-base-map "\C-\M-g" 'eclim-java-find-declaration)
+(define-key c-mode-base-map "\C-\M-o" 'eclim-java-import-organize)
+(define-key c-mode-base-map "\C-q" 'eclim-java-show-documentation-for-current-element)
+(define-key c-mode-base-map "\M-i" 'eclim-java-implement) ;; IDEA is C-i
+(define-key c-mode-base-map (kbd "<M-RET>") 'eclim-problems-correct)
+(define-key c-mode-base-map (kbd "<M-f7>") 'eclim-java-find-references)
+(define-key c-mode-base-map (kbd "<S-f6>") 'eclim-java-refactor-rename-symbol-at-point)
+(define-key c-mode-base-map (kbd "<S-f7>") 'gtags-find-tag-from-here)
+
 #+END_SRC
