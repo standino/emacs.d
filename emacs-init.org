@@ -1175,6 +1175,8 @@ sudo apt-get install groovy
                                   global-semantic-idle-summary-mode
                                   global-semantic-mru-bookmark-mode))
 (semantic-mode 1)
+(global-srecode-minor-mode 1)
+(global-semantic-mru-bookmark-mode 1)
 (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
 (require 'malabar-mode)
 (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
