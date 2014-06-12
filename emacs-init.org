@@ -32,6 +32,7 @@
 |      | C-cao       |                | 打开任务总结视图.获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。 |
 | 写作 | C-c C-e R R |                | 导出演示文稿                                                                                          |
 ** [[https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org][ malabar-mode cheat sheet]]
+
 ** 书签操作：
 
   | C-x r m Bookmark | bookmark-set         | 设置一个名为 Bookmark 的书签。              |
@@ -448,8 +449,12 @@ sudo pip install nikola
 (defun have-a-rest ()
   "alert a have a rest msg"
   (interactive)
-  (shell-command (concat zendisp   " --text='" "休息一下吧。" "'" ))
-)
+
+  (save-window-excursion
+    (shell-command(concat "notify-send '休息一下吧'"))
+    (x-popup-dialog t '( "休息一下吧"  ("okay" . t)) t)
+    )
+  )
 
 #+END_SRC
 *** 提醒 在org文件中设定的任务，到时会弹出框提醒
