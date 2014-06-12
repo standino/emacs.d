@@ -1,7 +1,6 @@
 #+STARTUP: content
 #+STARTUP: indent
 #+STARTUP: hidestars
-
 * 初始化
 
   通过使用 =org-babel-load-file= 把 =emacs-lisp= 代码块中的配置代码生成到 =emacs-init.el= 文件中。通过这种方式，可以把配置使用说明和配
@@ -17,98 +16,22 @@
 #+END_SRC
 
 * 如何使用emacs
-
    - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org][一年成为Emacs高手(像神一样使用编辑器)]]
    - http://emacslife.com/
-
-|------+-------------+-------------+-------------------------------------------------------------------------------------------------------|
-| 分类 | 快捷键      | 命令        | 说明                                                                                                  |
-|------+-------------+-------------+-------------------------------------------------------------------------------------------------------|
-| 编程   | M-./ C-Mg   |             | 获得Java变量和方法的引用或声明                                                                        |
-|      |             | swoop-multi | 在打开的 buffer 查找某个关键字                                                                        |
-|      | C-cpg       |             | 在项目中查找字段                                                                                      |
-|      | C-ci或S-M t | helm-imenu  | 查看当前文件的结构                                                                                    |
-|      | C-cf或C-cpf |             | 打开文件                                                                                              |
-|      | M-;         |             | 注释代码                                                                                              |
-| GTD  | C-caa或F12  |             | 打开TODO视图                                                                                          |
-|      | C-cao       |             | 打开任务总结视图.获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。 |
-| 写作 | C-c C-e R R |             | 导出演示文稿                                                                                          |
-
-
+|------+-------------+----------------+-------------------------------------------------------------------------------------------------------|
+| 分类 | 快捷键      | 命令           | 说明                                                                                                  |
+|------+-------------+----------------+-------------------------------------------------------------------------------------------------------|
+| 编程 | M-./ C-Mg   |                | 获得Java变量和方法的引用或声明                                                                        |
+|      |             | swoop-multi    | 在打开的 buffer 查找某个关键字                                                                        |
+|      | C-cpg       |                | 在项目中查找字段                                                                                      |
+|      | C-ci或S-M t | helm-imenu     | 查看当前文件的结构                                                                                    |
+|      | C-cf或C-cpf |                | 打开文件                                                                                              |
+|      | M-;         |                | 注释代码                                                                                              |
+|      |             | cleanup-buffer | 格式化文档                                                                                            |
+| GTD  | C-caa或F12  |                | 打开TODO视图                                                                                          |
+|      | C-cao       |                | 打开任务总结视图.获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。 |
+| 写作 | C-c C-e R R |                | 导出演示文稿                                                                                          |
 ** [[https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org][ malabar-mode cheat sheet]]
-
-*** Abbrevs
-
-| Abbrev | Expansion  | Abbrev | Expansion                 |
-|--------+------------+--------+---------------------------|
-| pu     | public     | main   | Create a main method      |
-| pri    | private    | #Test  | @Test template            |
-| pro    | protected  | sysout | System.out.printf("_%n"); |
-| st     | static     |        |                           |
-| vo     | void       |        |                           |
-| ab     | abstract   |        |                           |
-| bo     | boolean    |        |                           |
-| cl     | class      |        |                           |
-| impl   | implements |        |                           |
-| ext    | extends    |        |                           |
-| pa     | package    |        |                           |
-| re     | return     |        |                           |
-
-*** Building
-
-| Binding     | Function                | Description                            |
-|-------------+-------------------------+----------------------------------------|
-| C-c C-v C-c | malabar-compile-file    | Compile the file in the current buffer |
-| C-c C-v p   | malabar-package-project | Run 'mvn package'                      |
-| C-c C-v C-b | malabar-install-project | Run 'mvn install'                      |
-| C-c C-v M-t | malabar-run-all-tests   | Run 'mvn test'                         |
-
-*** Class Inspection
-
-| Binding   | Function                                          | Description                                                 |
-|-----------+---------------------------------------------------+-------------------------------------------------------------|
-| C-c C-v * | malabar-fully-qualified-class-name-kill-ring-save | Copy the binary class name current buffer to the kill ring  |
-| C-c C-v w | malabar-which                                     | Copy the location of the binary class name to the kill ring |
-|           |                                                   |                                                             |
-
-*** Navigation
-
-| Binding     | Function                             | Description                                                              |
-|-------------+--------------------------------------+--------------------------------------------------------------------------|
-| C-M-f       | forward-sexp                         | Move to next interesting thing                                           |
-| C-M-b       | backward-sexp                        | Move to previous interesting thing                                   |
-| C-c , m     | semantic-complete-jump-local-members | Jump to a method, variable or class.  Use space to cycle between methods |
-| C-c , J     | semantic-complete-jump               | Jump to a method, variable or class.  Use space to cycle between methods |
-| c-c , ,     | semantic-force-refresh               | Refresh the navigation tags                                              |
-| c-c , n     | senator-next-tag                     | Navigate to the next semantic tags                                       |
-| c-c , p     | senator-previous-tag                 | Navigate to the previous semantic tags                                   |
-| C-c C-v C-y | malabar-jump-to-thing                | Jump to the definition of the thing at point                             |
-| C-x C-SPACE | pop-global-mark                      | Use after malabar-jump-to-thing to pop back to previous point            | 
-| C-c C-v C-p | malabar-visit-project-file           | Open the project file for this buffer, ei nearest pom.xml                |
-
-*** Code Generation
-
-| Binding     | Function                         | Description                                                                                                                                                 |
-|-------------+----------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| C-c C-v C-e | malabar-extend-class             | Prompts for a class, adds stub implementations of all that class’s abstract methods and accessible constructors and inserts the appropriate extends clause. |
-| C-c C-v C-i | malabar-implement-interface      | Prompts for an interface, adds stub implementations of all that interface’s methods and adds the interface to the class’s implements clause.                |
-| C-c C-v C-g | malabar-insert-getset            | Insert a getter/setter for a field, adding the field if needed                                                                                              |
-| C-c C-v C-. | semantic-ia-complete-symbol      | Complete the current symbol                                                                                                                                 |
-| C-c C-v .   | semantic-ia-complete-symbol-menu | Complete the current symbol with menu                                                                                                                       |
-|             | malabar-delegate-interface       | Similar to malabar-implement-interface and creates a delegate field                                                                                         |
-|             | malabar-update-package           | Add or update the package statement to match the current directory                                                                                          |
-|             |                                  |                                                                                                                                                             |
-
-
-*** Developing malabar-mode
-
-**** Debug logging
-
-Turn on debug logging with 'malabar-project-logging-debug'
-Turn off debug logging with 'malabar-project-logging-info'
-
-
-
 ** 书签操作：
 
   | C-x r m Bookmark | bookmark-set         | 设置一个名为 Bookmark 的书签。              |
@@ -174,6 +97,12 @@ Turn off debug logging with 'malabar-project-logging-info'
 *** toc
 #+BEGIN_SRC
 (require-package 'org-toc)
+(eval-after-load "org-toc-autoloads"
+  '(progn
+     (if (require 'org-toc nil t)
+         (add-hook 'org-mode-hook 'org-toc-enable)
+       (warn "org-toc not found"))))
+
 #+END_SRC
 *** 常用配置，大部分来自 sacha
 
@@ -1054,94 +983,44 @@ current line to line 99.
     (shell-command-on-region (point-min) (point-max) "go tool fix -diff"))
 #+END_SRC
 
-** TODO [#C] 邮件(mutt)
-:LOGBOOK:
-CLOCK: [2014-05-13 二 11:00]--[2014-05-13 二 11:12] =>  0:12
-:END:
 
-  1. http://docs.huihoo.com/homepage/shredderyin/mutt_frame.html
-  2. http://heim.ifi.uio.no/~jani/mutt/muttemacs.html
-  3. http://emacs-fu.blogspot.com/2009/01/e-mail-with-emacs-using-mutt.html
-  4. http://upsilon.cc/~zack/blog/posts/2010/02/integrating_Mutt_with_Org-mode/
-  5. http://wenshanren.org/?p=111
-
-mu4e
-
-#+BEGIN_SRC 
-sudo apt-get install libgmime-2.6-dev libxapian-dev gnutls-bin
-sudo apt-get install guile-2.0-dev html2text xdg-utils
-git clone https://github.com/djcb/mu.git
-#+END_SRC
-
-emacs-conf.sample :
-
-#+BEGIN_SRC
-;; standard org <-> remember stuff, RTFM
-(require 'org-capture)
-(require 'org-protocol)
-
-(setq org-default-notes-file "~/org/gtd.org")
-
-(setq org-capture-templates
-      (quote
-       (("m"
-         "Mail"
-         entry
-         (file+headline "~/org/gtd.org" "Incoming")
-         "* TODO %^{Title}\n\n  Source: %u, %c\n\n  %i"
-         :empty-lines 1)
-        ;; ... more templates here ...
-        )))
-;; ensure that emacsclient will show just the note to be edited when invoked
-;; from Mutt, and that it will shut down emacsclient once finished;
-;; fallback to legacy behavior when not invoked via org-protocol.
-(add-hook 'org-capture-mode-hook 'delete-other-windows)
-(setq my-org-protocol-flag nil)
-(defadvice org-capture-finalize (after delete-frame-at-end activate)
-  "Delete frame at remember finalization"
-  (progn (if my-org-protocol-flag (delete-frame))
-         (setq my-org-protocol-flag nil)))
-(defadvice org-capture-kill (after delete-frame-at-end activate)
-  "Delete frame at remember abort"
-  (progn (if my-org-protocol-flag (delete-frame))
-         (setq my-org-protocol-flag nil)))
-(defadvice org-protocol-capture (before set-org-protocol-flag activate)
-  (setq my-org-protocol-flag t))
-
-(defun open-mail-in-mutt (message)
-  "Open a mail message in Mutt, using an external terminal.
-
-Message can be specified either by a path pointing inside a
-Maildir, or by Message-ID."
-  (interactive "MPath or Message-ID: ")
-  (shell-command
-   (format "gnome-terminal -e \"%s %s\""
-           (substitute-in-file-name "$HOME/bin/mutt-open") message)))
-
-;; add support for "mutt:ID" links
-(org-add-link-type "mutt" 'open-mail-in-mutt)
-#+END_SRC
-
-mutt-conf.sample:
-
-#+BEGIN_SRC
-macro index \eR "|~/bin/remember-mail\n"
-#+END_SRC
-
-mutt-open
 ** Java
 eclim在我机器上太慢了，改用malabar-mode
 
 
+*** jtags
+
+- jtags-member-completion:      find all completions of the partly typed
+                                method or variable name at point
+- jtags-show-declaration:       look up and display the declaration of the
+                                indentifier at point
+- jtags-show-documentation:     look up and display the Javadoc for the
+                                indentifier at point
+- jtags-update-tags-files:      update all tags table files with the latest
+                                source code changes
+- jtags-update-this-tags-file:  update the tags table file in which the
+                                class in the current buffer is tagged
+
+
+#+BEGIN_SRC 
+(require-package 'jtags)
+(autoload 'jtags-mode "jtags" "Toggle jtags mode." t)
+(add-hook 'java-mode-hook 'jtags-mode)
+;; (setq tags-table-list '("c:/java/jdk1.6.0/src"                         "c:/projects/tetris/src"))
+(setq tags-revert-without-query 't)
+
+#+END_SRC
+
 ***  malabar-mode
    CLOSED: [2014-05-09 五 09:47]
+   :LOGBOOK:
    - State "OKTODAY"    from "OKTODAY"    [2014-05-09 五 16:04]
    - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:47]
    - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:05]
-   :LOGBOOK:
    CLOCK: [2014-05-09 五 09:05]--[2014-05-09 五 09:11] =>  0:06
    CLOCK: [2014-05-09 五 09:00]--[2014-05-09 五 09:05] =>  0:05
    :END:
+
   - http://software-ninja-ninja.blogspot.com/2014/03/using-malabar-mode-to-auto-populate-new.html
   - https://github.com/m0smith/malabar-mode#Installation
   - http://www.skybert.net/emacs/using-malabar-for-java-development/
@@ -1175,8 +1054,7 @@ sudo apt-get install groovy
                                   global-semantic-idle-summary-mode
                                   global-semantic-mru-bookmark-mode))
 (semantic-mode 1)
-(global-srecode-minor-mode 1)
-(global-semantic-mru-bookmark-mode 1)
+
 (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
 (require 'malabar-mode)
 (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
@@ -1193,6 +1071,7 @@ sudo apt-get install groovy
   (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
   (global-set-key "\M-n" 'semantic-ia-complete-symbol)
   (define-key c-mode-base-map "." 'semantic-complete-self-insert)
+  (global-srecode-minor-mode -1)
 )
 
 (add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
@@ -1483,6 +1362,15 @@ all-to-list will not override default elpa, so now you have to repositories, one
 (global-hl-line-mode)
 #+END_SRC
 
+** 代理
+#+BEGIN_SRC emacs-lisp
+
+(setq url-proxy-services
+   '(("no_proxy" . "^\\(localhost\\|10.*\\|*.jd.com\\|*.360buy.com\\)")
+     ("http" . "127.0.0.1:8087")
+     ("https" . "127.0.0.1:8087")))
+
+#+END_SRC
 ** pig
 
 #+BEGIN_SRC 
@@ -1795,6 +1683,81 @@ CLOSED: [2014-06-03 二 10:47]
 CLOCK: [2014-06-03 二 10:04]--[2014-06-03 二 10:47] =>  0:43
 :END:
 * 停用配置
+** TODO [#C] 邮件(mutt)
+:LOGBOOK:
+CLOCK: [2014-05-13 二 11:00]--[2014-05-13 二 11:12] =>  0:12
+:END:
+
+  1. http://docs.huihoo.com/homepage/shredderyin/mutt_frame.html
+  2. http://heim.ifi.uio.no/~jani/mutt/muttemacs.html
+  3. http://emacs-fu.blogspot.com/2009/01/e-mail-with-emacs-using-mutt.html
+  4. http://upsilon.cc/~zack/blog/posts/2010/02/integrating_Mutt_with_Org-mode/
+  5. http://wenshanren.org/?p=111
+
+mu4e
+
+#+BEGIN_SRC 
+sudo apt-get install libgmime-2.6-dev libxapian-dev gnutls-bin
+sudo apt-get install guile-2.0-dev html2text xdg-utils
+git clone https://github.com/djcb/mu.git
+#+END_SRC
+
+emacs-conf.sample :
+
+#+BEGIN_SRC
+;; standard org <-> remember stuff, RTFM
+(require 'org-capture)
+(require 'org-protocol)
+
+(setq org-default-notes-file "~/org/gtd.org")
+
+(setq org-capture-templates
+      (quote
+       (("m"
+         "Mail"
+         entry
+         (file+headline "~/org/gtd.org" "Incoming")
+         "* TODO %^{Title}\n\n  Source: %u, %c\n\n  %i"
+         :empty-lines 1)
+        ;; ... more templates here ...
+        )))
+;; ensure that emacsclient will show just the note to be edited when invoked
+;; from Mutt, and that it will shut down emacsclient once finished;
+;; fallback to legacy behavior when not invoked via org-protocol.
+(add-hook 'org-capture-mode-hook 'delete-other-windows)
+(setq my-org-protocol-flag nil)
+(defadvice org-capture-finalize (after delete-frame-at-end activate)
+  "Delete frame at remember finalization"
+  (progn (if my-org-protocol-flag (delete-frame))
+         (setq my-org-protocol-flag nil)))
+(defadvice org-capture-kill (after delete-frame-at-end activate)
+  "Delete frame at remember abort"
+  (progn (if my-org-protocol-flag (delete-frame))
+         (setq my-org-protocol-flag nil)))
+(defadvice org-protocol-capture (before set-org-protocol-flag activate)
+  (setq my-org-protocol-flag t))
+
+(defun open-mail-in-mutt (message)
+  "Open a mail message in Mutt, using an external terminal.
+
+Message can be specified either by a path pointing inside a
+Maildir, or by Message-ID."
+  (interactive "MPath or Message-ID: ")
+  (shell-command
+   (format "gnome-terminal -e \"%s %s\""
+           (substitute-in-file-name "$HOME/bin/mutt-open") message)))
+
+;; add support for "mutt:ID" links
+(org-add-link-type "mutt" 'open-mail-in-mutt)
+#+END_SRC
+
+mutt-conf.sample:
+
+#+BEGIN_SRC
+macro index \eR "|~/bin/remember-mail\n"
+#+END_SRC
+
+mutt-open
 ** Org capture 
 
 #+BEGIN_SRC
@@ -1972,8 +1935,8 @@ Emacs 配置
 
 ;; }}
 #+END_SRC
-*** Java 开发快捷键
-#+BEGIN_SRC emacs-lisp
+** Java 开发快捷键
+#+BEGIN_SRC 
 (require 'cc-mode)
 (define-key c-mode-base-map (kbd "<f2>") 'eclim-problems)
 (define-key c-mode-base-map "\C-\M-g" 'eclim-java-find-declaration)
@@ -1984,5 +1947,14 @@ Emacs 配置
 (define-key c-mode-base-map (kbd "<M-f7>") 'eclim-java-find-references)
 (define-key c-mode-base-map (kbd "<S-f6>") 'eclim-java-refactor-rename-symbol-at-point)
 (define-key c-mode-base-map (kbd "<S-f7>") 'gtags-find-tag-from-here)
+
+#+END_SRC
+*** JDEE
+#+BEGIN_SRC
+
+(add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/jdee-2.4.1" "Path to JDEE"))
+(autoload 'jde-mode "jde" "JDE mode." t)
+(setq auto-mode-alist
+      (append '(("\\.java\\'" . jde-mode)) auto-mode-alist))
 
 #+END_SRC
