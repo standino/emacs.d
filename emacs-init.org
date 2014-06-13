@@ -475,11 +475,6 @@ sudo pip install nikola
                            ))
     )
   )
-
-(defun gohome ()
-  (interactive)
-    (x-popup-dialog t '("Time to home already!" ("okay" . t)) t))
-
 #+END_SRC
 
 **** 获得org agenda 中的TODO，到时提醒
