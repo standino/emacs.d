@@ -32,7 +32,8 @@
 |      | C-cao       |                                     | 打开任务总结视图.获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。 |
 | 写作 | C-c C-e R R |                                     | 导出演示文稿                                                                                          |
 |      |             | org-confluence-export-as-confluence | 以conflunce wiki的格式导出文稿                                                                                |
-** [[https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org][ malabar-mode cheat sheet]]
+
+
 
 ** 书签操作：
 
@@ -44,6 +45,7 @@
 
 
 * 如何配置emacs
+
 
 ** 快捷键设置
 #+BEGIN_SRC emacs-lisp
@@ -82,13 +84,7 @@
 
 
 
-** Package 
-#+BEGIN_SRC emacs-lisp
 
-(add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
-(add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
-
-#+END_SRC
 ** 统计字数
 #+BEGIN_SRC emacs-lisp
 (require 'wc)
@@ -990,209 +986,6 @@ current line to line 99.
 #+END_SRC
 
 
-** Java
-eclim在我机器上太慢了，改用malabar-mode
-
-
-*** jtags
-
-- jtags-member-completion:      find all completions of the partly typed
-                                method or variable name at point
-- jtags-show-declaration:       look up and display the declaration of the
-                                indentifier at point
-- jtags-show-documentation:     look up and display the Javadoc for the
-                                indentifier at point
-- jtags-update-tags-files:      update all tags table files with the latest
-                                source code changes
-- jtags-update-this-tags-file:  update the tags table file in which the
-                                class in the current buffer is tagged
-
-
-#+BEGIN_SRC 
-(require-package 'jtags)
-(autoload 'jtags-mode "jtags" "Toggle jtags mode." t)
-(add-hook 'java-mode-hook 'jtags-mode)
-;; (setq tags-table-list '("c:/java/jdk1.6.0/src"                         "c:/projects/tetris/src"))
-(setq tags-revert-without-query 't)
-
-#+END_SRC
-
-***  malabar-mode
-   CLOSED: [2014-05-09 五 09:47]
-   :LOGBOOK:
-   - State "OKTODAY"    from "OKTODAY"    [2014-05-09 五 16:04]
-   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:47]
-   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:05]
-   CLOCK: [2014-05-09 五 09:05]--[2014-05-09 五 09:11] =>  0:06
-   CLOCK: [2014-05-09 五 09:00]--[2014-05-09 五 09:05] =>  0:05
-   :END:
-
-  - http://software-ninja-ninja.blogspot.com/2014/03/using-malabar-mode-to-auto-populate-new.html
-  - https://github.com/m0smith/malabar-mode#Installation
-  - http://www.skybert.net/emacs/using-malabar-for-java-development/
-  -
-**** 安装
-
-#+BEGIN_SRC
-cd
-
-git clone https://github.com/m0smith/malabar-mode-jar.git
-cd malabar-mode-jar/
-
-mvn package -Pdevel
-
-cd
-
-git clone https://github.com/m0smith/malabar-mode.git
-
-sudo apt-get install groovy
-
-#+END_SRC  
-
-
-**** 配置
-
-#+BEGIN_SRC emacs-lisp
-
-;; Or enable more if you wish
-(setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
-                                  global-semanticdb-minor-mode
-                                  global-semantic-idle-summary-mode
-                                  global-semantic-mru-bookmark-mode))
-(semantic-mode 1)
-
-(add-to-list 'load-path "~/malabar-mode/src/main/lisp")
-(require 'malabar-mode)
-(setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
-(setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
-(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
-
-(add-hook 'malabar-mode-hook
-     (lambda () 
-       (add-hook 'after-save-hook 'malabar-compile-file-silently
-                  nil t)))
-
-
-(defun my-java-malabar-mode-hook ()
-  (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
-  (global-set-key "\M-n" 'semantic-ia-complete-symbol)
-  (define-key c-mode-base-map "." 'semantic-complete-self-insert)
-  (global-srecode-minor-mode -1)
-)
-
-(add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
-
-#+END_SRC
-
-下面的代码是在打开java程序的时候才加载malabar mode
-#+BEGIN_SRC 
-
-(defun malabar-mode-bootstrap ()
-  (require 'cedet)
-  (require 'semantic)
-  (load "semantic/loaddefs.el")
-  (semantic-mode 1);;
-  (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
-  (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
-  (setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
-  (require 'malabar-mode)
-  (load "malabar-flycheck")
-  (malabar-mode)
-;;  (flycheck-mode)
-)
-
-(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode-bootstrap))
-
-#+END_SRC
-
-
-Display line number in Malabar and Java mode.
-
-#+begin_src 
-(add-hook 'malabar-mode-hook 'linum-mode)
-(add-hook 'c-mode-common-hook 'linum-mode)
-#+end_src
-
-Use textmate mode with Malabar mode.
-
-#+begin_src 
-(require-package 'textmate)
-(add-hook 'malabar-mode-hook 'textmate-mode)
-(add-hook 'c-mode-common-hook 'textmate-mode)
-#+end_src
-
-Use auto-complete mode with Malabar mode.
-
-#+begin_src
-(add-hook 'malabar-mode-hook 'auto-complete-mode)
-#+end_src
-
-Display JavaDoc at point
-
-#+begin_src 
-(eval-after-load 'malabar-mode
-                 '(define-key malabar-mode-map (kbd "C-x ?") 'malabar-show-javadoc))
-#+end_src
-
-Support for re-factoring under Malabar mode. These functions are
-missing.
-
-#+begin_src 
-(defun c-forward-subword-internal ()
-  (if (and
-       (save-excursion
-         (let ((case-fold-search nil))
-           (re-search-forward
-            (concat "\\W*\\(\\([" c-upper "]*\\W?\\)[" c-lower c-digit "]*\\)")
-            nil t)))
-       (> (match-end 0) (point))) ; So we don't get stuck at a
-                                  ; "word-constituent" which isn't c-upper,
-                                  ; c-lower or c-digit
-      (goto-char
-       (cond
-        ((< 1 (- (match-end 2) (match-beginning 2)))
-         (1- (match-end 2)))
-        (t
-         (match-end 0))))
-    (forward-word 1)))
-
-(defun c-forward-subword (&optional arg)
-  "Do the same as `forward-word' but on subwords.
-See the command `c-subword-mode' for a description of subwords.
-Optional argument ARG is the same as for `forward-word'."
-  (interactive "p")
-  (unless arg (setq arg 1))
-  (c-keep-region-active)
-  (cond
-   ((< 0 arg)
-    (dotimes (i arg (point))
-      (c-forward-subword-internal)))
-   ((> 0 arg)
-    (dotimes (i (- arg) (point))
-      (c-backward-subword-internal)))
-   (t
-    (point))))
-
-(defun subword-capitalize (arg)
-  "Do the same as `capitalize-word' but on subwords.
-See the command `c-subword-mode' for a description of subwords.
-Optional argument ARG is the same as for `capitalize-word'."
-  (interactive "p")
-  (let ((count (abs arg))
-        (direction (if (< 0 arg) 1 -1)))
-    (dotimes (i count)
-      (when (re-search-forward
-             (concat "[" c-alpha "]")
-             nil t)
-        (goto-char (match-beginning 0)))
-      (let* ((p (point))
-             (pp (1+ p))
-             (np (c-forward-subword direction)))
-        (upcase-region p pp)
-        (downcase-region pp np)
-        (goto-char np)))))
-#+end_src
-
 
 ** Project
 
@@ -1202,14 +995,6 @@ Optional argument ARG is the same as for `capitalize-word'."
 (setq projectile-enable-caching nil)
 #+END_SRC
 
-** [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
-all-to-list will not override default elpa, so now you have to repositories, one is elpa, another is myelpa
-#+BEGIN_SRC emacs-lisp
-(require-package 'elpa-mirror)
-(add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
-(add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
-
-#+END_SRC
 
 ** 数据库
 *** Mysql
@@ -1389,6 +1174,9 @@ git clone https://github.com/cloudera/piglatin-mode.git
 #+BEGIN_SRC emacs-lisp
 (load-file "~/piglatin-mode/piglatin.el")
 #+END_SRC
+
+
+* Incubation Lab
 
 
 * 常用函数
@@ -1962,5 +1750,267 @@ Emacs 配置
 (autoload 'jde-mode "jde" "JDE mode." t)
 (setq auto-mode-alist
       (append '(("\\.java\\'" . jde-mode)) auto-mode-alist))
+
+#+END_SRC
+
+
+** DONE malabar-mode
+CLOSED: [2014-06-18 三 15:17]
+   :LOGBOOK:
+   - State "DONE"       from "STARTED"    [2014-06-18 三 15:17]
+   CLOCK: [2014-06-18 三 13:48]--[2014-06-18 三 15:34] =>  1:46
+   - State "OKTODAY"    from "OKTODAY"    [2014-05-09 五 16:04]
+   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:47]
+   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:05]
+   CLOCK: [2014-05-09 五 09:05]--[2014-05-09 五 09:11] =>  0:06
+   CLOCK: [2014-05-09 五 09:00]--[2014-05-09 五 09:05] =>  0:05
+   :END:
+
+  - http://software-ninja-ninja.blogspot.com/2014/03/using-malabar-mode-to-auto-populate-new.html
+  - https://github.com/m0smith/malabar-mode#Installation
+  - http://www.skybert.net/emacs/using-malabar-for-java-development/
+    - 
+*** [[https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org][ malabar-mode cheat sheet]]
+**** 安装
+
+#+BEGIN_SRC
+cd
+
+git clone https://github.com/m0smith/malabar-mode-jar.git
+cd malabar-mode-jar/
+
+mvn package -Pdevel
+
+cd
+
+git clone https://github.com/m0smith/malabar-mode.git
+
+sudo apt-get install groovy
+
+#+END_SRC  
+
+
+**** 配置
+
+#+BEGIN_SRC 
+(require 'cedet)
+(require 'semantic)
+(load "semantic/loaddefs.el")
+(semantic-mode 1);;
+(require-package 'malabar-mode)
+(require 'malabar-mode)
+  (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
+  (setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
+
+(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
+
+(add-hook 'malabar-mode-hook
+     (lambda () 
+       (add-hook 'after-save-hook 'malabar-compile-file-silently
+                  nil t)))
+
+;; Auto-populate an empty java file
+(add-hook 'malabar-mode-hook 
+      '(lambda ()
+         (when (= 0 (buffer-size))
+           (malabar-codegen-insert-class-template))))
+
+#+END_SRC
+
+下面的代码是在打开java程序的时候才加载malabar mode
+#+BEGIN_SRC
+
+(defun malabar-mode-bootstrap ()
+  (require 'cedet)
+  (require 'semantic)
+  (load "semantic/loaddefs.el")
+  (semantic-mode 1);;
+  (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
+  (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
+  (setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
+  (require 'malabar-mode)
+  (load "malabar-flycheck")
+  (malabar-mode)
+;;  (flycheck-mode)
+)
+
+(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode-bootstrap))
+
+(defun my-java-malabar-mode-hook ()
+  (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
+  (global-set-key "\M-n" 'semantic-ia-complete-symbol)
+  )
+
+(add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
+
+#+END_SRC
+
+
+Display line number in Malabar and Java mode.
+
+#+begin_src 
+(add-hook 'malabar-mode-hook 'linum-mode)
+(add-hook 'c-mode-common-hook 'linum-mode)
+#+end_src
+
+Use textmate mode with Malabar mode.
+
+#+begin_src 
+(require-package 'textmate)
+(add-hook 'malabar-mode-hook 'textmate-mode)
+(add-hook 'c-mode-common-hook 'textmate-mode)
+#+end_src
+
+Use auto-complete mode with Malabar mode.
+
+#+begin_src
+(add-hook 'malabar-mode-hook 'auto-complete-mode)
+#+end_src
+
+Display JavaDoc at point
+
+#+begin_src 
+(eval-after-load 'malabar-mode
+                 '(define-key malabar-mode-map (kbd "C-x ?") 'malabar-show-javadoc))
+#+end_src
+
+Support for re-factoring under Malabar mode. These functions are
+missing.
+
+#+begin_src 
+(defun c-forward-subword-internal ()
+  (if (and
+       (save-excursion
+         (let ((case-fold-search nil))
+           (re-search-forward
+            (concat "\\W*\\(\\([" c-upper "]*\\W?\\)[" c-lower c-digit "]*\\)")
+            nil t)))
+       (> (match-end 0) (point))) ; So we don't get stuck at a
+                                  ; "word-constituent" which isn't c-upper,
+                                  ; c-lower or c-digit
+      (goto-char
+       (cond
+        ((< 1 (- (match-end 2) (match-beginning 2)))
+         (1- (match-end 2)))
+        (t
+         (match-end 0))))
+    (forward-word 1)))
+
+(defun c-forward-subword (&optional arg)
+  "Do the same as `forward-word' but on subwords.
+See the command `c-subword-mode' for a description of subwords.
+Optional argument ARG is the same as for `forward-word'."
+  (interactive "p")
+  (unless arg (setq arg 1))
+  (c-keep-region-active)
+  (cond
+   ((< 0 arg)
+    (dotimes (i arg (point))
+      (c-forward-subword-internal)))
+   ((> 0 arg)
+    (dotimes (i (- arg) (point))
+      (c-backward-subword-internal)))
+   (t
+    (point))))
+
+(defun subword-capitalize (arg)
+  "Do the same as `capitalize-word' but on subwords.
+See the command `c-subword-mode' for a description of subwords.
+Optional argument ARG is the same as for `capitalize-word'."
+  (interactive "p")
+  (let ((count (abs arg))
+        (direction (if (< 0 arg) 1 -1)))
+    (dotimes (i count)
+      (when (re-search-forward
+             (concat "[" c-alpha "]")
+             nil t)
+        (goto-char (match-beginning 0)))
+      (let* ((p (point))
+             (pp (1+ p))
+             (np (c-forward-subword direction)))
+        (upcase-region p pp)
+        (downcase-region pp np)
+        (goto-char np)))))
+#+end_src
+
+*** ajoke
+
+#+BEGIN_SRC
+cd
+git clone --recursive https://github.com/baohaojun/ajoke
+./ajoke/bin/ajoke-test-drive
+
+export AJOKE_DIR=~/ajoke #PLEASE MODIFY THIS TO SUIT YOUR CASE
+export export PATH=$AJOKE_DIR/bin:$PATH
+export PERL5LIB="$AJOKE_DIR/etc/perl:$PERL5LIB";
+#+END_SRC
+
+Create gtags for your Java project And add the JDK or Android as fallback:
+#+BEGIN_SRC
+cd ~/your-java-project
+mkgtags
+java-add-fallback /usr/lib/jvm/java-7-openjdk-amd64
+# or java-add-fallback ~/src/android, but not both
+# as it'd be a waste of time to find 2 copies of java.lang.String
+#+END_SRC
+
+Require $AJOKE_DIR/etc/elisp/ajoke.el in your ~/.emacs
+
+#+BEGIN_SRC
+  (add-to-list 'load-path "~/ajoke/etc/elisp")
+  (require 'ajoke)
+#+END_SRC
+
+
+*** jtags
+
+
+- jtags-member-completion:      find all completions of the partly typed
+                                method or variable name at point
+- jtags-show-declaration:       look up and display the declaration of the
+                                indentifier at point
+- jtags-show-documentation:     look up and display the Javadoc for the
+                                indentifier at point
+- jtags-update-tags-files:      update all tags table files with the latest
+                                source code changes
+- jtags-update-this-tags-file:  update the tags table file in which the
+                                class in the current buffer is tagged
+
+#+BEGIN_SRC
+
+ 2044  wget -c http://tamacom.com/global/global-6.3.tar.gz?
+  2047  cd global-6.3/
+  2049  sudo apt-get remove global
+ 
+ 2058  sh ./reconf.sh
+  2070  sudo apt-get build-dep global
+ 2071  ./configure  --with-exuberant-ctags=/etc/alternatives/ctags --disable-gtagscscope
+ 2072  make
+ 2073  sudo make install
+
+#+END_SRC
+
+#+BEGIN_SRC
+(require-package 'jtags)
+(autoload 'jtags-mode "jtags" "Toggle jtags mode." t)
+(add-hook 'java-mode-hook 'jtags-mode)
+;; (setq tags-table-list '("c:/java/jdk1.6.0/src"                         "c:/projects/tetris/src"))
+(setq tags-revert-without-query 't)
+
+#+END_SRC
+** [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
+all-to-list will not override default elpa, so now you have to repositories, one is elpa, another is myelpa
+#+BEGIN_SRC emacs-lisp
+(require-package 'elpa-mirror)
+(add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
+(add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
+
+#+END_SRC
+
+** Package 
+#+BEGIN_SRC 
+
+(add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
+(add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
 
 #+END_SRC
