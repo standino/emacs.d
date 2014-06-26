@@ -140,6 +140,7 @@
           (cw/org-agenda-clock-daily-report)
           (cw/org-agenda-clock-thisweek)
           (cw/org-agenda-clock-thismonth)
+          (cw/org-agenda-clock-lastQ)
           (cw/org-agenda-clock-thisyear)
           )
          )
@@ -1454,6 +1455,24 @@ last month with the Category Foo."
            :narrow 150!
 ;;           :link t
        ))))
+
+
+
+(defun cw/org-agenda-clock-lastQ (match)
+  ;; Find out when today is
+  (let* ((inhibit-read-only t))
+    (goto-char (point-max))
+    (insert  "\n\n2014 2Q完成的工作:\n")
+    (org-dblock-write:clocktable
+     `(:scope agenda
+       :maxlevel 8
+           :block 2014-Q2
+           :formula %
+           :compact t
+           :narrow 150!
+;;           :link t
+       ))))
+
 (defun cw/org-agenda-clock-thisyear (match)
   ;; Find out when today is
   (let* ((inhibit-read-only t))
