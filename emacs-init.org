@@ -787,14 +787,35 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 ** 备份设置
 #+BEGIN_SRC emacs-lisp
-(setq backup-directory-alist '(("" . "~/backup/emacs/backup")))
-(setq-default make-backup-file t)
-(setq make-backup-file t)
-(setq make-backup-files t)
-(setq version-control t)
-(setq kept-old-versions 2)
-(setq kept-new-versions 10)
-(setq delete-old-versions t)
+
+;;设置备份策略
+(setq make-backup-files t)    ;;启用备份功能
+(setq vc-make-backup-files t)    ;;使用版本控制系统的时候也启用备份功能
+(setq version-control t)    ;;启用版本控制，即可以备份多次
+(setq kept-old-versions 2)    ;;备份最原始的版本两次，即第一次编辑前的文档，和第二次编
+                ;;辑前的文档
+(setq kept-new-versions 6)    ;;备份最新的版本6次，理解同上
+(setq delete-old-versions t)    ;;删掉不属于以上3种版本的版本
+(setq backup-directory-alist '(("." . "~/backup/emacs/backup")));;设置备份文件的路径到~/backup/emacs/backup中
+(setq backup-by-copying t)    ;;备份设置方法，直接拷贝
+
+(setq backup-enable-predicate 'ecm-backup-enable-predicate);;设置备份条件
+;;关闭匹配下列目录或文件的备份功能
+(defun ecm-backup-enable-predicate (filename)
+(and (not (string= "/tmp/" (substring filename 0 5)))
+(not (string-match "semanticdb" filename))
+))
+
+;;关闭自动保存模式
+;(setq auto-save-mode nil)
+;;不生成 #filename# 临时文件
+(setq auto-save-default nil)
+
+;;自动的在文件末增加一新行
+(setq require-final-newline t)
+;;当光标在行尾上下移动的时候，始终保持在行尾。
+(setq track-eol t)
+
 #+END_SRC
 ** 字典
 #+BEGIN_SRC emacs-lisp
