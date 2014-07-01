@@ -1,5 +1,7 @@
 org-clock-save.el
 testmyfun.el
+snippets/java-mode/copyright.yasnippet
+snippets/java-mode/myjavahead.yasnippet
 /url/cache
 /.emacs.desktop
 /auto-save-list
