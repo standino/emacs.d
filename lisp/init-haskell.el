@@ -2,13 +2,19 @@
 
 (when (> emacs-major-version 23)
   (require-package 'flycheck-hdevtools)
-  (require-package 'flycheck-haskell))
-(after-load 'flycheck
-  (require 'flycheck-hdevtools))
+  (require-package 'flycheck-haskell)
+  (after-load 'flycheck
+    (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup)
 
-(dolist (hook '(haskell-mode-hook inferior-haskell-mode-hook interactive-haskell-mode-hook))
+    (defadvice haskell-mode-stylish-buffer (around skip-if-flycheck-errors activate)
+      "Don't run stylish-buffer if the buffer appears to have a syntax error."
+      (unless (flycheck-has-current-errors-p 'error)
+        ad-do-it))))
+
+
+(dolist (hook '(haskell-mode-hook inferior-haskell-mode-hook haskell-interactive-mode-hook))
   (add-hook hook 'turn-on-haskell-doc-mode))
-(add-hook 'haskell-mode-hook 'inferior-haskell-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 (after-load 'haskell-interactive-mode
   (diminish 'interactive-haskell-mode " IntHS"))
