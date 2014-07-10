@@ -922,7 +922,7 @@ current line to line 99.
 
 (require-package 'go-mode)
 ;; golang mode
-(require 'go-mode-load)
+;;(require 'go-mode-load)
 (require-package 'go-autocomplete)
 ;; speedbar
 ;;(speedbar 1)
