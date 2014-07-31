@@ -2041,7 +2041,7 @@ Require $AJOKE_DIR/etc/elisp/ajoke.el in your ~/.emacs
 #+END_SRC
 ** [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
 all-to-list will not override default elpa, so now you have to repositories, one is elpa, another is myelpa
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC 
 (require-package 'elpa-mirror)
 (add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
 (add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
