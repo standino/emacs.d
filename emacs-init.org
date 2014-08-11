@@ -1177,7 +1177,7 @@ current line to line 99.
 #+END_SRC
 
 ** 代理
-#+BEGIN_SRC 
+#+BEGIN_SRC emacs-lisp
 
 (setq url-proxy-services
    '(("no_proxy" . "^\\(localhost\\|10.*\\|*.jd.com\\|*.360buy.com\\\|orgmode.org\\\|*.gnu.org\\)")
