@@ -7,7 +7,7 @@
   (interactive)
   (dired my-idea-home))
 
-(defun my-dired-to-jd()
+(defun my-dired-to-__my_company_1__()
   (interactive)
   (dired "d:/JD/projects/"))
 

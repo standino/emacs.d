@@ -35,7 +35,7 @@
 
 ;;
 ;; Install load hooks into your .emacs file.
-;; (load-file "~/../init/jde-init.el")
+;; (load-file "~/../init/__my_company_1__e-init.el")
 ;;
 ;
 ;; 打开 debug ，方便输出错误信息
@@ -44,10 +44,10 @@
 ;; Load Cedet Elib Jde
 
 ;; 在这里定义你得CLASSPATH 需要的话，就修改这个文件，然后 M-x load-file
-;;(setq jde-compile-option-classpath (quote ("./"
+;;(setq __my_company_1__e-compile-option-classpath (quote ("./"
 ;;;;                                         "../" "../../" "../../../"
-;;                                           "d:/mysoft/java/jdk/lib/dt.jar"
-;;                                           "d:/mysoft/java/jdk/lib/tools.jar"
+;;                                           "d:/mysoft/java/__my_company_1__k/lib/dt.jar"
+;;                                           "d:/mysoft/java/__my_company_1__k/lib/tools.jar"
 ;;;;                                         "~/../bin/apache-ant/lib/ant.jar"
 ;;;;                                         "D:/mysoft/webserver/resin_3_0_21/lib/jsdk-24.jar"
 ;;;;                                         "D:/website/cqtel.softreg.com/WEB-INF/lib/webpro2.jar"
@@ -59,43 +59,43 @@
 ;;(semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
 ;;(global-srecode-minor-mode 1)            ; Enable template insertion menu
 ;;
-;;(setq jde-debugger (quote ("JDEbug")))
+;;(setq __my_company_1__e-debugger (quote ("JDEbug")))
 ;;
 ;;;; 用JDK1.5编译如果出现乱码,加上下面一行可以解决
-;;(setq jde-compiler (quote ("javac" "")))
+;;(setq __my_company_1__e-compiler (quote ("javac" "")))
 ;;
-;;(setq jde-complete-function (quote jde-complete-menu))
+;;(setq __my_company_1__e-complete-function (quote __my_company_1__e-complete-menu))
 ;;
 ;;;; JDK版本号和JAVA_HOME
-;;(setq jde-jdk-registry (quote (("1.5" . "D:/mysoft/java/jdk"))))
+;;(setq __my_company_1__e-__my_company_1__k-registry (quote (("1.5" . "D:/mysoft/java/__my_company_1__k"))))
 ;;
 ;;;; 定义 ANT_HOME
-;;(setq jde-ant-home "D:/emacs22/custom/bin/apache-ant")
+;;(setq __my_company_1__e-ant-home "D:/emacs22/custom/bin/apache-ant")
 ;;
 ;;;; 将 %ANT_HOME%/bin 放在你的环境变量PATH中
-;;(setq jde-ant-program "ant")
-;;;;(setq jde-ant-program "D:/emacs22/custom/bin/apache-ant/bin/ant")
+;;(setq __my_company_1__e-ant-program "ant")
+;;;;(setq __my_company_1__e-ant-program "D:/emacs22/custom/bin/apache-ant/bin/ant")
 ;;
 ;;;; 默认的是 Script 在 window下不是找不到文件，就是说ant不可执行
 ;;;; 设置为Ant Server就好了
-;;(setq jde-ant-invocation-method (quote ("Ant Server")))
+;;(setq __my_company_1__e-ant-invocation-method (quote ("Ant Server")))
 ;;
 ;;;; 可能我理解错了，我以为会在用ant发布的时候在 -classpath 里多加上下面jar包
-;;(setq jde-ant-user-jar-files (quote ("~/../bin/apache-ant/lib/ant.jar")))
+;;(setq __my_company_1__e-ant-user-jar-files (quote ("~/../bin/apache-ant/lib/ant.jar")))
 ;;
 ;;;; 如果不用msf-abbrev的话，可以在去掉下面这段注释
-;;;; 就可以在第一次打开.java文件的时候再载入jde
-;;; (setq defer-loading-jde t)
-;;; (setq jde-enable-abbrev-mode t)
-;;; (if defer-loading-jde
+;;;; 就可以在第一次打开.java文件的时候再载入__my_company_1__e
+;;; (setq defer-loading-__my_company_1__e t)
+;;; (setq __my_company_1__e-enable-abbrev-mode t)
+;;; (if defer-loading-__my_company_1__e
 ;;; (progn
-;;; (autoload 'jde-mode "jde" "JDE mode." t)
+;;; (autoload '__my_company_1__e-mode "__my_company_1__e" "JDE mode." t)
 ;;; (setq auto-mode-alist
-;;; (append '(("\\.java\\'" . jde-mode))
+;;; (append '(("\\.java\\'" . __my_company_1__e-mode))
 ;;; auto-mode-alist)))
 ;;
 ;;;; 开启Emacs时就载入Jde，这样msf-abbrev就不会出错
-;;(require 'jde)
+;;(require '__my_company_1__e)
 ;;
 ;;;; 反编译 C-x C-f 打开一个Jar包，在Class文件上按 j 就会给出反编译的代码
 ;;;; 需要 jad.exe 和 unzip.exe 配合
@@ -125,7 +125,7 @@
 ;;;; 从新编译 M-x byte-compile-file <RET> <RET>
 ;;
 ;;;; 当前版本检查器只支持到 cedet 较低，禁用之。
-;;(setq jde-check-version-flag nil)
+;;(setq __my_company_1__e-check-version-flag nil)
 
 ;; Complicated regexp to match method declarations in interfaces or classes
 ;; A nasty test case is:
@@ -185,9 +185,9 @@
 
 
 
-;; jdee
-;;(add-to-list 'load-path "~/.emacs.d/jdee-2.4.1/lisp")
-;;(load "jde")
+;; __my_company_1__ee
+;;(add-to-list 'load-path "~/.emacs.d/__my_company_1__ee-2.4.1/lisp")
+;;(load "__my_company_1__e")
 
 
 

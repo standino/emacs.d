@@ -1180,7 +1180,7 @@ current line to line 99.
 #+BEGIN_SRC emacs-lisp
 
 (setq url-proxy-services
-   '(("no_proxy" . "^\\(localhost\\|10.*\\|*.jd.com\\|*.360buy.com\\\|orgmode.org\\\|*.gnu.org\\)")
+   '(("no_proxy" . "^\\(localhost\\|10.*\\|*.__my_company_1__.com\\|*.360buy.com\\\|orgmode.org\\\|*.gnu.org\\)")
      ("http" . "127.0.0.1:8087")
      ("https" . "127.0.0.1:8087")))
 
@@ -1787,10 +1787,10 @@ Emacs 配置
 *** JDEE
 #+BEGIN_SRC
 
-(add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/jdee-2.4.1" "Path to JDEE"))
-(autoload 'jde-mode "jde" "JDE mode." t)
+(add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/__my_company_1__ee-2.4.1" "Path to JDEE"))
+(autoload '__my_company_1__e-mode "__my_company_1__e" "JDE mode." t)
 (setq auto-mode-alist
-      (append '(("\\.java\\'" . jde-mode)) auto-mode-alist))
+      (append '(("\\.java\\'" . __my_company_1__e-mode)) auto-mode-alist))
 
 #+END_SRC
 
@@ -1990,7 +1990,7 @@ Create gtags for your Java project And add the JDK or Android as fallback:
 #+BEGIN_SRC
 cd ~/your-java-project
 mkgtags
-java-add-fallback /usr/lib/jvm/java-7-openjdk-amd64
+java-add-fallback /usr/lib/jvm/java-7-open__my_company_1__k-amd64
 # or java-add-fallback ~/src/android, but not both
 # as it'd be a waste of time to find 2 copies of java.lang.String
 #+END_SRC
@@ -2035,7 +2035,7 @@ Require $AJOKE_DIR/etc/elisp/ajoke.el in your ~/.emacs
 (require-package 'jtags)
 (autoload 'jtags-mode "jtags" "Toggle jtags mode." t)
 (add-hook 'java-mode-hook 'jtags-mode)
-;; (setq tags-table-list '("c:/java/jdk1.6.0/src"                         "c:/projects/tetris/src"))
+;; (setq tags-table-list '("c:/java/__my_company_1__k1.6.0/src"                         "c:/projects/tetris/src"))
 (setq tags-revert-without-query 't)
 
 #+END_SRC

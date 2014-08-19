@@ -1,6 +1,4 @@
 svn st
-svn up
-svn st
 svn ci -m " BUG #32802 IE浏览器】我的任务新发布任务描述超长时，提示发布成功但后台报错"
 cd trunk/
 svn ci -m " BUG #32802 IE浏览器】我的任务新发布任务描述超长时，提示发布成功但后台报错"
@@ -126,3 +124,5 @@ cd ..
 ls
 svn up
 ./run.sh saiku
+cd ..
+mvn install

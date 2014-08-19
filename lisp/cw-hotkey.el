@@ -51,7 +51,7 @@
 (global-set-key [(f3)] 'dired)
 (global-set-key [(f4)] 'eshell)
 (global-set-key [(f5)] 'gtd)
-(global-set-key [(f6)] 'my-dired-to-jd)
+(global-set-key [(f6)] 'my-dired-to-__my_company_1__)
 (global-set-key [(f7)] 'my-dired-to-standino)
 (global-set-key [(f8)] 'dic-lookup-w3m--ce-haici-word)
 (global-set-key [(control f8)] 'dic-lookup-w3m--ce-ichiba-region)

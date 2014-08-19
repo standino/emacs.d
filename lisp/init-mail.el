@@ -29,12 +29,12 @@
 ;; mail status
 (setq mew-name "常伟") ;; (user-full-name)
 (setq mew-user "changwei") ;; (user-login-name)
-(setq mew-mail-domain "jd.com")
+(setq mew-mail-domain "__my_company_1__.com")
 
 ;; SMTP (send)
 
 (setq mew-smtp-user "username")
-(setq mew-smtp-server "smtp.jd.com")
+(setq mew-smtp-server "smtp.__my_company_1__.com")
 ;;(setq mew-smtp-ssl t)
 ;;(setq mew-smtp-ssl-port "465")
 ;;; -------
@@ -45,7 +45,7 @@
 
 ;; POP (recv)
 (setq mew-pop-user "changwei")  ;; (user-login-name)
-(setq mew-pop-server "pop3.jd.com")    ;; if not localhost
+(setq mew-pop-server "pop3.__my_company_1__.com")    ;; if not localhost
 ;;(setq mew-pop-ssl t)
 ;;(setq mew-pop-ssl-port "995")
 

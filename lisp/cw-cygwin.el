@@ -8,7 +8,7 @@
 ;;(setenv "STANDINO_HOME" "c:/standino")                                                                          
 ;;(setenv "STANDINO_SETUP" "c:/software")                                                                         
 ;;(setenv "MPLAYER_HOME" (concat (getenv "STANDINO_TOOL") "/mplayer"))                                                                         
-;;(setenv "JAVA_HOME" (concat (getenv "STANDINO_TOOL") "/jdk1.6.0_02"))                                                                        
+;;(setenv "JAVA_HOME" (concat (getenv "STANDINO_TOOL") "/__my_company_1__k1.6.0_02"))                                                                        
 ;;(setenv "RUBY_HOME" (concat (getenv "STANDINO_TOOL") "/ruby"))                                                                               
 ;;(setenv "CYGWIN_HOME" (concat (getenv "STANDINO_TOOL") "/cygwin"))                                                                           
 ;;(setenv "DEV_SHORT" (concat (getenv "STANDINO_HOME") "/ideas/myscripts/dev_shorcut"))                                                        
