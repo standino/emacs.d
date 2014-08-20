@@ -819,7 +819,7 @@ specifies the list of buffers to kill, asking for approval for each one."
 
 #+END_SRC
 ** 字典
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC 
 (require-package 'dic-lookup-w3m)
 (require 'dic-lookup-w3m)
 (require 'dic-lookup-w3m-zh)
@@ -880,19 +880,20 @@ specifies the list of buffers to kill, asking for approval for each one."
                 js3-mode css-mode less-css-mode sql-mode web-mode
                 sql-interactive-mode org-mode
                 inferior-emacs-lisp-mode))
-  (add-to-list 'ac-modes mode))
+;;  (add-to-list 'ac-modes mode)
+)
 (require-package 'dropdown-list)
 (require-package 'yasnippet)
 (require 'init-yasnippet)
-(require-package 'go-snippets)
-(require-package 'java-snippets)
+;;(require-package 'go-snippets)
+;;(require-package 'java-snippets)
 ;;(require-package 'yasnippet-bundle)
 
 #+END_SRC
 ** 统计使用的快捷键频率
  use keyfreq-show to see how many times you used a command.
 
- #+BEGIN_SRC emacs-lisp
+ #+BEGIN_SRC
 (require-package 'keyfreq)
 (keyfreq-mode 1)
 (keyfreq-autosave-mode 1)
@@ -907,7 +908,7 @@ the specified line number. The line number is passed as parameter of the command
 For example, `C-u 99 evilnc-comment-or-uncomment-to-the-line` will comment code from
 current line to line 99.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC 
 
 (require-package 'evil-nerd-commenter)
 
@@ -919,7 +920,7 @@ current line to line 99.
 
 *** 配置从这个 [[https://github.com/astaxie/build-web-application-with-golang/blob/master/ebook/01.4.md][页面]]拷贝的。
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC 
 
 (require-package 'go-mode)
 ;; golang mode
@@ -1091,8 +1092,8 @@ current line to line 99.
 
 (setq sql-send-terminator ";")
 
-(eval-after-load "sql"
-   '(load-library "sql-indent"))
+;;(eval-after-load "sql"
+;;   '(load-library "sql-indent"))
 
 (defgroup xdb-connect nil
   "interactiv db-sessions"
@@ -1158,7 +1159,7 @@ current line to line 99.
 ** UI
 
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC 
 (setq sml/theme 'respectful)
 (require-package 'smart-mode-line)
 (sml/setup)
@@ -1177,7 +1178,7 @@ current line to line 99.
 #+END_SRC
 
 ** 代理
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC 
 
 (setq url-proxy-services
    '(("no_proxy" . "^\\(localhost\\|10.*\\|*.__my_company_1__.com\\|*.360buy.com\\\|orgmode.org\\\|*.gnu.org\\)")

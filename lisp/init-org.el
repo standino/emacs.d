@@ -10,9 +10,33 @@
 (define-key global-map (kbd "C-c l") 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
 
+;; {{ export org-mode in Chinese into PDF
+;; @see http://freizl.github.io/posts/tech/2012-04-06-export-orgmode-file-in-Chinese.html
+;; and you need install texlive-xetex on different platforms
+;; To install texlive-xetex:
+;;    `sudo USE="cjk" emerge texlive-xetex` on Gentoo Linux
+(setq org-latex-to-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+;; }}
+
+(if (and *is-a-mac* (file-exists-p "/Applications/LibreOffice.app/Contents/MacOS/soffice"))
+    (setq org-export-odt-convert-processes '(("LibreOffice" "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to %f%x --outdir %d %i"))))
+
+;; @see https://gist.github.com/mwfogleman/95cc60c87a9323876c6c
+(defun narrow-or-widen-dwim ()
+  "If the buffer is narrowed, it widens. Otherwise, it narrows to region, or Org subtree."
+  (interactive)
+  (cond ((buffer-narrowed-p) (widen))
+        ((region-active-p) (narrow-to-region (region-beginning) (region-end)))
+        ((equal major-mode 'org-mode) (org-narrow-to-subtree))
+        (t (error "Please select a region to narrow to"))))
+
 ;; Various preferences
 (setq org-log-done t
       org-completion-use-ido t
+      org-edit-src-content-indentation 0
       org-edit-timestamp-down-means-later t
       org-agenda-start-on-weekday nil
       org-agenda-span 14
@@ -20,8 +44,15 @@
       org-agenda-window-setup 'current-window
       org-fast-tag-selection-single-key 'expert
       org-export-kill-product-buffer-when-displayed t
+<<<<<<< HEAD:lisp/init-org.el
       org-tags-column 80)
 
+=======
+      org-export-odt-preferred-output-format "doc"
+      org-tags-column 80
+      ;org-startup-indented t
+      )
+>>>>>>> upstream/master:init-org.el
 
 ; Refile targets include this file and any file contributing to the agenda - up to 5 levels deep
 (setq org-refile-targets (quote ((nil :maxlevel . 5) (org-agenda-files :maxlevel . 5))))
@@ -39,11 +70,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Org clock
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Save the running clock and all clock history when exiting Emacs, load it on startup
-(setq org-clock-persistence-insinuate t)
-(setq org-clock-persist t)
-(setq org-clock-in-resume t)
 
 ;; Change task state to STARTED when clocking in
 (setq org-clock-in-switch-to-state "STARTED")
@@ -71,6 +97,7 @@
   (define-key org-clock-mode-line-map [header-line mouse-2] 'org-clock-goto)
   (define-key org-clock-mode-line-map [header-line mouse-1] 'org-clock-menu))
 
+<<<<<<< HEAD:lisp/init-org.el
 
 (require-package 'org-pomodoro)
 (after-load 'org-agenda
@@ -126,5 +153,44 @@
      (sql . nil)
      (sqlite . t))))
 
+=======
+(eval-after-load 'org
+   '(progn
+      (require 'org-exp)
+      (require 'org-clock)
+      ; @see http://irreal.org/blog/?p=671
+      (setq org-src-fontify-natively t)
+      (require 'org-fstree)
+      (defun soft-wrap-lines ()
+        "Make lines wrap at window edge and on word boundary,
+        in current buffer."
+        (interactive)
+        (setq truncate-lines nil)
+        (setq word-wrap t)
+        )
+      (add-hook 'org-mode-hook '(lambda ()
+                                  (setq evil-auto-indent nil)
+                                  (soft-wrap-lines)
+                                  ))))
+
+(defadvice org-open-at-point (around org-open-at-point-choose-browser activate)
+  (let ((browse-url-browser-function
+         (cond ((equal (ad-get-arg 0) '(4))
+                'browse-url-generic)
+               ((equal (ad-get-arg 0) '(16))
+                'choose-browser)
+               (t
+                (lambda (url &optional new)
+                  (w3m-browse-url url t))))))
+    ad-do-it))
+
+;; {{ org2nikola set up
+(setq org2nikola-output-root-directory "~/projs/blog.binchen.org")
+(setq org2nikola-use-google-code-prettify t)
+(setq org2nikola-prettify-unsupported-language
+      '(elisp "lisp"
+              emacs-lisp "lisp"))
+;; }}
+>>>>>>> upstream/master:init-org.el
 
 (provide 'init-org)

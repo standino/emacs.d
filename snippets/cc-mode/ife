@@ -1,7 +1,14 @@
 #name : if (...) { ... } else { ... }
 # --
 if (${1:condition}) {
+<<<<<<< HEAD
      $2
 } else {
      $0
 }         
+=======
+    $2
+} else {
+    $0
+}
+>>>>>>> upstream/master
