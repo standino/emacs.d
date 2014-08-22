@@ -110,7 +110,7 @@
 (require 'init-which-func)
 (require 'init-move-window-buffer)
 ;; (require 'init-gist)
-;; (require 'init-moz)
+(require 'init-moz)
 (require 'init-gtags)
 ;; use evil mode (vi key binding)
 ;;(require 'init-evil)
