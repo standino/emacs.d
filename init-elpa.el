@@ -65,15 +65,16 @@ ARCHIVE is the string name of the package archive.")
 ;; Standard package repositories
 ;;------------------------------------------------------------------------------
 
-;; We include the org repository for completeness, but don't use it.
-;; Lock org-mode temporarily:
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 
 ;; use packages from melpa only, even packages in elpa.gnu.org are ignored
 (setq package-archives '(("melpa" . "http://melpa.milkbox.net/packages/")
                          ;; ("melpa-stable" . "http://hiddencameras.milkbox.net/packages/")
                          ))
+;; We include the org repository for completeness, but don't use it.
+;; Lock org-mode temporarily:
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+
 ;; well, melpa does not bother supporting emacs23 any more
 (if (not *emacs24*) (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 

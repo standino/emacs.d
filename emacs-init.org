@@ -30,6 +30,7 @@
 |      |             | cleanup-buffer                      | 格式化文档                                                                                            |
 | GTD  | C-caa或F12  |                                     | 打开TODO视图                                                                                          |
 |      | C-cao       |                                     | 打开任务总结视图.获得本周/本月/本年任务的列表。公司要求每周要发周报回报上周做了什么，下周准备做什么。 |
+|      |             | org-agenda-file-to-front            | 把当前org文件加入到GTD统计列表里面。                                                                           |
 | 写作 | C-c C-e R R |                                     | 导出演示文稿                                                                                          |
 |      |             | org-confluence-export-as-confluence | 以conflunce wiki的格式导出文稿                                                                        |
 |      |             | org-toggle-inline-images            | 在 org-mode 中，提供了一個 org-toggle-inline-images 的命令，可以將你插入的圖片顯示出來                |
