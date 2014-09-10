@@ -184,22 +184,19 @@ table th.right, table td.right {
     color: #ccc;
 }
 .masthead a {
-    display: block;
-    color: #2B3F00;
-    text-decoration: none;
-    border-top: 1px solid #E4FFD3;
-    border-bottom: 1px solid #486B02;
-    
+    color: #333;
 }
 .masthead ul {
-    margin: 0;
-    padding: 0;
     list-style: none;
-    width: 8em;
-    background-color: #8bd400;
-    border: 1px solid #486B02;
 }
-
+.masthead li {
+    display: inline-block;
+}
+.masthead li + li:before {
+    display: inline-block;
+    content: "\00B7 \00a0";
+    color: #ccc;
+}
 /* searchform*/
 #searchform {
     position: absolute;
