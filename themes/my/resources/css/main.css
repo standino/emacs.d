@@ -199,14 +199,7 @@ table th.right, table td.right {
     background-color: #8bd400;
     border: 1px solid #486B02;
 }
-.masthead li {
-    display: inline-block;
-}
-.masthead li + li:before {
-    display: inline-block;
-    content: "\00B7 \00a0";
-    color: #ccc;
-}
+
 /* searchform*/
 #searchform {
     position: absolute;
