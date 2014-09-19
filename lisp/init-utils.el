@@ -78,12 +78,6 @@
 (defun browse-current-file ()
   "Open the current file as a URL using `browse-url'."
   (interactive)
-<<<<<<< HEAD:lisp/init-utils.el
-  (let ((file-name (buffer-file-name)))
-    (if (tramp-tramp-file-p file-name)
-        (error "Cannot open tramp file")
-      (browse-url (concat "file://" file-name)))))
-=======
   (browse-url-generic (concat "file://" (buffer-file-name))))
 
 
@@ -99,7 +93,7 @@
          (unwind-protect
              (progn ,@forms)
            (select-frame ,prev-frame))))))
->>>>>>> upstream/master:init-utils.el
+
 
 
 (provide 'init-utils)
