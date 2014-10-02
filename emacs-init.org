@@ -286,6 +286,7 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 ;;(require-package 'ht)
 (add-to-list 'load-path "~/my-org-page")
 (add-to-list 'load-path "~/ht.el")
+(add-to-list 'load-path "~/mustache.el")
 (require 'org-page)
 (setq op/site-main-title "Keep going")
 (setq op/site-sub-title "努力超越自己！")
@@ -295,6 +296,9 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 
 (setq op/repository-org-branch "master")  ;; default is "source"
 (setq op/repository-html-branch "master") ;; default is "master"
+
+(setq op/repository-directory  "~/myblog" )
+
 (defun cw/commit-pub ()
     (shell-command  "st ci")
     (op/do-publication t nil nil t)
@@ -331,7 +335,8 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 
 #+BEGIN_SRC emacs-lisp
 (setq op/theme-root-directory "~/.emacs.d/themes")
-(setq op/theme 'my)
+;;(setq op/theme 'my)
+(setq op/theme 'sb-admin-2)
 #+END_SRC
 
 **** nikola
