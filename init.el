@@ -168,7 +168,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.bmk")
- '(org-agenda-files (quote ("~/myblog/work/jd.org" "~/.emacs.d/emacs-init.org" "~/ideas/org/mygtd.org" "~/ideas/orgpage/wiki/jd.org")))
+ '(org-agenda-files (quote ("~/myblog/work/Personal.org" "~/myblog/work/jd.org" "~/.emacs.d/emacs-init.org" "~/ideas/org/mygtd.org" "~/ideas/orgpage/wiki/jd.org")))
  '(safe-local-variable-values (quote ((emacs-lisp-docstring-fill-column . 75) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
  '(session-use-package t nil (session)))
 (custom-set-faces
