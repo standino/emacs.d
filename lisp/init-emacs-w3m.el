@@ -39,7 +39,6 @@
 
 ;bind this function to ‘a’, which is the normal w3m bookmark binding:
 (eval-after-load "w3m" '(progn
-                          (define-key w3m-info-like-map "A" 'delicious-post)
                           (w3m-lnum-mode 1)
                           ))
 
@@ -47,9 +46,9 @@
 (setq browse-url-generic-program
       (cond
        (*is-a-mac* "open")
-       (*linux* (executable-find "firefox"))
+       (*linux* (executable-find "chromium-browser"))
        ))
-(setq browse-url-browser-function 'browse-url-generic)
+(setq browse-url-browser-function 'browse-url-generic-program)
 
 ;; use external browser to search programming stuff
 (defun w3mext-hacker-search ()

@@ -13,22 +13,14 @@
     (define-key map "\e[5C"   [C-right])
     (define-key map "\e[5D"   [C-left])))
 
-(global-set-key [mouse-4] (lambda () (interactive) (scroll-down 1)))
-(global-set-key [mouse-5] (lambda () (interactive) (scroll-up 1)))
-
 (add-hook 'after-make-console-frame-hooks
           (lambda ()
             (when (< emacs-major-version 23)
               (fix-up-xterm-control-arrows))
             (xterm-mouse-mode 1) ; Mouse in a terminal (Use shift to paste with middle button)
-<<<<<<< HEAD:lisp/init-xterm.el
-            (when (fboundp 'mwheel-install)
-              (mwheel-install))))
-=======
             ;; Enable wheelmouse support by default
             (cond (window-system
                    (mwheel-install)))
             ))
->>>>>>> upstream/master:init-xterm.el
 
 (provide 'init-xterm)

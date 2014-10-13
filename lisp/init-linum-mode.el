@@ -7,6 +7,8 @@
                                          shell-mode
                                          erc-mode
                                          help-mode
+                                         text-mode
+                                         fundamental-mode
                                          jabber-roster-mode
                                          jabber-chat-mode
                                          twittering-mode
@@ -20,7 +22,10 @@
                                          gnus-group-mode
                                          inf-ruby-mode
                                          gud-mode
-					 term-mode
+                                         org-mode
+                                         vc-git-log-edit-mode
+                                         log-edit-mode
+                                         term-mode
                                          w3m-mode
                                          speedbar-mode
                                          gnus-summary-mode

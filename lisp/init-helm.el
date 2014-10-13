@@ -1,5 +1,6 @@
-(require-package 'helm)
-(helm-mode 1)
+(require 'helm-config)
+
+;; (helm-mode 1)
 
 (setq helm-completing-read-handlers-alist
       '((describe-function . ido)
@@ -19,24 +20,21 @@
         (ido-find-file . nil)
         (ido-edit-input . nil)
         (mml-attach-file . ido)
-        (read-file-name . ni)
+        (read-file-name . nil)
         (yas/compile-directory . ido)
         (execute-extended-command . ido)
+        (minibuffer-completion-help . nil)
+        (minibuffer-complete . nil)
+        (c-set-offset . nil)
         (wg-load . ido)
+        (rgrep . nil)
         (read-directory-name . ido)
         ))
 
-;; {{make helm-ls-git-ls more UI friendly
-;;(require-package 'helm-git )
-;;(require 'helm-ls-git)
-;;(helm-attrset 'header-name
-;;                '(lambda (name) (concat name ", `C-]' to toggle full path"))
-;;                helm-source-ls-git)
-(define-key helm-map (kbd ",k") 'helm-keyboard-quit)
-;; }}
 
 ;; {{helm-gtags
 ;; customize
+(autoload 'helm-gtags-mode "helm-gtags" nil t)
 (setq helm-c-gtags-path-style 'relative)
 (setq helm-c-gtags-ignore-case t)
 (setq helm-c-gtags-read-only t)
@@ -56,21 +54,25 @@
               (local-set-key (kbd "C-c C-f") 'helm-gtags-pop-stack)))
 ;; ==end
 
-
+(if *emacs24*
     (progn
       (autoload 'helm-c-yas-complete "helm-c-yasnippet" nil t)
       (global-set-key (kbd "C-x C-o") 'helm-find-files)
       (global-set-key (kbd "C-c f") 'helm-for-files)
       (global-set-key (kbd "C-c y") 'helm-c-yas-complete)
-      (global-set-key (kbd "C-c C-g") 'helm-ls-git-ls)
       (global-set-key (kbd "C-c i") 'helm-imenu)
       )
   (global-set-key (kbd "C-x C-o") 'ffap)
+  )
 
-(autoload 'helm-swoop "helm-swoop" "helm-swoop" t)
-(autoload 'helm-back-to-last-point "helm-swoop" t)
+(autoload 'helm-swoop "helm-swoop" nil t)
+(autoload 'helm-back-to-last-point "helm-swoop" nil t)
 
 ;; When doing isearch, hand the word over to helm-swoop
 (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+
+
+(autoload 'helm-ls-git-ls "helm-ls-git" nil t)
+(autoload 'helm-browse-project "helm-ls-git" nil t)
 
 (provide 'init-helm)

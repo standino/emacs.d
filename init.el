@@ -1,6 +1,6 @@
 ;; -*- coding: utf-8 -*-
 (setq emacs-load-start-time (current-time))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
 ;;----------------------------------------------------------------------------
 ;; Which functionality to enable (use t or nil for true and false)
@@ -99,7 +99,7 @@
 (require 'init-haskell)
 (require 'init-ruby-mode)
 (require 'init-elisp)
-(require 'init-yasnippet)
+(if *emacs24* (require 'init-yasnippet))
 ;; Use bookmark instead
 (require 'init-zencoding-mode)
 (require 'init-cc-mode)
@@ -127,6 +127,7 @@
 (require 'init-slime)
 (when *emacs24* (require 'init-company))
 (require 'init-stripe-buffer)
+(require 'init-eim) ;;  cannot be idle-required
 
 ;; color theme
 (require 'color-theme)
@@ -137,9 +138,7 @@
 
 (setq idle-require-idle-delay 3)
 (setq idle-require-symbols '(init-lisp
-                             init-eim
                              init-keyfreq
-                             init-move-window-buffer
                              init-elnode
                              init-doxygen
                              init-pomodoro
@@ -152,8 +151,7 @@
 ;;----------------------------------------------------------------------------
 ;; Variables configured via the interactive 'customize' interface
 ;;----------------------------------------------------------------------------
-(if (file-exists-p "~/.custom.el")
-                   (load-file "~/.custom.el"))
+(if (file-exists-p "~/.custom.el") (load-file "~/.custom.el"))
 
 (require 'init-local)
 
