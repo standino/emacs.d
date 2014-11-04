@@ -249,6 +249,8 @@ GTD 提醒
   - https://github.com/yjwen/org-reveal/blob/master/Readme.org  
 
 
+**** 导出odt
+C-c C-e o o     (org-odt-export-to-odt)
 **** ox-reveal
 
   - 安装文档： https://github.com/yjwen/org-reveal/blob/master/Readme.org

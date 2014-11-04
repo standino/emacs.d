@@ -1,3 +1,4 @@
+*.odt
 org-clock-save.el
 testmyfun.el
 snippets/java-mode/copyright.yasnippet
