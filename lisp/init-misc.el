@@ -171,7 +171,7 @@
 ;; Misc config - yet to be placed in separate files
 ;;----------------------------------------------------------------------------
 ;; {{ shell and conf
-(add-to-list 'auto-mode-alist '("\\.[a-zA-Z]+rc$" . conf-mode))
+(add-to-list 'auto-mode-alist '("\\.[^b][^a][a-zA-Z]*rc$" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.aspell\\.en\\.pws\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.meta\\'" . conf-mode))
 (add-to-list 'auto-mode-alist '("\\.ctags\\'" . conf-mode))
@@ -215,13 +215,58 @@
   kept-old-versions 2
   version-control t  ;use versioned backups
   )
-;; Make backups of files, even when they're in version control
-(setq vc-make-backup-files t)
+
+;; Donot make backups of files, not safe
+;; @see https://github.com/joedicastro/dotfiles/tree/master/emacs
+(setq vc-make-backup-files nil)
 
 ;; Don't disable narrowing commands
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-defun 'disabled nil)
+
+(defun grep-pattern-into-list (regexp)
+  (let ((s (buffer-string))
+        (pos 0)
+        item
+        items)
+    (while (setq pos (string-match regexp s pos))
+      (setq item (match-string-no-properties 0 s))
+      (setq pos (+ pos (length item)))
+      (if (not (member item items))
+          (add-to-list 'items item)
+        ))
+    items))
+
+(defun grep-pattern-into-kill-ring (regexp)
+  "Find all strings matching REGEXP in current buffer.
+grab matched string and insert them into kill-ring"
+  (interactive
+   (let* ((regexp (grep-read-regexp)))
+     (list regexp)))
+  (let (items rlt)
+    (setq items (grep-pattern-into-list regexp))
+    (dolist (i items)
+      (setq rlt (concat rlt (format "%s\n" i)))
+      )
+    (kill-new rlt)
+    (message "matched strings => kill-ring")
+    rlt))
+
+(defun grep-pattern-jsonize-into-kill-ring (regexp)
+  "Find all strings matching REGEXP in current buffer.
+grab matched string, jsonize them, and insert into kill ring"
+  (interactive
+   (let* ((regexp (grep-read-regexp)))
+     (list regexp)))
+  (let (items rlt)
+    (setq items (grep-pattern-into-list regexp))
+    (dolist (i items)
+      (setq rlt (concat rlt (format "%s : %s ,\n" i i)))
+      )
+    (kill-new rlt)
+    (message "matched strings => json => kill-ring")
+    rlt))
 
 ; from RobinH
 ;Time management
@@ -643,18 +688,27 @@ version control automatically"
           (vc-register)
          )))))
 
-;; @see http://wenshanren.org/?p=298
-(defun wenshan-edit-current-file-as-root ()
-  "Edit the file that is associated with the current buffer as root"
-  (interactive)
-  (if (buffer-file-name)
-      (progn
-        (setq file (concat "/sudo:root@localhost:" (buffer-file-name)))
-        (find-file file))
-    (message "Current buffer does not have an associated file.")))
+;; {{ @see http://emacsredux.com/blog/2013/04/21/edit-files-as-root/
+(defun sudo-edit (&optional arg)
+  "Edit currently visited file as root.
+With a prefix ARG prompt for a file to visit.
+Will also prompt for a file to visit if current
+buffer is not visiting a file."
+  (interactive "P")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:"
+                         (ido-read-file-name "Find file(as root): ")))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+(defadvice ido-find-file (after find-file-sudo activate)
+  "Find file as root if necessary."
+  (unless (and buffer-file-name
+               (file-writable-p buffer-file-name))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+;; }}
 
 ;; {{ eval and replace anywhere
-;; @see http://emacs.wordpress.com/2007/01/17/eval-and-replace-anywhere/ 
+;; @see http://emacs.wordpress.com/2007/01/17/eval-and-replace-anywhere/
 (defun fc-eval-and-replace ()
   "Replace the preceding sexp with its value."
   (interactive)
