@@ -44,4 +44,14 @@
             (remove-hook 'yas/after-exit-snippet-hook
                          'web-mode-yasnippet-exit-hook t)
             ))
+
+(eval-after-load 'web-mode
+  '(progn
+     ;; make org-mode export fail, I use evil and evil-matchit
+     ;; to select text, so expand-region.el is not used
+     (remove-hook 'web-mode-hook 'er/add-web-mode-expansions)
+     ;; angular imenu
+     (add-to-list 'web-mode-imenu-regexp-list
+                  '(" \\(ng-[a-z]*\\)=\"\\([a-zA-Z0-9]*\\)" 1 2 "="))
+     ))
 (provide 'init-web-mode)

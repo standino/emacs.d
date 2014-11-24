@@ -1,4 +1,5 @@
 (add-hook 'prog-mode-hook 'global-company-mode)
+(add-hook 'cmake-mode-hook 'global-company-mode)
 
 ;; does not matter, I never use this hotkey
 (global-set-key (kbd "C-c o") 'company-complete)
@@ -16,6 +17,7 @@
 (eval-after-load 'company
   '(progn
      (add-to-list 'company-backends 'company-cmake)
+     (add-to-list 'company-backends 'company-c-headers)
      ;; can't work with TRAMP
      (setq company-backends (delete 'company-ropemacs company-backends))
      (setq company-backends (delete 'company-capf company-backends))

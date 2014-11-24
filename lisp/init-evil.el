@@ -12,8 +12,8 @@
 (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
 ;; }}
 
-;; Don't move back the cursor one position when exiting insert mode
-(setq evil-move-cursor-back nil)
+;; Move back the cursor one position when exiting insert mode
+(setq evil-move-cursor-back t)
 
 (defun toggle-org-or-message-mode ()
   (interactive)
@@ -51,6 +51,7 @@
         (direx:direx-mode . emacs)
         (yari-mode . emacs)
         (erc-mode . emacs)
+        (w3m-mode . emacs)
         (gud-mode . emacs)
         (help-mode . emacs)
         (eshell-mode . emacs)
@@ -87,6 +88,7 @@
 (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt)
 (define-key evil-normal-state-map "-" 'evil-numbers/dec-at-pt)
 (define-key evil-normal-state-map "go" 'goto-char)
+(define-key evil-normal-state-map (kbd "M-y") 'browse-kill-ring)
 
 ;; {{ evil-matchit
 (require 'evil-matchit)
@@ -202,7 +204,9 @@ to replace the symbol under cursor"
   "cb" 'evilcvn-change-symbol-in-whole-buffer
   "tt" 'ido-goto-symbol ;; same as my vim hotkey
   "ht" 'helm-etags-select
-  "hb" 'helm-bookmarks
+  "hm" 'helm-bookmarks
+  "hb" 'helm-back-to-last-point
+  "hh" 'browse-kill-ring
   "cg" 'helm-ls-git-ls
   "ud" '(lambda ()(interactive) (gud-gdb (concat "gdb --fullname \"" (cppcm-get-exe-path-current-buffer) "\"")))
   "uk" 'gud-kill-yes
@@ -219,10 +223,11 @@ to replace the symbol under cursor"
   "W" 'save-some-buffers
   "K" 'kill-buffer-and-window ;; "k" is preserved to replace "C-g"
   "it" 'issue-tracker-increment-issue-id-under-cursor
-  "hh" 'highlight-symbol-at-point
-  "hn" 'highlight-symbol-next
-  "hp" 'highlight-symbol-prev
-  "hq" 'highlight-symbol-query-replace
+  "ii" 'rimenu-jump
+  "lh" 'highlight-symbol-at-point
+  "ln" 'highlight-symbol-next
+  "lp" 'highlight-symbol-prev
+  "lq" 'highlight-symbol-query-replace
   "bm" 'pomodoro-start ;; beat myself
   "im" 'helm-imenu
   "." 'evil-ex
@@ -277,11 +282,14 @@ to replace the symbol under cursor"
   "rbr" 'robe-rails-refresh
   "rbs" 'robe-start
   "ws" 'w3mext-hacker-search
-  "hs" 'helm-swoop
+  "hsp" 'helm-swoop
+  "hst" 'hs-toggle-fold
+  "hsa" 'hs-toggle-fold-all
+  "hsh" 'hs-hide-block
+  "hss" 'hs-show-block
   "hd" 'describe-function
   "hf" 'find-function
   "hv" 'describe-variable
-  "hb" 'helm-back-to-last-point
   "gt" 'ggtags-find-tag-dwim
   "gr" 'ggtags-find-reference
   "fb" 'flyspell-buffer
@@ -317,6 +325,7 @@ to replace the symbol under cursor"
   "8" 'select-window-8
   "9" 'select-window-9
   "xm" 'smex
+  "mx" 'helm-M-x
   "xx" 'er/expand-region
   "xf" 'ido-find-file
   "xb" 'ido-switch-buffer

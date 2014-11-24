@@ -94,7 +94,6 @@
   (require 'init-org)
   (require 'init-org-mime))
 (require 'init-css)
-(require 'init-haml)
 (require 'init-python-mode)
 (require 'init-haskell)
 (require 'init-ruby-mode)
@@ -128,6 +127,7 @@
 (when *emacs24* (require 'init-company))
 (require 'init-stripe-buffer)
 (require 'init-eim) ;;  cannot be idle-required
+(require 'init-hs-minor-mode)
 
 ;; color theme
 (require 'color-theme)
@@ -168,7 +168,15 @@
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.bmk")
  '(org-agenda-files (quote ("~/myblog/work/Personal.org" "~/myblog/work/jd.org" "~/.emacs.d/emacs-init.org" "~/ideas/org/mygtd.org" "~/ideas/orgpage/wiki/jd.org")))
- '(safe-local-variable-values (quote ((emacs-lisp-docstring-fill-column . 75) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
+ '(safe-local-variable-values
+   (quote
+    ((js2-basic-offset . 2)
+     (emacs-lisp-docstring-fill-column . 75)
+     (ruby-compilation-executable . "ruby")
+     (ruby-compilation-executable . "ruby1.8")
+     (ruby-compilation-executable . "ruby1.9")
+     (ruby-compilation-executable . "rbx")
+     (ruby-compilation-executable . "jruby"))))
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

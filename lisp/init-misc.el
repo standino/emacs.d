@@ -127,9 +127,6 @@
         (sort-subr nil 'forward-line 'end-of-line nil nil
                    (lambda (s1 s2) (eq (random 2) 0)))))))
 
-;need install browse-kill-ring
-(if *emacs24* (browse-kill-ring-default-keybindings))
-
 (add-hook 'prog-mode-hook
           '(lambda ()
              ;; enable for all programming modes
@@ -253,6 +250,27 @@ grab matched string and insert them into kill-ring"
     (message "matched strings => kill-ring")
     rlt))
 
+(defvar rimenu-position-pair nil "positions before and after imenu jump")
+(add-hook 'imenu-after-jump-hook
+          (lambda ()
+            (let ((start-point (marker-position (car mark-ring)))
+                  (end-point (point)))
+              (setq rimenu-position-pair (list start-point end-point)))))
+
+(defun rimenu-jump ()
+  "jump to the closest before/after position of latest imenu jump"
+  (interactive)
+  (when rimenu-position-pair
+    (let ((p1 (car rimenu-position-pair))
+          (p2 (cadr rimenu-position-pair)))
+
+      ;; jump to the far way point of the rimenu-position-pair
+      (if (< (abs (- (point) p1))
+             (abs (- (point) p2)))
+          (goto-char p2)
+          (goto-char p1))
+      )))
+
 (defun grep-pattern-jsonize-into-kill-ring (regexp)
   "Find all strings matching REGEXP in current buffer.
 grab matched string, jsonize them, and insert into kill ring"
@@ -268,8 +286,22 @@ grab matched string, jsonize them, and insert into kill ring"
     (message "matched strings => json => kill-ring")
     rlt))
 
-; from RobinH
-;Time management
+(defun grep-pattern-cssize-into-kill-ring (regexp)
+  "Find all strings matching REGEXP in current buffer.
+grab matched string, cssize them, and insert into kill ring"
+  (interactive
+   (let* ((regexp (grep-read-regexp)))
+     (list regexp)))
+  (let (items rlt)
+    (setq items (grep-pattern-into-list regexp))
+    (dolist (i items)
+      (setq i (replace-regexp-in-string "\\(class=\\|\"\\)" "" i))
+      (setq rlt (concat rlt (format ".%s {\n}\n\n" i))))
+    (kill-new rlt)
+    (message "matched strings => json => kill-ring")
+    rlt))
+
+;; from RobinH, Time management
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
 (display-time)
@@ -452,19 +484,6 @@ grab matched string, jsonize them, and insert into kill ring"
     (copy-yank-str (file-truename buffer-file-name))
     (message "file full path => clipboard & yank ring")
     ))
-
-;; {{ git-messenger
-(autoload 'git-messenger:popup-message "git-messenger" "" t)
-;; show details to play `git blame' game
-(setq git-messenger:show-detail t)
-(add-hook 'git-messenger:after-popup-hook (lambda (msg)
-                                            ;; extract commit id and put into the kill ring
-                                            (when (string-match "\\(commit *: *\\)\\([0-9a-z]+\\)" msg)
-                                              (kill-new (match-string 2 msg)))
-                                            (copy-yank-str msg)
-                                            (message "commit details > clipboard & kill-ring")))
-(global-set-key (kbd "C-x v p") 'git-messenger:popup-message)
-;; }}
 
 (defun copy-to-x-clipboard ()
   (interactive)
@@ -862,17 +881,16 @@ The full path into relative path insert it as a local file link in org-mode"
   (interactive)
   (let (str
         rlt
-        (file (read-file-name "The path of image:"))
-        )
+        (file (read-file-name "The path of image:")))
     (with-temp-buffer
       (shell-command (concat "cat " file "|base64") 1)
       (setq str (replace-regexp-in-string "\n" "" (buffer-string)))
       )
-    (setq rlt (concat "background:url(data:image/"
+    (setq rlt (concat "background:url(\"data:image/"
                       (car (last (split-string file "\\.")))
                       ";base64,"
                       str
-                      ") no-repeat 0 0;"
+                      "\") no-repeat 0 0;"
                       ))
     (kill-new rlt)
     (copy-yank-str rlt)
@@ -1034,5 +1052,17 @@ The full path into relative path insert it as a local file link in org-mode"
 ;; {{go-mode
 (require 'go-mode-load)
 ;; }}
+
+;; someone mentioned that blink cursor could slow Emacs24.4
+;; I couldn't care less about cursor, so turn it off explicitly
+;; https://github.com/redguardtoo/emacs.d/issues/208
+(blink-cursor-mode -1)
+
+;; https://github.com/browse-kill-ring/browse-kill-ring
+(require 'browse-kill-ring)
+(browse-kill-ring-default-keybindings)
+
+;; @see http://emacs.stackexchange.com/questions/3322/python-auto-indent-problem/3338#3338
+(if (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 
 (provide 'init-misc)

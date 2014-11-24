@@ -110,7 +110,6 @@ ARCHIVE is the string name of the package archive.")
     regex-tool
     csharp-mode
     switch-window
-    cmake-mode
     sr-speedbar
     quack
     iedit
@@ -136,11 +135,11 @@ ARCHIVE is the string name of the package archive.")
     org-fstree
     textile-mode
     pretty-mode
-    auto-complete-clang
     w3m
     fakir
     erlang
     fancy-narrow
+    company-c-headers
     company-anaconda
     anaconda-mode)
   "Don't install any Melpa packages except these packages")
@@ -185,7 +184,6 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'yaml-mode)
 (require-package 'paredit)
 (require-package 'erlang '(20120612 0 0) nil)
-(if *emacs24* (require-package 'browse-kill-ring))
 (require-package 'findr)
 (if *emacs24* (require-package 'jump '(2 3 0) nil))
 (require-package 'haml-mode)
@@ -210,12 +208,10 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'git-timemachine)
 (require-package 'exec-path-from-shell)
 (require-package 'flymake-css)
-(require-package 'flymake-haml)
 (require-package 'flymake-jslint)
 (require-package 'flymake-python-pyflakes)
 (require-package 'flymake-ruby)
 (require-package 'flymake-sass)
-(require-package 'flymake-shell)
 (require-package 'hl-sexp)
 (require-package 'ibuffer-vc)
 (require-package 'less-css-mode)
@@ -224,10 +220,11 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'page-break-lines)
 (require-package 'pointback)
 (require-package 'regex-tool)
+;; I don't use multiple-cursors, but js2-refactor requires it
+(require-package 'multiple-cursors)
 (require-package 'rinari)
 (require-package 'ruby-compilation)
 (require-package 'csharp-mode)
-(require-package 'cmake-mode)
 (require-package 'emmet-mode)
 (require-package 'session)
 ;; (require-package 'tidy)
@@ -238,7 +235,7 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'buffer-move)
 (require-package 'switch-window)
 (require-package 'maxframe)
-(require-package 'cpputils-cmake '(0 4 17) nil)
+(require-package 'cpputils-cmake '(0 4 22) nil)
 (require-package 'flyspell-lazy)
 (require-package 'bbdb '(20130421 1145 0) nil)
 (require-package 'iedit)
@@ -259,7 +256,9 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'fancy-narrow)
 (require-package 'sr-speedbar)
 ;; company-mode drop emacs 23 support
-(if (>= emacs-major-version 24) (require-package 'company '(0 8 5) nil))
+(when (>= emacs-major-version 24)
+  (require-package 'company '(0 8 5) nil)
+  (require-package 'company-c-headers))
 (require-package 'legalese)
 (require-package 'string-edit)
 (require-package 'dired-details)
