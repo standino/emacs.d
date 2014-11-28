@@ -1055,11 +1055,11 @@ current line to line 99.
 (setq sql-connection-alist
       '((pool-sone-dev
          (sql-product 'mysql)
-         (sql-server "192.168.229.76")
-         (sql-user "root")
-         (sql-password "123456")
+         (sql-server "192.168.178.50")
+         (sql-user "sone")
+         (sql-password "sone")
          (sql-database "sone")
-         (sql-port 3306))
+         (sql-port 3358))
          (pool-ras-dev
          (sql-product 'mysql)
          (sql-server "192.168.229.76")
