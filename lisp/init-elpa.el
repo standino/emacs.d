@@ -82,7 +82,7 @@ ARCHIVE is the string name of the package archive.")
 (add-to-list 'package-archives '("myelpa" . "~/myelpa"))
 
 ;; Or Un-comment below line if you prefer installing package from https://github.com/redguardtoo/myelpa/ directly
-(add-to-list 'package-archives '("myelpa2" . "https://raw.github.com/redguardtoo/myelpa/master/"))
+;;(add-to-list 'package-archives '("myelpa2" . "https://raw.github.com/redguardtoo/myelpa/master/"))
 
 (defvar melpa-include-packages
   '(bbdb
