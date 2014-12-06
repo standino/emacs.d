@@ -68,6 +68,9 @@ ARCHIVE is the string name of the package archive.")
 ;; Standard package repositories
 ;;------------------------------------------------------------------------------
 
+;; We include the org repository for completeness, but don't use it.
+;; Lock org-mode temporarily:
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 
 ;; well, melpa does not bother supporting emacs23 any more, but cl-lib is still required
@@ -77,15 +80,11 @@ ARCHIVE is the string name of the package archive.")
                          ))
 (if (not *emacs24*) (add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa")))
 
-;; We include the org repository for completeness, but don't normally
-;; use it.
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-
 ;; Un-comment below line if you download zip file from https://github.com/redguardtoo/myelpa/archive/master.zip and extract its content into ~/myelpa/
-(add-to-list 'package-archives '("myelpa" . "~/myelpa"))
+ (setq package-archives '(("myelpa" . "~/myelpa")))
 
 ;; Or Un-comment below line if you prefer installing package from https://github.com/redguardtoo/myelpa/ directly
-(add-to-list 'package-archives '("myelpa2" . "https://raw.github.com/redguardtoo/myelpa/master/"))
+;; (setq package-archives '(("myelpa" . "https://raw.github.com/redguardtoo/myelpa/master/")))
 
 (defvar melpa-include-packages
   '(bbdb
@@ -189,7 +188,7 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'erlang '(20120612 0 0) nil)
 (require-package 'findr)
 (if *emacs24* (require-package 'jump '(2 3 0) nil))
-(require-package 'writeroom-mode)
+;;(require-package 'writeroom-mode)
 (require-package 'haml-mode)
 (require-package 'sass-mode)
 (require-package 'scss-mode)
@@ -262,7 +261,8 @@ ARCHIVE is the string name of the package archive.")
 ;; company-mode drop emacs 23 support
 (when (>= emacs-major-version 24)
   (require-package 'company '(0 8 5) nil)
-  (require-package 'company-c-headers))
+  (require-package 'company-c-headers)
+)
 (require-package 'legalese)
 (require-package 'string-edit)
 (require-package 'dired-details)

@@ -46,9 +46,9 @@
 (setq browse-url-generic-program
       (cond
        (*is-a-mac* "open")
-       (*linux* (executable-find "chromium-browser"))
+       (*linux* (executable-find "firefox"))
        ))
-(setq browse-url-browser-function 'browse-url-generic-program)
+(setq browse-url-browser-function 'browse-url-generic)
 
 ;; use external browser to search programming stuff
 (defun w3mext-hacker-search ()

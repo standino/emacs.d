@@ -7,11 +7,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-<<<<<<< HEAD
-    <meta name="description" content="" />
-    <title>${1:mytitle}</title>
-    <style type="text/css"></style>
-=======
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
     <title>${1:mytitle}</title>
@@ -23,7 +18,6 @@
         nope: '//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js'
       }]);
     </script>
->>>>>>> upstream/master
   </head>
   <body>
     $0

@@ -108,11 +108,11 @@
 (require 'init-linum-mode)
 (require 'init-which-func)
 (require 'init-move-window-buffer)
-;;(require 'init-gist)
-;;(require 'init-moz)
+;; (require 'init-gist)
+(require 'init-moz)
 (require 'init-gtags)
 ;; use evil mode (vi key binding)
-;;(require 'init-evil)
+(require 'init-evil)
 (require 'init-sh)
 (require 'init-ctags)
 (require 'init-ace-jump-mode)
@@ -137,12 +137,10 @@
 (require 'color-theme)
 (require 'color-theme-molokai)
 (color-theme-molokai)
-
 ;; This line must be after color-theme-molokai! Don't know why.
 (setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
 ;; (color-theme-select 'color-theme-xp)
 ;; (color-theme-xp)
-
 
 (setq idle-require-idle-delay 3)
 (setq idle-require-symbols '(init-writting
@@ -162,33 +160,10 @@
 ;;----------------------------------------------------------------------------
 (if (file-exists-p "~/.custom.el") (load-file "~/.custom.el"))
 
-(require 'init-local)
-
 (when (require 'time-date nil t)
    (message "Emacs startup time: %d seconds."
     (time-to-seconds (time-since emacs-load-start-time)))
    )
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(bmkp-last-as-first-bookmark-file "~/.emacs.bmk")
- '(org-agenda-files
-   (quote
-    ("~/myblog/work/Personal.org" "~/myblog/work/jd.org" "~/.emacs.d/emacs-init.org")))
- '(safe-local-variable-values
-   (quote
-    ((js2-basic-offset . 2)
-     (emacs-lisp-docstring-fill-column . 75)
-     (ruby-compilation-executable . "ruby")
-     (ruby-compilation-executable . "ruby1.8")
-     (ruby-compilation-executable . "ruby1.9")
-     (ruby-compilation-executable . "rbx")
-     (ruby-compilation-executable . "jruby"))))
- '(session-use-package t nil (session)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

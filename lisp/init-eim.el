@@ -1,4 +1,3 @@
-
 ;; EIM Input Method. Use C-\ to toggle input method.
 (autoload 'eim-use-package "eim" "Another emacs input method")
 (setq eim-use-tooltip nil)              ; don't use tooltip
@@ -35,4 +34,3 @@ when toggle off input method, switch to evil-normal-state if current state is ev
 
 
 (provide 'init-eim)
-
