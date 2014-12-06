@@ -130,16 +130,19 @@
 (require 'init-hs-minor-mode)
 
 
-(setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
+;; misc has some crucial tools I need immediately
+(require 'init-misc)
+
 ;; color theme
 (require 'color-theme)
 (require 'color-theme-molokai)
 (color-theme-molokai)
+
+;; This line must be after color-theme-molokai! Don't know why.
+(setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
 ;; (color-theme-select 'color-theme-xp)
 ;; (color-theme-xp)
 
-;; misc has some crucial tools I need immediately
-(require 'init-misc)
 
 (setq idle-require-idle-delay 3)
 (setq idle-require-symbols '(init-writting
@@ -165,6 +168,7 @@
    (message "Emacs startup time: %d seconds."
     (time-to-seconds (time-since emacs-load-start-time)))
    )
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
