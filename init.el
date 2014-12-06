@@ -129,10 +129,15 @@
 (require 'init-eim) ;;  cannot be idle-required
 (require 'init-hs-minor-mode)
 
+
+(setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
 ;; color theme
 (require 'color-theme)
 (require 'color-theme-molokai)
 (color-theme-molokai)
+;; (color-theme-select 'color-theme-xp)
+;; (color-theme-xp)
+
 ;; misc has some crucial tools I need immediately
 (require 'init-misc)
 
@@ -167,7 +172,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.bmk")
- '(org-agenda-files (quote ("~/myblog/work/Personal.org" "~/myblog/work/jd.org" "~/.emacs.d/emacs-init.org" "~/ideas/org/mygtd.org" "~/ideas/orgpage/wiki/jd.org")))
+ '(org-agenda-files
+   (quote
+    ("~/myblog/work/Personal.org" "~/myblog/work/jd.org" "~/.emacs.d/emacs-init.org")))
  '(safe-local-variable-values
    (quote
     ((js2-basic-offset . 2)
@@ -178,6 +185,7 @@
      (ruby-compilation-executable . "rbx")
      (ruby-compilation-executable . "jruby"))))
  '(session-use-package t nil (session)))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

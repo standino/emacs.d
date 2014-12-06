@@ -239,7 +239,7 @@
   "Find all strings matching REGEXP in current buffer.
 grab matched string and insert them into kill-ring"
   (interactive
-   (let* ((regexp (grep-read-regexp)))
+   (let* ((regexp (read-regexp "grep regex:")))
      (list regexp)))
   (let (items rlt)
     (setq items (grep-pattern-into-list regexp))
@@ -275,7 +275,7 @@ grab matched string and insert them into kill-ring"
   "Find all strings matching REGEXP in current buffer.
 grab matched string, jsonize them, and insert into kill ring"
   (interactive
-   (let* ((regexp (grep-read-regexp)))
+   (let* ((regexp (read-regexp "grep regex:")))
      (list regexp)))
   (let (items rlt)
     (setq items (grep-pattern-into-list regexp))
@@ -286,11 +286,17 @@ grab matched string, jsonize them, and insert into kill ring"
     (message "matched strings => json => kill-ring")
     rlt))
 
+(defun open-blog-on-current-month ()
+  (interactive)
+  (let (blog)
+   (setq blog (file-truename (concat "~/blog/" (format-time-string "%Y-%m") ".org")) )
+   (find-file blog)))
+
 (defun grep-pattern-cssize-into-kill-ring (regexp)
   "Find all strings matching REGEXP in current buffer.
 grab matched string, cssize them, and insert into kill ring"
   (interactive
-   (let* ((regexp (grep-read-regexp)))
+   (let* ((regexp (read-regexp "grep regex:")))
      (list regexp)))
   (let (items rlt)
     (setq items (grep-pattern-into-list regexp))
@@ -502,18 +508,24 @@ grab matched string, cssize them, and insert into kill ring"
         (deactivate-mark))
         (message "No region active; can't yank to clipboard!")))
 
+(defun get-str-from-x-clipboard ()
+  (let (s)
+    (cond
+     ((and (display-graphic-p) x-select-enable-clipboard)
+      (setq s (x-selection 'CLIPBOARD)))
+     (t (setq s (shell-command-to-string
+                 (cond
+                  (*cygwin* "getclip")
+                  (*is-a-mac* "pbpaste")
+                  (t "xsel -ob"))))
+        ))
+    s))
+
+
 (defun paste-from-x-clipboard()
+  "Paste string clipboard"
   (interactive)
-  (cond
-   ((and (display-graphic-p) x-select-enable-clipboard)
-    (insert (x-selection 'CLIPBOARD)))
-   (t (shell-command
-       (cond
-        (*cygwin* "getclip")
-        (*is-a-mac* "pbpaste")
-        (t "xsel -ob"))
-       1))
-   ))
+  (insert (get-str-from-x-clipboard)))
 
 (defun my/paste-in-minibuffer ()
   (local-set-key (kbd "M-y") 'paste-from-x-clipboard)
@@ -989,8 +1001,6 @@ The full path into relative path insert it as a local file link in org-mode"
 (setq imenu-max-item-length 128)
 (setq imenu-max-item-length 64)
 ;; }}
-
-(setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
 
 (defun display-line-number ()
   "display current line number in mini-buffer"

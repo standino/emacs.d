@@ -1,3 +1,4 @@
+
 #+STARTUP: content
 #+STARTUP: indent
 #+STARTUP: hidestars
@@ -263,8 +264,14 @@ C-c C-e o o     (org-odt-export-to-odt)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/org-reveal")
+(add-to-list 'load-path "~/ht.el")
 
-(require-package 'ox-reveal)
+(require 'ox-reveal)
+(require 'ht)
+;;(require-package 'ox-reveal)
+(require-package 'org)
+(require-package 'org-plus-contrib)
 
 #+END_SRC
 
@@ -283,7 +290,7 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 
   - [[http://orgmode.org/manual/JavaScript-support.html][Exporting org-mode documents to HTML offers 3 styles]]
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC 
 (require-package 'org-page)
 (require 'org-page)
 (setq op/site-main-title "Keep going")
