@@ -290,7 +290,7 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 
   - [[http://orgmode.org/manual/JavaScript-support.html][Exporting org-mode documents to HTML offers 3 styles]]
 
-#+BEGIN_SRC 
+#+BEGIN_SRC  emacs-lisp
 (require-package 'org-page)
 (require 'org-page)
 (setq op/site-main-title "Keep going")
