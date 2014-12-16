@@ -1,4 +1,5 @@
 (require 'erlang-start)
+(require 'cb)
 (require 'flymake)
 ;; (setq flymake-log-level 3) ;; log is annoying
 
