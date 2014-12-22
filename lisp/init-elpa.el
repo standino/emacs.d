@@ -77,6 +77,7 @@ ARCHIVE is the string name of the package archive.")
                          ))
 (if (not *emacs24*) (add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa")))
 
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 ;; Un-comment below line if you download zip file from https://github.com/redguardtoo/myelpa/archive/master.zip and extract its content into ~/myelpa/
 (add-to-list 'package-archives '("myelpa" . "~/myelpa"))
