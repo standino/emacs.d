@@ -921,9 +921,10 @@ current line to line 99.
 
 ** go 语言
 
-*** STARTED Evil  
+*** WAITING Evil  
 :LOGBOOK:  
-CLOCK: [2014-12-22 Mon 11:25]
+- State "WAITING"    from "STARTED"    [2014-12-22 Mon 13:28]
+CLOCK: [2014-12-22 Mon 11:25]--[2014-12-22 Mon 13:28] =>  2:03
 :END:      
 *** TODO [#C] http://yousefourabi.com/blog/2014/05/emacs-for-go/
 
