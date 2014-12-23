@@ -3,21 +3,16 @@
 #+STARTUP: hidestars
 * 初始化
 
-  通过使用 =org-babel-load-file= 把 =emacs-lisp= 代码块中的配置代码生成到 =emacs-init.el= 文件中。通过这种方式，可以把配置使用说明和配
-  置很好的放到这一个文件里。
-
+在命令行里执行如下命令： 
 #+BEGIN_SRC
-(require 'ob-tangle)
-(org-babel-load-file
- (expand-file-name "emacs-init.org"
-                   user-emacs-directory))
-(org-agenda nil  "a")
-(provide 'init-local)
+git clone https://github.com/standino/emacs.d.git ~/.emacs.d
+emacs -nw --batch -l ~/.emacs.d/init.el -f package-refresh-contents 
 #+END_SRC
+* 常用网站
 
-* 如何使用emacs
    - [[https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/blob/master/guide-zh.org][一年成为Emacs高手(像神一样使用编辑器)]]
    - http://emacslife.com/
+* 如何使用emacs
 |------+-------------+-------------------------------------+-------------------------------------------------------------------------------------------------------|
 | 分类 | 快捷键      | 命令                                | 说明                                                                                                  |
 |------+-------------+-------------------------------------+-------------------------------------------------------------------------------------------------------|
@@ -48,6 +43,10 @@
 
 * 如何配置emacs
 
+引入所需插件
+#+BEGIN_SRC emacs-lisp
+(require 'wc)
+#+END_SRC
 
 ** 快捷键设置
 #+BEGIN_SRC emacs-lisp
@@ -61,7 +60,6 @@
 (global-set-key (kbd "C-c n") 'orgtbl-tab)
 
 (global-set-key "\C-o" 'scroll-down)
-;;(global-set-key "\C-i" 'my-tab)
 (global-set-key [(f3)] 'dired)
 (global-set-key [(f4)] 'eshell)
 (global-set-key [(f8)] 'highlight-symbol-at-point)
@@ -69,28 +67,10 @@
 (global-set-key (kbd "<f9>") 'list-bookmarks)
 (global-set-key [(f10)] 'bookmark-set)
 
-;;(global-set-key [(f11)] 'fullscreen)
-
-;;(define-key global-map (kbd "C-c f") 'wy-go-to-char)
-;;(define-key global-map (kbd "C-c b") 'my-back-to-char)
-;;
-;;(global-set-key [(control ?\.)] 'ska-point-to-register)
-;;(global-set-key [(control ?\,)] 'ska-jump-to-register)
-;;(global-set-key (kbd "M-X") 'anything)
-;;
-;;(keyboard-translate ?\C-h ?\C-?)
-;;(global-set-key (kbd "M-8") 'extend-selection)
-;;(global-set-key (kbd "M-*") 'select-text-in-quote)
 
 #+END_SRC
 
 
-
-
-** 统计字数
-#+BEGIN_SRC emacs-lisp
-(require 'wc)
-#+END_SRC
 ** Org
 
 
@@ -359,14 +339,6 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 (setq op/theme 'sb-admin-2)
 #+END_SRC
 
-**** nikola
-- http://getnikola.com/handbook.html
-
-***** 安装
-#+BEGIN_SRC
-sudo apt-get install python-dev python-pip
-sudo pip install nikola
-#+END_SRC
 *** 每周回顾
 
 - =C-c a e= : 导出到~/review/目录下。
@@ -1528,6 +1500,204 @@ CLOSED: [2014-06-03 二 10:47]
 - State "DONE"       from "STARTED"    [2014-06-03 二 10:47]
 CLOCK: [2014-06-03 二 10:04]--[2014-06-03 二 10:47] =>  0:43
 :END:
+
+* VI
+| 快捷键 | 功能           |
+| h      | 左移           |
+| l      | 右移           |
+| k      | 上移           |
+| j      | 下移           |
+| )      | 光标移到句尾   |
+| （     | 光标移动导句首 |
+| i      | 启用插入模式   |
+| Esc    | 推出插入模式   |
+| v      | 开始拷贝       |
+| y      | 拷贝           |
+| p      | 粘贴           |
+|        |                |
+#+BEGIN_SRC
+
+移动光标类命令
+h ：光标左移一个字符
+l ：光标右移一个字符
+space：光标右移一个字符
+Backspace：光标左移一个字符
+k或Ctrl+p：光标上移一行
+j或Ctrl+n ：光标下移一行
+Enter ：光标下移一行
+w或W ：光标右移一个字至字首
+b或B ：光标左移一个字至字首
+e或E ：光标右移一个字至字尾
+) ：光标移至句尾
+( ：光标移至句首
+}：光标移至段落开头
+{：光标移至段落结尾
+- nG：光标移至第n行首
+n+：光标下移n行
+n-：光标上移n行
+n$：光标移至第n行尾
+H ：光标移至屏幕顶行
+M ：光标移至屏幕中间行
+L ：光标移至屏幕最后行
+0：（注意是数字零）光标移至当前行首
+$：光标移至当前行尾
+
+屏幕翻滚类命令
+Ctrl+u：向文件首翻半屏
+Ctrl+d：向文件尾翻半屏
+Ctrl+f：向文件尾翻一屏
+Ctrl＋b；向文件首翻一屏
+nz：将第n行滚至屏幕顶部，不指定n时将当前行滚至屏幕顶部。
+
+插入文本类命令
+i ：在光标前
+I ：在当前行首
+a：光标后
+A：在当前行尾
+o：在当前行之下新开一行
+O：在当前行之上新开一行
+r：替换当前字符
+R：替换当前字符及其后的字符，直至按ESC键
+s：从当前光标位置处开始，以输入的文本替代指定数目的字符
+S：删除指定数目的行，并以所输入文本代替之
+ncw或nCW：修改指定数目的字
+nCC：修改指定数目的行
+
+删除命令
+ndw或ndW：删除光标处开始及其后的n-1个字
+do：删至行首
+d$：删至行尾
+ndd：删除当前行及其后n-1行
+x或X：删除一个字符，x删除光标后的，而X删除光标前的
+Ctrl+u：删除输入方式下所输入的文本
+
+搜索及替换命令
+/pattern：从光标开始处向文件尾搜索pattern
+?pattern：从光标开始处向文件首搜索pattern
+n：在同一方向重复上一次搜索命令
+N：在反方向上重复上一次搜索命令
+：s/p1/p2/g：将当前行中所有p1均用p2替代
+：n1,n2s/p1/p2/g：将第n1至n2行中所有p1均用p2替代
+：g/p1/s//p2/g：将文件中所有p1均用p2替换
+
+选项设置
+all：列出所有选项设置情况
+term：设置终端类型
+ignorance：在搜索中忽略大小写
+list：显示制表位(Ctrl+I)和行尾标志（$)
+number：显示行号
+report：显示由面向行的命令修改过的数目
+terse：显示简短的警告信息
+warn：在转到别的文件时若没保存当前文件则显示NO write信息
+nomagic：允许在搜索模式中，使用前面不带“\”的特殊字符
+nowrapscan：禁止vi在搜索到达文件两端时，又从另一端开始
+mesg：允许vi显示其他用户用write写到自己终端上的信息
+
+最后行方式命令
+：n1,n2 co n3：将n1行到n2行之间的内容拷贝到第n3行下
+：n1,n2 m n3：将n1行到n2行之间的内容移至到第n3行下
+：n1,n2 d ：将n1行到n2行之间的内容删除
+：w ：保存当前文件
+：e filename：打开文件filename进行编辑
+：x：保存当前文件并退出
+：q：退出vi
+：q!：不保存文件并退出vi
+：!command：执行shell命令command
+：n1,n2 w!command：将文件中n1行至n2行的内容作为command的输入并执行之，若不指定n1，n2，则表示将整个文件内容作为command的输入
+：r!command：将命令command的输出结果放到当前行
+
+寄存器操作
+“?nyy：将当前行及其下n行的内容保存到寄存器？中，其中?为一个字母，n为一个数字
+“?nyw：将当前行及其下n个字保存到寄存器？中，其中?为一个字母，n为一个数字
+“?nyl：将当前行及其下n个字符保存到寄存器？中，其中?为一个字母，n为一个数字
+“?p：取出寄存器？中的内容并将其放到光标位置处。这里？可以是一个字母，也可以是一个数字
+ndd：将当前行及其下共n行文本删除，并将所删内容放到1号删除寄存器中。
+
+vi 复制粘贴详解
+(2009-07-14 14:33:17)
+转载▼
+标签：
+杂谈
+	分类： 资料精选
+
+转自：http://woodvillage.blogbus.com/logs/34811481.html
+
+多方搜索整理如下：（除特殊说明以下操作均在命令模式下）
+
+1.
+
+将光标移动到将要复制的行处，按yy进行复制当前行（按nyy复制n行），再移动到粘贴位置，按p进行粘贴。
+
+2.
+
+将光标移到复制的首位置，按下v，用hjkl移动，按y复制，按p粘贴。
+
+3.
+
+光标移到起始行，输入ma；光标移到结束行，输入mb；光标移到粘贴行，输入mc；然后 :'a,'b co 'c，把 co 改成 m 就成剪切了。
+
+4.
+
+光标移动到要复制的行，输入yny（n表示要复制该行以下n行）；光标移动到粘贴行，按p粘贴。
+
+5.
+
+直接输入:n1,n2 co n3。（n1为起始行，n2为结束行，n3为粘贴行）
+
+6.
+
+不同文件之间的复制：用:sp [filename]打开另一文件，（用^ww在文件之间切换），然后按上述方法复制
+
+有关的命令如下：
+yy  将当前行复制到缓冲区
+yw  将当前单词复制到缓冲区
+y1  将光标处的一个字符复制到缓冲区
+p   将缓冲区的信息粘贴到光标的后面
+：行号1 ，行号2 copy 行号3    将行号1到行号2的内容复制到行号3所在行的后面。
+：行号1 ，行号2 move 行号3    将行号1到行号2的文本内容移动到行号3所在行的后面。
+
+ 
+
+7.
+
+寄存器操作
+寄存器操作
+
+"?nyy: 将当前行及其下n行的内容保存到寄存器？中，其中?为一个字母，n为
+
+一个数字
+
+"?nyw: 将当前行及其下n个字保存到寄存器？中，其中?为一个字母，n为一个
+
+数字
+
+"?nyl: 将当前行及其下n个字符保存到寄存器？中，其中?为一个字母，n为一
+
+个数字
+
+"?p: 取出寄存器？中的内容并将其放到光标位置处。这里？可以是一个字母
+
+，也可以是一个数字
+
+ndd: 将当前行及其下共n行文本删除，并将所删内容放到1号删除寄存器中
+
+
+ vi多个文件之间复制、粘贴
+
+
+打开和切换文件 步骤
+
+1、vi 12、：e 2 打开文件2
+
+3、用：e#在两个文件间切换。
+
+复制和粘贴文件 步骤
+
+1、回到1文件，先在开始处做标志mk  然后在末尾用"ay'k （光标自动回到开始处，此时已经把你的内容放到缓冲区了） 其中a表示缓冲区a 
+
+2、用：e#切换到文件2，找到你要粘贴的位置，然后用"ap命令粘贴就行
+#+END_SRC
+
 * 停用配置
 ** TODO [#C] 邮件(mutt)
 :LOGBOOK:
@@ -1795,261 +1965,7 @@ Emacs 配置
 (define-key c-mode-base-map (kbd "<S-f7>") 'gtags-find-tag-from-here)
 
 #+END_SRC
-*** JDEE
-#+BEGIN_SRC
 
-(add-to-list 'load-path (format "%s/lisp" "~/.emacs.d/__my_company_1__ee-2.4.1" "Path to JDEE"))
-(autoload '__my_company_1__e-mode "__my_company_1__e" "JDE mode." t)
-(setq auto-mode-alist
-      (append '(("\\.java\\'" . __my_company_1__e-mode)) auto-mode-alist))
-
-#+END_SRC
-
-
-** DONE malabar-mode
-CLOSED: [2014-06-18 三 15:17]
-   :LOGBOOK:
-   - State "DONE"       from "STARTED"    [2014-06-18 三 15:17]
-   CLOCK: [2014-06-18 三 13:48]--[2014-06-18 三 15:34] =>  1:46
-   - State "OKTODAY"    from "OKTODAY"    [2014-05-09 五 16:04]
-   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:47]
-   - State "OKTODAY"    from "STARTED"    [2014-05-09 五 09:05]
-   CLOCK: [2014-05-09 五 09:05]--[2014-05-09 五 09:11] =>  0:06
-   CLOCK: [2014-05-09 五 09:00]--[2014-05-09 五 09:05] =>  0:05
-   :END:
-
-  - http://software-ninja-ninja.blogspot.com/2014/03/using-malabar-mode-to-auto-populate-new.html
-  - https://github.com/m0smith/malabar-mode#Installation
-  - http://www.skybert.net/emacs/using-malabar-for-java-development/
-    - 
-*** [[https://github.com/m0smith/malabar-mode/blob/develop/src/main/lisp/malabar-cheatsheet.org][ malabar-mode cheat sheet]]
-**** 安装
-
-#+BEGIN_SRC
-cd
-
-git clone https://github.com/m0smith/malabar-mode-jar.git
-cd malabar-mode-jar/
-
-mvn package -Pdevel
-
-cd
-
-git clone https://github.com/m0smith/malabar-mode.git
-
-sudo apt-get install groovy
-
-#+END_SRC  
-
-
-**** 配置
-
-#+BEGIN_SRC 
-(require 'cedet)
-(require 'semantic)
-(load "semantic/loaddefs.el")
-(semantic-mode 1);;
-(require-package 'malabar-mode)
-(require 'malabar-mode)
-  (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
-  (setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
-
-(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode))
-
-(add-hook 'malabar-mode-hook
-     (lambda () 
-       (add-hook 'after-save-hook 'malabar-compile-file-silently
-                  nil t)))
-
-;; Auto-populate an empty java file
-(add-hook 'malabar-mode-hook 
-      '(lambda ()
-         (when (= 0 (buffer-size))
-           (malabar-codegen-insert-class-template))))
-
-#+END_SRC
-
-下面的代码是在打开java程序的时候才加载malabar mode
-#+BEGIN_SRC
-
-(defun malabar-mode-bootstrap ()
-  (require 'cedet)
-  (require 'semantic)
-  (load "semantic/loaddefs.el")
-  (semantic-mode 1);;
-  (add-to-list 'load-path "~/malabar-mode/src/main/lisp")
-  (setq malabar-groovy-lib-dir "~/malabar-mode-jar/target/lib")
-  (setq malabar-groovy-extra-classpath '("~/malabar-mode-jar/target/classes"))
-  (require 'malabar-mode)
-  (load "malabar-flycheck")
-  (malabar-mode)
-;;  (flycheck-mode)
-)
-
-(add-to-list 'auto-mode-alist '("\\.java\\'" . malabar-mode-bootstrap))
-
-(defun my-java-malabar-mode-hook ()
-  (define-key c-mode-base-map "\C-\M-g" 'malabar-jump-to-thing)
-  (global-set-key "\M-n" 'semantic-ia-complete-symbol)
-  )
-
-(add-hook 'c-mode-common-hook 'my-java-malabar-mode-hook)
-
-#+END_SRC
-
-
-Display line number in Malabar and Java mode.
-
-#+begin_src 
-(add-hook 'malabar-mode-hook 'linum-mode)
-(add-hook 'c-mode-common-hook 'linum-mode)
-#+end_src
-
-Use textmate mode with Malabar mode.
-
-#+begin_src 
-(require-package 'textmate)
-(add-hook 'malabar-mode-hook 'textmate-mode)
-(add-hook 'c-mode-common-hook 'textmate-mode)
-#+end_src
-
-Use auto-complete mode with Malabar mode.
-
-#+begin_src
-(add-hook 'malabar-mode-hook 'auto-complete-mode)
-#+end_src
-
-Display JavaDoc at point
-
-#+begin_src 
-(eval-after-load 'malabar-mode
-                 '(define-key malabar-mode-map (kbd "C-x ?") 'malabar-show-javadoc))
-#+end_src
-
-Support for re-factoring under Malabar mode. These functions are
-missing.
-
-#+begin_src 
-(defun c-forward-subword-internal ()
-  (if (and
-       (save-excursion
-         (let ((case-fold-search nil))
-           (re-search-forward
-            (concat "\\W*\\(\\([" c-upper "]*\\W?\\)[" c-lower c-digit "]*\\)")
-            nil t)))
-       (> (match-end 0) (point))) ; So we don't get stuck at a
-                                  ; "word-constituent" which isn't c-upper,
-                                  ; c-lower or c-digit
-      (goto-char
-       (cond
-        ((< 1 (- (match-end 2) (match-beginning 2)))
-         (1- (match-end 2)))
-        (t
-         (match-end 0))))
-    (forward-word 1)))
-
-(defun c-forward-subword (&optional arg)
-  "Do the same as `forward-word' but on subwords.
-See the command `c-subword-mode' for a description of subwords.
-Optional argument ARG is the same as for `forward-word'."
-  (interactive "p")
-  (unless arg (setq arg 1))
-  (c-keep-region-active)
-  (cond
-   ((< 0 arg)
-    (dotimes (i arg (point))
-      (c-forward-subword-internal)))
-   ((> 0 arg)
-    (dotimes (i (- arg) (point))
-      (c-backward-subword-internal)))
-   (t
-    (point))))
-
-(defun subword-capitalize (arg)
-  "Do the same as `capitalize-word' but on subwords.
-See the command `c-subword-mode' for a description of subwords.
-Optional argument ARG is the same as for `capitalize-word'."
-  (interactive "p")
-  (let ((count (abs arg))
-        (direction (if (< 0 arg) 1 -1)))
-    (dotimes (i count)
-      (when (re-search-forward
-             (concat "[" c-alpha "]")
-             nil t)
-        (goto-char (match-beginning 0)))
-      (let* ((p (point))
-             (pp (1+ p))
-             (np (c-forward-subword direction)))
-        (upcase-region p pp)
-        (downcase-region pp np)
-        (goto-char np)))))
-#+end_src
-
-*** ajoke
-
-#+BEGIN_SRC
-cd
-git clone --recursive https://github.com/baohaojun/ajoke
-./ajoke/bin/ajoke-test-drive
-
-export AJOKE_DIR=~/ajoke #PLEASE MODIFY THIS TO SUIT YOUR CASE
-export export PATH=$AJOKE_DIR/bin:$PATH
-export PERL5LIB="$AJOKE_DIR/etc/perl:$PERL5LIB";
-#+END_SRC
-
-Create gtags for your Java project And add the JDK or Android as fallback:
-#+BEGIN_SRC
-cd ~/your-java-project
-mkgtags
-java-add-fallback /usr/lib/jvm/java-7-open__my_company_1__k-amd64
-# or java-add-fallback ~/src/android, but not both
-# as it'd be a waste of time to find 2 copies of java.lang.String
-#+END_SRC
-
-Require $AJOKE_DIR/etc/elisp/ajoke.el in your ~/.emacs
-
-#+BEGIN_SRC
-  (add-to-list 'load-path "~/ajoke/etc/elisp")
-  (require 'ajoke)
-#+END_SRC
-
-
-*** jtags
-
-
-- jtags-member-completion:      find all completions of the partly typed
-                                method or variable name at point
-- jtags-show-declaration:       look up and display the declaration of the
-                                indentifier at point
-- jtags-show-documentation:     look up and display the Javadoc for the
-                                indentifier at point
-- jtags-update-tags-files:      update all tags table files with the latest
-                                source code changes
-- jtags-update-this-tags-file:  update the tags table file in which the
-                                class in the current buffer is tagged
-
-#+BEGIN_SRC
-
- 2044  wget -c http://tamacom.com/global/global-6.3.tar.gz?
-  2047  cd global-6.3/
-  2049  sudo apt-get remove global
- 
- 2058  sh ./reconf.sh
-  2070  sudo apt-get build-dep global
- 2071  ./configure  --with-exuberant-ctags=/etc/alternatives/ctags --disable-gtagscscope
- 2072  make
- 2073  sudo make install
-
-#+END_SRC
-
-#+BEGIN_SRC
-(require-package 'jtags)
-(autoload 'jtags-mode "jtags" "Toggle jtags mode." t)
-(add-hook 'java-mode-hook 'jtags-mode)
-;; (setq tags-table-list '("c:/java/__my_company_1__k1.6.0/src"                         "c:/projects/tetris/src"))
-(setq tags-revert-without-query 't)
-
-#+END_SRC
 ** [[https://github.com/redguardtoo/elpa-mirror][elpa-mirror]]
 all-to-list will not override default elpa, so now you have to repositories, one is elpa, another is myelpa
 #+BEGIN_SRC 
@@ -2065,203 +1981,6 @@ all-to-list will not override default elpa, so now you have to repositories, one
 (add-to-list 'package-archives '("mylocalelpa" . "~/myelpa"))
 (add-to-list 'package-archives '("myelpa" . "https://dl.dropboxusercontent.com/u/858862/myelpa/"))
 
-#+END_SRC
-
-* VI
-| 快捷键 | 功能           |
-| h      | 左移           |
-| l      | 右移           |
-| k      | 上移           |
-| j      | 下移           |
-| )      | 光标移到句尾   |
-| （     | 光标移动导句首 |
-| i      | 启用插入模式   |
-| Esc    | 推出插入模式   |
-| v      | 开始拷贝       |
-| y      | 拷贝           |
-| p      | 粘贴           |
-|        |                |
-#+BEGIN_SRC
-
-移动光标类命令
-h ：光标左移一个字符
-l ：光标右移一个字符
-space：光标右移一个字符
-Backspace：光标左移一个字符
-k或Ctrl+p：光标上移一行
-j或Ctrl+n ：光标下移一行
-Enter ：光标下移一行
-w或W ：光标右移一个字至字首
-b或B ：光标左移一个字至字首
-e或E ：光标右移一个字至字尾
-) ：光标移至句尾
-( ：光标移至句首
-}：光标移至段落开头
-{：光标移至段落结尾
-- nG：光标移至第n行首
-n+：光标下移n行
-n-：光标上移n行
-n$：光标移至第n行尾
-H ：光标移至屏幕顶行
-M ：光标移至屏幕中间行
-L ：光标移至屏幕最后行
-0：（注意是数字零）光标移至当前行首
-$：光标移至当前行尾
-
-屏幕翻滚类命令
-Ctrl+u：向文件首翻半屏
-Ctrl+d：向文件尾翻半屏
-Ctrl+f：向文件尾翻一屏
-Ctrl＋b；向文件首翻一屏
-nz：将第n行滚至屏幕顶部，不指定n时将当前行滚至屏幕顶部。
-
-插入文本类命令
-i ：在光标前
-I ：在当前行首
-a：光标后
-A：在当前行尾
-o：在当前行之下新开一行
-O：在当前行之上新开一行
-r：替换当前字符
-R：替换当前字符及其后的字符，直至按ESC键
-s：从当前光标位置处开始，以输入的文本替代指定数目的字符
-S：删除指定数目的行，并以所输入文本代替之
-ncw或nCW：修改指定数目的字
-nCC：修改指定数目的行
-
-删除命令
-ndw或ndW：删除光标处开始及其后的n-1个字
-do：删至行首
-d$：删至行尾
-ndd：删除当前行及其后n-1行
-x或X：删除一个字符，x删除光标后的，而X删除光标前的
-Ctrl+u：删除输入方式下所输入的文本
-
-搜索及替换命令
-/pattern：从光标开始处向文件尾搜索pattern
-?pattern：从光标开始处向文件首搜索pattern
-n：在同一方向重复上一次搜索命令
-N：在反方向上重复上一次搜索命令
-：s/p1/p2/g：将当前行中所有p1均用p2替代
-：n1,n2s/p1/p2/g：将第n1至n2行中所有p1均用p2替代
-：g/p1/s//p2/g：将文件中所有p1均用p2替换
-
-选项设置
-all：列出所有选项设置情况
-term：设置终端类型
-ignorance：在搜索中忽略大小写
-list：显示制表位(Ctrl+I)和行尾标志（$)
-number：显示行号
-report：显示由面向行的命令修改过的数目
-terse：显示简短的警告信息
-warn：在转到别的文件时若没保存当前文件则显示NO write信息
-nomagic：允许在搜索模式中，使用前面不带“\”的特殊字符
-nowrapscan：禁止vi在搜索到达文件两端时，又从另一端开始
-mesg：允许vi显示其他用户用write写到自己终端上的信息
-
-最后行方式命令
-：n1,n2 co n3：将n1行到n2行之间的内容拷贝到第n3行下
-：n1,n2 m n3：将n1行到n2行之间的内容移至到第n3行下
-：n1,n2 d ：将n1行到n2行之间的内容删除
-：w ：保存当前文件
-：e filename：打开文件filename进行编辑
-：x：保存当前文件并退出
-：q：退出vi
-：q!：不保存文件并退出vi
-：!command：执行shell命令command
-：n1,n2 w!command：将文件中n1行至n2行的内容作为command的输入并执行之，若不指定n1，n2，则表示将整个文件内容作为command的输入
-：r!command：将命令command的输出结果放到当前行
-
-寄存器操作
-“?nyy：将当前行及其下n行的内容保存到寄存器？中，其中?为一个字母，n为一个数字
-“?nyw：将当前行及其下n个字保存到寄存器？中，其中?为一个字母，n为一个数字
-“?nyl：将当前行及其下n个字符保存到寄存器？中，其中?为一个字母，n为一个数字
-“?p：取出寄存器？中的内容并将其放到光标位置处。这里？可以是一个字母，也可以是一个数字
-ndd：将当前行及其下共n行文本删除，并将所删内容放到1号删除寄存器中。
-
-vi 复制粘贴详解
-(2009-07-14 14:33:17)
-转载▼
-标签：
-杂谈
-	分类： 资料精选
-
-转自：http://woodvillage.blogbus.com/logs/34811481.html
-
-多方搜索整理如下：（除特殊说明以下操作均在命令模式下）
-
-1.
-
-将光标移动到将要复制的行处，按yy进行复制当前行（按nyy复制n行），再移动到粘贴位置，按p进行粘贴。
-
-2.
-
-将光标移到复制的首位置，按下v，用hjkl移动，按y复制，按p粘贴。
-
-3.
-
-光标移到起始行，输入ma；光标移到结束行，输入mb；光标移到粘贴行，输入mc；然后 :'a,'b co 'c，把 co 改成 m 就成剪切了。
-
-4.
-
-光标移动到要复制的行，输入yny（n表示要复制该行以下n行）；光标移动到粘贴行，按p粘贴。
-
-5.
-
-直接输入:n1,n2 co n3。（n1为起始行，n2为结束行，n3为粘贴行）
-
-6.
-
-不同文件之间的复制：用:sp [filename]打开另一文件，（用^ww在文件之间切换），然后按上述方法复制
-
-有关的命令如下：
-yy  将当前行复制到缓冲区
-yw  将当前单词复制到缓冲区
-y1  将光标处的一个字符复制到缓冲区
-p   将缓冲区的信息粘贴到光标的后面
-：行号1 ，行号2 copy 行号3    将行号1到行号2的内容复制到行号3所在行的后面。
-：行号1 ，行号2 move 行号3    将行号1到行号2的文本内容移动到行号3所在行的后面。
-
- 
-
-7.
-
-寄存器操作
-寄存器操作
-
-"?nyy: 将当前行及其下n行的内容保存到寄存器？中，其中?为一个字母，n为
-
-一个数字
-
-"?nyw: 将当前行及其下n个字保存到寄存器？中，其中?为一个字母，n为一个
-
-数字
-
-"?nyl: 将当前行及其下n个字符保存到寄存器？中，其中?为一个字母，n为一
-
-个数字
-
-"?p: 取出寄存器？中的内容并将其放到光标位置处。这里？可以是一个字母
-
-，也可以是一个数字
-
-ndd: 将当前行及其下共n行文本删除，并将所删内容放到1号删除寄存器中
-
-
- vi多个文件之间复制、粘贴
-
-
-打开和切换文件 步骤
-
-1、vi 12、：e 2 打开文件2
-
-3、用：e#在两个文件间切换。
-
-复制和粘贴文件 步骤
-
-1、回到1文件，先在开始处做标志mk  然后在末尾用"ay'k （光标自动回到开始处，此时已经把你的内容放到缓冲区了） 其中a表示缓冲区a 
-
-2、用：e#切换到文件2，找到你要粘贴的位置，然后用"ap命令粘贴就行
 #+END_SRC
 
 
