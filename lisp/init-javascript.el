@@ -32,8 +32,6 @@
         ("Config" "\.config( *\\[ *'\\([^']+\\)" 1)
         ("OnChange" " *\$('\\([^']*\\)').*\.change *( *function" 1)
         ("OnClick" " *\$('\\([^']*\\)').*\.click *( *function" 1)
-        ("OnChange" "^ *\\([a-zA-Z0-9\.]+\\)\.change *( *function" 1)
-        ("OnClick" "^ *\\([a-zA-Z0-9\.]+\\)\.click *( *function" 1)
         ("Watch" "\.\$watch( *'\\([^']+\\)" 1)
         ("Function" "function\\s-+\\([^ ]+\\) *(" 1)
         ("Function" " \\([^ ]+\\)\\s-*=\\s-*function\\s-*(" 1)))
@@ -45,7 +43,6 @@
     (imenu--generic-function javascript-common-imenu-regex-list)))
 
 (defun flymake-jshint-init ()
-  (message "flymake-jshint-init called (buffer-file-name)=%s" (buffer-file-name))
   (let* ((temp-file (flymake-init-create-temp-buffer-copy
                      'flymake-create-temp-inplace))
          (local-file (file-relative-name
@@ -221,6 +218,9 @@ Merge RLT and EXTRA-RLT, items in RLT has *higher* priority."
 ;; }}
 
 (if *emacs24* (add-hook 'coffee-mode-hook 'flymake-coffee-load))
+
+;; @see https://github.com/Sterlingg/json-snatcher
+(autoload 'jsons-print-path "json-snatcher" nil t)
 
 ;; {{ js-beautify
 (defun js-beautify ()

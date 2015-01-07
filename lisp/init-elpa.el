@@ -75,12 +75,14 @@ ARCHIVE is the string name of the package archive.")
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
                          ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ))
-(if (not *emacs24*) (add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa")))
 
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 ;; Un-comment below line if you download zip file from https://github.com/redguardtoo/myelpa/archive/master.zip and extract its content into ~/myelpa/
 (add-to-list 'package-archives '("myelpa" . "~/myelpa"))
+;; (setq package-archives '(("myelpa" . "~/projs/myelpa")))
+
+(if (not *emacs24*) (add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa")))
 
 ;; Or Un-comment below line if you prefer installing package from https://github.com/redguardtoo/myelpa/ directly
 ;;(add-to-list 'package-archives '("myelpa2" . "https://raw.github.com/redguardtoo/myelpa/master/"))
@@ -187,6 +189,7 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'erlang '(20120612 0 0) nil)
 (require-package 'findr)
 (if *emacs24* (require-package 'jump '(2 3 0) nil))
+(require-package 'writeroom-mode)
 (require-package 'haml-mode)
 (require-package 'sass-mode)
 (require-package 'scss-mode)
@@ -235,7 +238,6 @@ ARCHIVE is the string name of the package archive.")
 (if *emacs24* (require-package 'ggtags))
 (require-package 'buffer-move)
 (require-package 'switch-window)
-(require-package 'maxframe)
 (require-package 'cpputils-cmake '(0 4 22) nil)
 (require-package 'flyspell-lazy)
 (require-package 'bbdb '(20130421 1145 0) nil)

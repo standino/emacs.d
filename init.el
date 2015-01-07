@@ -97,6 +97,7 @@
 (require 'init-python-mode)
 (require 'init-haskell)
 (require 'init-ruby-mode)
+(require 'init-lisp)
 (require 'init-elisp)
 (if *emacs24* (require 'init-yasnippet))
 ;; Use bookmark instead
@@ -128,18 +129,24 @@
 (require 'init-stripe-buffer)
 (require 'init-eim) ;;  cannot be idle-required
 (require 'init-hs-minor-mode)
+;; need statistics of keyfreq asap
+(require 'init-keyfreq)
+
+
+;; misc has some crucial tools I need immediately
+(require 'init-misc)
 
 ;; color theme
 (require 'color-theme)
 (require 'color-theme-molokai)
 (color-theme-molokai)
-;; misc has some crucial tools I need immediately
-(require 'init-misc)
+;; This line must be after color-theme-molokai! Don't know why.
+(setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
+;; (color-theme-select 'color-theme-xp)
+;; (color-theme-xp)
 
 (setq idle-require-idle-delay 3)
 (setq idle-require-symbols '(init-writting
-                             init-lisp
-                             init-keyfreq
                              init-elnode
                              init-doxygen
                              init-pomodoro

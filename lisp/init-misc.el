@@ -2,9 +2,6 @@
 ;; Some basic preferences
 ;;----------------------------------------------------------------------------
 (setq-default
- blink-cursor-delay 0
- blink-cursor-interval 0.4
- bookmark-default-file "~/.emacs.d/.bookmarks.el"
  buffers-menu-max-size 30
  case-fold-search t
  compilation-scroll-output t
@@ -21,6 +18,10 @@
  truncate-partial-width-windows nil
  ;; no annoying beep on errors
  visible-bell t)
+
+;; use my own bmk if it exists
+(if (file-exists-p (file-truename "~/.emacs.bmk"))
+    (setq bookmark-default-file (file-truename "~/.emacs.bmk")))
 
 (global-auto-revert-mode)
 (setq global-auto-revert-non-file-buffers t
@@ -239,7 +240,7 @@
   "Find all strings matching REGEXP in current buffer.
 grab matched string and insert them into kill-ring"
   (interactive
-   (let* ((regexp (grep-read-regexp)))
+   (let* ((regexp (read-regexp "grep regex:")))
      (list regexp)))
   (let (items rlt)
     (setq items (grep-pattern-into-list regexp))
@@ -275,7 +276,7 @@ grab matched string and insert them into kill-ring"
   "Find all strings matching REGEXP in current buffer.
 grab matched string, jsonize them, and insert into kill ring"
   (interactive
-   (let* ((regexp (grep-read-regexp)))
+   (let* ((regexp (read-regexp "grep regex:")))
      (list regexp)))
   (let (items rlt)
     (setq items (grep-pattern-into-list regexp))
@@ -286,11 +287,17 @@ grab matched string, jsonize them, and insert into kill ring"
     (message "matched strings => json => kill-ring")
     rlt))
 
+(defun open-blog-on-current-month ()
+  (interactive)
+  (let (blog)
+   (setq blog (file-truename (concat "~/blog/" (format-time-string "%Y-%m") ".org")) )
+   (find-file blog)))
+
 (defun grep-pattern-cssize-into-kill-ring (regexp)
   "Find all strings matching REGEXP in current buffer.
 grab matched string, cssize them, and insert into kill ring"
   (interactive
-   (let* ((regexp (grep-read-regexp)))
+   (let* ((regexp (read-regexp "grep regex:")))
      (list regexp)))
   (let (items rlt)
     (setq items (grep-pattern-into-list regexp))
@@ -502,18 +509,24 @@ grab matched string, cssize them, and insert into kill ring"
         (deactivate-mark))
         (message "No region active; can't yank to clipboard!")))
 
+(defun get-str-from-x-clipboard ()
+  (let (s)
+    (cond
+     ((and (display-graphic-p) x-select-enable-clipboard)
+      (setq s (x-selection 'CLIPBOARD)))
+     (t (setq s (shell-command-to-string
+                 (cond
+                  (*cygwin* "getclip")
+                  (*is-a-mac* "pbpaste")
+                  (t "xsel -ob"))))
+        ))
+    s))
+
+
 (defun paste-from-x-clipboard()
+  "Paste string clipboard"
   (interactive)
-  (cond
-   ((and (display-graphic-p) x-select-enable-clipboard)
-    (insert (x-selection 'CLIPBOARD)))
-   (t (shell-command
-       (cond
-        (*cygwin* "getclip")
-        (*is-a-mac* "pbpaste")
-        (t "xsel -ob"))
-       1))
-   ))
+  (insert (get-str-from-x-clipboard)))
 
 (defun my/paste-in-minibuffer ()
   (local-set-key (kbd "M-y") 'paste-from-x-clipboard)
@@ -977,6 +990,7 @@ The full path into relative path insert it as a local file link in org-mode"
 (autoload 'issue-tracker-increment-issue-id-under-cursor "issue-tracker" "" t)
 (autoload 'elpamr-create-mirror-for-installed "elpa-mirror" "" t)
 (autoload 'org2nikola-export-subtree "org2nikola" "" t)
+(autoload 'org2nikola-rerender-published-posts "org2nikola" "" t)
 ;; }}
 
 (setq web-mode-imenu-regexp-list
@@ -989,8 +1003,6 @@ The full path into relative path insert it as a local file link in org-mode"
 (setq imenu-max-item-length 128)
 (setq imenu-max-item-length 64)
 ;; }}
-
-(setq color-theme-illegal-faces "^\\(w3-\\|dropdown-\\|info-\\|linum\\|yas-\\|font-lock\\)")
 
 (defun display-line-number ()
   "display current line number in mini-buffer"
@@ -1056,7 +1068,9 @@ The full path into relative path insert it as a local file link in org-mode"
 ;; someone mentioned that blink cursor could slow Emacs24.4
 ;; I couldn't care less about cursor, so turn it off explicitly
 ;; https://github.com/redguardtoo/emacs.d/issues/208
-(blink-cursor-mode -1)
+;; but somebody mentioned that blink cursor is needed in dark theme
+;; so it should not be turned off by default
+;; (blink-cursor-mode -1)
 
 ;; https://github.com/browse-kill-ring/browse-kill-ring
 (require 'browse-kill-ring)
