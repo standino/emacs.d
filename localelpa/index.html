@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="" />
+        <title>My Emacs packages</title>
+        <style type="text/css">
+         .clear { clear:both; width:100%; }
+         .code{
+           background-color: #DCDCDC;
+           border: 1px solid #B5B5B5;
+           border-radius: 3px;
+           display: inline-block;
+           margin: 0;
+           max-width: 100%;
+           overflow: auto;
+           padding: 0;
+           vertical-align: middle;
+         }
+         .spacer { margin:10px 0; }
+         @media screen and (max-width: 1024px) {
+           ul { list-style-type:none;padding-left:8px; }
+           .name, .descr, #quickstart, #upgrade{ width:100%; }
+           .name{ padding-top:5px; }
+           .descr{ border-bottom:1px solid; padding-bottom:5px; }
+         }
+         @media screen and (min-width: 1025px) {
+           #quickstart{ float:left; width:50%; }
+           #upgrade{ float:right; width:50%; }
+           .name{ float:left; width:50%; }
+           .descr{ float:right; width:50%; }
+         }
+        </style>
+    </head>
+    <body>
+        <div class="clear">
+            <div id="quickstart">
+                <h2>Quick Start</h2>
+                <ul id="usage">
+                    <li><a href="http://repo.or.cz/w/emacs.git/blob_plain/1a0a666f941c99882093d7bd08ced15033bc3f0c:/lisp/emacs-lisp/package.el">First, if you are not using Emacs 24, install package.el</a>.
+                    </li>
+                    <li>Add to your .emacs:<br/>
+                        <pre class="code spacer">
+(require 'package)
+(add-to-list 'package-archives
+          '("myelpa" .
+          "http://myelpa.mydomain.com"))
+          (package-initialize)
+                        </pre><br/>
+        In above code, you can use full path of file directory instead of URL.
+                    </li>
+                    <li><span class="code">M-x eval-buffer</span> to evaluate it, and then do <span class="code">M-x package-refresh-contents</span> to load in the package listing.</li>
+                    <li>You're good to go!</li>
+                    <li><strong>OPTIONAL</strong>, please see <a href="http://www.emacswiki.org/emacs/ELPA">EmacsWiki</a> for advanced stuff.</li>
+                    <li><strong>OPTIONAL</strong>, to upgrade specific package, please download tar file and run <span class="code">M-x package-install-file</span>.</li>
+                </ul>
+            </div>
+            <div id="upgrade">
+                <h2>Upgrade package</h2>
+                <ul>
+                    <li>Please email to <a href='mailto:name@mydomain.com'>name@mydomain.com</a> for upgrading specific package.</li>
+                    <li>The email subject <strong>should</strong> start with <span class="code">ELPA-PACKAGE-yyyymmdd</span> (yyyymmdd is the date string like "20140215").</li>
+                    <li>The remaining part of subject should either be empty string or the full package name with version number like "cl-lib-0.5.tar".</li>
+                    <li>If the package name is not in the subject, you should attach the package itself in email</li>
+                    <li>You can explain why you need upgrade in email body or just leave it empty</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="clear">
+            <h2>List of Packages</h2>
+            <form method="post" id="searchForm" action="">
+                <p>
+                    <label for="filter">Filter:</label>
+                    <input id="filter" type="text" placeholder="Input package name here" />
+                    <input type="button" value="reset" id="reset"/>
+                </p>
+            </form>
+      <div id='n1' class='name'><a href='ag-0.45.el'>ag-0.45.el</a></div><div id='d1' class='descr'>A front-end for ag ('the silver searcher'), the C ack replacement.</div>
+
+<div id='n2' class='name'><a href='anaconda-mode-20141225.702.tar'>anaconda-mode-20141225.702.tar</a></div><div id='d2' class='descr'>Code navigation, documentation lookup and completion for Python</div>
+
+<div id='n3' class='name'><a href='bookmark+-20141217.1632.tar'>bookmark+-20141217.1632.tar</a></div><div id='d3' class='descr'>Bookmark+: extensions to standard library `bookmark.el'.</div>
+
+<div id='n4' class='name'><a href='coffee-mode-0.5.7.el'>coffee-mode-0.5.7.el</a></div><div id='d4' class='descr'>Major mode to edit CoffeeScript files in Emacs</div>
+
+<div id='n5' class='name'><a href='cpputils-cmake-0.5.0.tar'>cpputils-cmake-0.5.0.tar</a></div><div id='d5' class='descr'>Easy real time C++ syntax check and intellisense if you use CMake</div>
+
+<div id='n6' class='name'><a href='csharp-mode-20141204.2302.el'>csharp-mode-20141204.2302.el</a></div><div id='d6' class='descr'>C# mode derived mode</div>
+
+<div id='n7' class='name'><a href='fancy-narrow-20141123.617.el'>fancy-narrow-20141123.617.el</a></div><div id='d7' class='descr'>narrowregion with more eye candy.</div>
+
+<div id='n8' class='name'><a href='flyspell-lazy-0.6.10.el'>flyspell-lazy-0.6.10.el</a></div><div id='d8' class='descr'>Improve flyspell responsiveness using idle timers</div>
+
+<div id='n9' class='name'><a href='ggtags-0.8.8.el'>ggtags-0.8.8.el</a></div><div id='d9' class='descr'>emacs frontend to GNU Global source code tagging system</div>
+
+<div id='n10' class='name'><a href='git-gutter-0.80.el'>git-gutter-0.80.el</a></div><div id='d10' class='descr'>Port of Sublime Text plugin GitGutter</div>
+
+<div id='n11' class='name'><a href='idomenu-20141123.1320.el'>idomenu-20141123.1320.el</a></div><div id='d11' class='descr'>imenu tag selection a la ido</div>
+
+<div id='n12' class='name'><a href='js2-mode-20141118.tar'>js2-mode-20141118.tar</a></div><div id='d12' class='descr'>Improved JavaScript editing mode</div>
+
+<div id='n13' class='name'><a href='magit-90141228.tar'>magit-90141228.tar</a></div><div id='d13' class='descr'>control Git from Emacs</div>
+
+<div id='n14' class='name'><a href='multi-term-20141203.1658.el'>multi-term-20141203.1658.el</a></div><div id='d14' class='descr'>Managing multiple terminal buffers in Emacs.</div>
+
+<div id='n15' class='name'><a href='org-20141229.tar'>org-20141229.tar</a></div><div id='d15' class='descr'>Outline-based notes management and organizer</div>
+
+<div id='n16' class='name'><a href='packed-20141211.904.el'>packed-20141211.904.el</a></div><div id='d16' class='descr'>package manager agnostic Emacs Lisp package utilities</div>
+
+<div id='n17' class='name'><a href='paredit-24.el'>paredit-24.el</a></div><div id='d17' class='descr'>minor mode for editing parentheses</div>
+
+<div id='n18' class='name'><a href='pretty-mode-20141207.1152.el'>pretty-mode-20141207.1152.el</a></div><div id='d18' class='descr'>Redisplay parts of the buffer as pretty symbols.</div>
+
+<div id='n19' class='name'><a href='rainbow-delimiters-2.1.el'>rainbow-delimiters-2.1.el</a></div><div id='d19' class='descr'>Highlight brackets according to their depth</div>
+
+<div id='n20' class='name'><a href='robe-20141120.1919.tar'>robe-20141120.1919.tar</a></div><div id='d20' class='descr'>Code navigation, documentation lookup and completion for Ruby</div>
+
+<div id='n21' class='name'><a href='switch-window-20141205.56.el'>switch-window-20141205.56.el</a></div><div id='d21' class='descr'>A *visual* way to choose a window to switch to</div>
+
+<div id='n22' class='name'><a href='w3m-20141125.1729.tar'>w3m-20141125.1729.tar</a></div><div id='d22' class='descr'>an Emacs interface to w3m</div>
+
+<div id='n23' class='name'><a href='web-20141111.533.el'>web-20141111.533.el</a></div><div id='d23' class='descr'>useful HTTP client</div>
+
+<div id='n24' class='name'><a href='writeroom-mode-2.5.tar'>writeroom-mode-2.5.tar</a></div><div id='d24' class='descr'>Minor mode for distraction-free writing</div>
+
+<div id='n25' class='name'><a href='yaml-mode-20141125.37.el'>yaml-mode-20141125.37.el</a></div><div id='d25' class='descr'>Major mode for editing YAML files</div>
+
+        </div>
+
+        <script type="text/javascript">
+         var dic=['ag-0.45',
+'anaconda-mode-20141225.702',
+'bookmark+-20141217.1632',
+'coffee-mode-0.5.7',
+'cpputils-cmake-0.5.0',
+'csharp-mode-20141204.2302',
+'fancy-narrow-20141123.617',
+'flyspell-lazy-0.6.10',
+'ggtags-0.8.8',
+'git-gutter-0.80',
+'idomenu-20141123.1320',
+'js2-mode-20141118',
+'magit-90141228',
+'multi-term-20141203.1658',
+'org-20141229',
+'packed-20141211.904',
+'paredit-24',
+'pretty-mode-20141207.1152',
+'rainbow-delimiters-2.1',
+'robe-20141120.1919',
+'switch-window-20141205.56',
+'w3m-20141125.1729',
+'web-20141111.533',
+'writeroom-mode-2.5',
+'yaml-mode-20141125.37'];
+        </script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="elpa-mirror.js"></script>
+    </body>
+</html>
