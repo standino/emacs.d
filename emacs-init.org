@@ -761,7 +761,7 @@ GTD 提醒
   (if (= level 1) ""
     (let ((str " "))
       (dotimes (k (1- level) str)
-        (setq str (concat "\__" str))))))
+        (setq str (concat "--" str))))))
 #+END_SRC
 
 ***  Org 写 PPT
@@ -775,7 +775,31 @@ GTD 提醒
  
   - http://orgmode.org/worg/org-tutorials/non-beamer-presentations.html#sec-3
   - https://github.com/yjwen/org-reveal/blob/master/Readme.org  
+  - http://forum.ubuntu.org.cn/viewtopic.php?t=810
+  - http://orgmode.org/manual/Beamer-export.html
+  - http://orgmode.org/worg/exporters/beamer/ox-beamer.html
+  - https://github.com/fniessen/refcard-org-beamer
+  - http://orgmode.org/worg/exporters/beamer/ox-beamer.htmlhttp://orgmode.org/worg/exporters/beamer/ox-beamer.html
+sudo apt-get install texlive-fonts-recommended
+sudo apt-get install texlive cjk-latex latex-cjk-all latex-beamer
+#+BEGIN_SRC emacs-lisp
+(setq org-latex-coding-system 'utf-8)
+;;; Export language
+(setq org-export-default-language "zh-CN")
+(eval-after-load "ox-latex"
 
+  ;; update the list of LaTeX classes and associated header (encoding, etc.)
+  ;; and structure
+  '(add-to-list 'org-latex-classes
+                `("beamer"
+                  ,(concat "\\documentclass[presentation]{beamer}\n"
+                           "[DEFAULT-PACKAGES]"
+                           "[PACKAGES]"
+                           "[EXTRA]\n")
+                  ("\\section{%s}" . "\\section*{%s}")
+                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+#+END_SRC
 
 **** 导出odt
 C-c C-e o o     (org-odt-export-to-odt)
