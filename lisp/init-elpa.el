@@ -76,13 +76,13 @@ ARCHIVE is the string name of the package archive.")
                          ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ))
 
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 ;; Un-comment below line if you download zip file from https://github.com/redguardtoo/myelpa/archive/master.zip and extract its content into ~/myelpa/
 (add-to-list 'package-archives '("myelpa" . "~/myelpa"))
 ;; (setq package-archives '(("myelpa" . "~/projs/myelpa")))
 
-(if (not *emacs24*) (add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa")))
+(add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa"))
 
 ;; Or Un-comment below line if you prefer installing package from https://github.com/redguardtoo/myelpa/ directly
 ;;(add-to-list 'package-archives '("myelpa2" . "https://raw.github.com/redguardtoo/myelpa/master/"))
