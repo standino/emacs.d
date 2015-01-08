@@ -10,6 +10,7 @@ snippets/java-mode/myjavahead.yasnippet
 /.session
 .cask
 /custom.el
+%APPDATA%
 *.elc
 *_flymake.el
 projectile.cache
