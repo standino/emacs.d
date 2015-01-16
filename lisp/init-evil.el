@@ -4,6 +4,13 @@
 ;; load undo-tree and ert
 (add-to-list 'load-path "~/.emacs.d/site-lisp/evil/lib")
 (require 'evil)
+
+;; @see https://bitbucket.org/lyro/evil/issue/342/evil-default-cursor-setting-should-default
+;; cursor is alway black because of evil
+;; here is the workaround
+(setq evil-default-cursor t)
+
+;; enable evil-mode
 (evil-mode 1)
 
 ;; {{@see https://github.com/timcharper/evil-surround
@@ -226,6 +233,7 @@ to replace the symbol under cursor"
   "cd" 'evilcvn-change-symbol-in-defun
   "cb" 'evilcvn-change-symbol-in-whole-buffer
   "yy" 'cb-switch-between-controller-and-view
+  "tua" 'artbollocks-mode
   "yu" 'cb-get-url-from-controller
   "tt" 'ido-goto-symbol ;; same as my vim hotkey
   "ht" 'helm-etags-select
