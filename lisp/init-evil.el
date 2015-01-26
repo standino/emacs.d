@@ -296,6 +296,9 @@ to replace the symbol under cursor"
   "x3" '(lambda () (interactive) (if *emacs23* (split-window-horizontally) (split-window-below)))
   "xu" 'winner-undo
   "to" 'toggle-web-js-offset
+  "cam" 'org-tags-view ;; "C-c a m" search items in org-file-apps by tag
+  "cf" 'helm-for-files ;; "C-c f"
+  "pf" 'projectile-find-file ;; "C-c p f"
   "sl" 'sort-lines
   "ulr" 'uniquify-all-lines-region
   "ulb" 'uniquify-all-lines-buffer
