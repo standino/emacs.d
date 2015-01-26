@@ -22,7 +22,8 @@
 ;; {{ https://github.com/syl20bnr/evil-escape
 (require 'evil-escape)
 ;; key-chord is used by evil-escape
-(setq key-chord-two-keys-delay 0.5)
+(setq-default evil-escape-delay 0.5)
+(setq-default evil-escape-key-sequence "kj")
 (evil-escape-mode 1)
 ;; }}
 
@@ -230,6 +231,8 @@ to replace the symbol under cursor"
   ;; "cl" 'evilnc-comment-or-uncomment-to-the-line
   ;; "cc" 'evilnc-copy-and-comment-lines
   ;; "cp" 'evilnc-comment-or-uncomment-paragraphs
+  "epy" 'emmet-expand-yas
+  "epl" 'emmet-expand-line
   "cd" 'evilcvn-change-symbol-in-defun
   "cb" 'evilcvn-change-symbol-in-whole-buffer
   "yy" 'cb-switch-between-controller-and-view
@@ -328,6 +331,7 @@ to replace the symbol under cursor"
   "hss" 'hs-show-block
   "hd" 'describe-function
   "hf" 'find-function
+  "hk" 'describe-key
   "hv" 'describe-variable
   "gt" 'ggtags-find-tag-dwim
   "gr" 'ggtags-find-reference
