@@ -14,7 +14,6 @@ snippets/java-mode/myjavahead.yasnippet
 *_flymake.el
 projectile.cache
 CVS
-elpa
 eshell/alias
 .svn
 *_flymake.el
@@ -52,7 +51,6 @@ emacs-init.el
 /.smex-items
 /image-dired/
 
-/elpa
 eshell/
 semanticdb/
 *.swp
