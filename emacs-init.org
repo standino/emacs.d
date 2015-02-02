@@ -15,21 +15,21 @@ emacs -nw --batch -l ~/.emacs.d/init.el -f package-refresh-contents
    - vim http://blog.jobbole.com/18339/
 
 * VI
-| 功能           | 键盘操作           |
-| 左移           | h                  |
-| 右移           | l                  |
-| 上移           | k                  |
-| 下移           | j                  |
-| 光标移到句尾   | )                  |
-| 光标移动导句首 | （                 |
-| 启用插入模式   | i                  |
-| 推出插入模式   | Esc                |
-| 开始拷贝       | v + y + p          |
-| 最后一行       | G                  |
-| 第一行         | gg                 |
-| 块操作删除粘贴 | C-v + hlkj + d + p |
-| 块插入         | C-v + kj + I + Esc |
-|                |                    |
+| 功能                          | 键盘操作           |
+| 左移                          | h                  |
+| 右移                          | l                  |
+| 上移                          | k                  |
+| 下移                          | j                  |
+| 光标移到句尾                  | )                  |
+| 光标移动导句首                | （                 |
+| 启用插入模式                  | i                  |
+| 推出插入模式                  | Esc                |
+| 开始拷贝                      | v + y + p          |
+| 最后一行                      | G                  |
+| 第一行                        | gg                 |
+| 块操作删除粘贴                | C-v + hlkj + d + p |
+| 块插入                        | C-v + kj + I + Esc |
+| 把当前文件加入到org file list | ,mx org-agenda-file-to-front |
 #+BEGIN_SRC
 
 
@@ -792,7 +792,7 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 (setq op/personal-google-analytics-id "UA-46515756-1")
 (setq op/repository-org-branch "master")  ;; default is "source"
 (setq op/repository-html-branch "master") ;; default is "master"
-(setq op/repository-directory  "~/myblog" )
+(setq op/repository-directory  "~/cwboot" )
 (setq op/category-config-alist
       '(("blog" ;; this is the default configuration
          :show-meta t
@@ -823,30 +823,14 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
          :sort-by :date
          :category-index nil)))
 
-(defun cw/commit-pub ()
-    (shell-command  "st ci")
-    (op/do-publication t nil nil t)
-  )
-(defun cw/pub-blog-git ()
-  (interactive)
-  (setq op/repository-directory (concat my-idea-home "standino.github.com") )
-  (cw/commit-pub)
- ;; (op/do-publication)
-  )
-(defun cw/pub-notes-local ()
-  (interactive)
-  (setq op/repository-directory (concat my-idea-home "orgpage") )
-  (cw/commit-pub)
-;;  (op/do-publication)
-)
-
 (defun cw/pub-all ()
   (interactive)
-  (cw/pub-notes-local)
-  (cw/pub-blog-git)
- ;; (shell-command  "st site")
 
-  )
+  (op/do-publication nil "HEAD~1" "~/standino.github.com/" nil)
+
+  (op/do-publication nil "HEAD~1" "~/myblog/" nil)
+)
+
 #+END_SRC
 
 **** 设置自己的的主题

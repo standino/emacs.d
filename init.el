@@ -185,8 +185,18 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(bmkp-last-as-first-bookmark-file "~/.emacs.bmk")
- '(org-agenda-files (quote ("~/myblog/work/Personal.org" "~/myblog/work/jd.org" "~/.emacs.d/emacs-init.org")))
- '(safe-local-variable-values (quote ((js2-basic-offset . 2) (emacs-lisp-docstring-fill-column . 75) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby"))))
+ '(org-agenda-files
+   (quote
+    ("~/cwboot/work/Personal.org" "~/.emacs.d/emacs-init.org" "~/cwboot/work/jd.org")))
+ '(safe-local-variable-values
+   (quote
+    ((js2-basic-offset . 2)
+     (emacs-lisp-docstring-fill-column . 75)
+     (ruby-compilation-executable . "ruby")
+     (ruby-compilation-executable . "ruby1.8")
+     (ruby-compilation-executable . "ruby1.9")
+     (ruby-compilation-executable . "rbx")
+     (ruby-compilation-executable . "jruby"))))
  '(session-use-package t nil (session)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
