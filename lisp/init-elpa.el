@@ -74,15 +74,16 @@ ARCHIVE is the string name of the package archive.")
 ;; TODO: in half a year, I will remove gnu elpa because emacs 24.3 is the minimum version
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
                          ("melpa-stable" . "http://stable.melpa.org/packages/")
+                         ;; uncomment below line if you need use GNU ELPA
+                         ;; ("gnu" . "http://elpa.gnu.org/packages/")
                          ))
-
-;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-
-;; Un-comment below line if you download zip file from https://github.com/redguardtoo/myelpa/archive/master.zip and extract its content into ~/myelpa/
-;; (add-to-list 'package-archives '("myelpa" . "~/myelpa"))
+;; Un-comment below line if you download zip file
+;; from https://github.com/redguardtoo/myelpa/archive/master.zip
+;; and extract its content into ~/myelpa/
 ;; (setq package-archives '(("myelpa" . "~/projs/myelpa")))
 
-;;(add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa"))
+;; this is just hack to work around *emacs23* issues
+(if (not *emacs24*) (add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa")))
 
 ;; Or Un-comment below line if you prefer installing package from https://github.com/redguardtoo/myelpa/ directly
 ;;(add-to-list 'package-archives '("myelpa2" . "https://raw.github.com/redguardtoo/myelpa/master/"))

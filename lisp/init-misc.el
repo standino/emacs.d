@@ -43,6 +43,7 @@
 (add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
 (autoload 'csv-mode "csv-mode" "Major mode for comma-separated value files." t)
 
+(autoload 'find-by-pinyin-dired "find-by-pinyin-dired" "" t)
 
 ;;----------------------------------------------------------------------------
 ;; Don't disable narrowing commands
@@ -130,14 +131,19 @@
 
 (add-hook 'prog-mode-hook
           '(lambda ()
-             ;; enable for all programming modes
-             ;; http://emacsredux.com/blog/2013/04/21/camelcase-aware-editing/
-             (subword-mode)
-             (if *emacs24* (electric-pair-mode 1))
-             ;; eldoc, show API doc in minibuffer echo area
-             (turn-on-eldoc-mode)
-             ;; show trailing spaces in a programming mod
-             (setq show-trailing-whitespace t)))
+             (unless (is-buffer-file-temp)
+               ;; highlight FIXME/BUG/TODO in comment
+               (require 'fic-mode)
+               (fic-mode 1)
+               ;; enable for all programming modes
+               ;; http://emacsredux.com/blog/2013/04/21/camelcase-aware-editing/
+               (subword-mode)
+               (if *emacs24* (electric-pair-mode 1))
+               ;; eldoc, show API doc in minibuffer echo area
+               (turn-on-eldoc-mode)
+               ;; show trailing spaces in a programming mod
+               (setq show-trailing-whitespace t)
+               )))
 
 ;; turns on auto-fill-mode, don't use text-mode-hook because for some
 ;; mode (org-mode for example), this will make the exported document
