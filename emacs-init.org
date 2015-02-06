@@ -538,12 +538,11 @@ ndd: 将当前行及其下共n行文本删除，并将所删内容放到1号删�
 
 ** 快捷键设置
 #+BEGIN_SRC emacs-lisp
-;;; Hotkey options
 (defalias 'tt 'toggle-truncate-lines)
 (defalias 'yas  'yas/expand)
 (defalias 'sql-org-table 'org-table-create-or-convert-from-region)
 (defalias 'sql-org-next  'orgtbl-tab)
-(global-set-key "\C-z" 'set-mark-command)
+;;(global-set-key "\C-z" 'set-mark-command)
 (global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
 (global-set-key (kbd "C-c n") 'orgtbl-tab)
 
@@ -554,14 +553,13 @@ ndd: 将当前行及其下共n行文本删除，并将所删内容放到1号删�
 
 (global-set-key (kbd "<f9>") 'list-bookmarks)
 (global-set-key [(f10)] 'bookmark-set)
-
-
 #+END_SRC
-
-
 ** Org
-
-
+*** evil org
+#+BEGIN_SRC 
+(require-package 'evil-org)
+(require 'evil-org)
+#+END_SRC
 *** toc
 #+BEGIN_SRC
 (require-package 'org-toc)
