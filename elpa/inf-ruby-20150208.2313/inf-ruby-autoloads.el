@@ -6,8 +6,8 @@
 ;;;### (autoloads (inf-ruby-file-contents-match inf-ruby-console-default
 ;;;;;;  inf-ruby-console-gem inf-ruby-console-rails inf-ruby-console-auto
 ;;;;;;  inf-ruby-switch-setup run-ruby inf-ruby inf-ruby-minor-mode
-;;;;;;  inf-ruby-setup-keybindings) "inf-ruby" "inf-ruby.el" (21633
-;;;;;;  25698 993197 827000))
+;;;;;;  inf-ruby-setup-keybindings) "inf-ruby" "inf-ruby.el" (21729
+;;;;;;  48707 157982 593000))
 ;;; Generated autoloads from inf-ruby.el
 
 (defvar ruby-source-modes '(ruby-mode enh-ruby-mode) "\
@@ -88,8 +88,8 @@ Run racksh, custom console.rb, or just IRB, in DIR.
 
 ;;;***
 
-;;;### (autoloads nil nil ("inf-ruby-pkg.el") (21633 25699 87560
-;;;;;;  338000))
+;;;### (autoloads nil nil ("inf-ruby-pkg.el") (21729 48707 261701
+;;;;;;  664000))
 
 ;;;***
 

@@ -1,4 +1,4 @@
-(define-package "anaconda-mode" "20150127.125" "Code navigation, documentation lookup and completion for Python"
+(define-package "anaconda-mode" "20150213.1059" "Code navigation, documentation lookup and completion for Python"
   '((emacs "24")
     (json-rpc "0.0.1")
     (cl-lib "0.5.0")

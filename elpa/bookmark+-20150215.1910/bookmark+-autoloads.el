@@ -3,18 +3,18 @@
 ;;; Code:
 
 
-;;;### (autoloads nil "bookmark+" "bookmark+.el" (21710 57761 645527
-;;;;;;  582000))
+;;;### (autoloads nil "bookmark+" "bookmark+.el" (21729 48831 217978
+;;;;;;  966000))
 ;;; Generated autoloads from bookmark+.el
  (autoload 'bmkp-version-number "bookmark+")
  (autoload 'bmkp-version "bookmark+")
 
 ;;;***
 
-;;;### (autoloads nil "bookmark+-1" "bookmark+-1.el" (21710 57761
-;;;;;;  677527 581000))
+;;;### (autoloads nil "bookmark+-1" "bookmark+-1.el" (21729 48831
+;;;;;;  265978 965000))
 ;;; Generated autoloads from bookmark+-1.el
- (autoload 'bmkp-prompt-for-tags-flag "bookmark+")
+ (autoload 'bmkp-autofile-filecache "bookmark+")
  (autoload 'bmkp-auto-idle-bookmark-min-distance "bookmark+")
  (autoload 'bmkp-auto-idle-bookmark-mode "bookmark+")
  (autoload 'bmkp-auto-idle-bookmark-mode-delay "bookmark+")
@@ -37,6 +37,7 @@
  (autoload 'bmkp-new-bookmark-default-names "bookmark+")
  (autoload 'bmkp-other-window-pop-to-flag "bookmark+")
  (autoload 'bmkp-prompt-for-tags-flag "bookmark+")
+ (autoload 'bmkp-properties-to-keep "bookmark+")
  (autoload 'bmkp-region-search-size "bookmark+")
  (autoload 'bmkp-save-new-location-flag "bookmark+")
  (autoload 'bmkp-sequence-jump-display-function "bookmark+")
@@ -62,6 +63,7 @@
  (autoload 'bookmark-jump "bookmark+")
  (autoload 'bookmark-jump-other-window "bookmark+")
  (autoload 'bookmark-relocate "bookmark+")
+ (autoload 'bookmark-insert-current-bookmark "bookmark+")
  (autoload 'bookmark-insert-location "bookmark+")
  (autoload 'bookmark-rename "bookmark+")
  (autoload 'bookmark-insert "bookmark+")
@@ -274,8 +276,8 @@
 
 ;;;***
 
-;;;### (autoloads nil "bookmark+-bmu" "bookmark+-bmu.el" (21710 57761
-;;;;;;  757527 580000))
+;;;### (autoloads nil "bookmark+-bmu" "bookmark+-bmu.el" (21729 48831
+;;;;;;  353978 962000))
 ;;; Generated autoloads from bookmark+-bmu.el
  (autoload 'bmkp-bmenu-omitted-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-commands-file "bookmark+")
@@ -298,29 +300,31 @@
  (autoload 'bookmark-bmenu-show-annotation "bookmark+")
  (autoload 'bookmark-bmenu-execute-deletions "bookmark+")
  (autoload 'bookmark-bmenu-rename "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-autonamed-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-non-file-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-dired-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-gnus-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-icicles-search-hits-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-image-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-info-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-desktop-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-man-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-region-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-tagged-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-untagged-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-url-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-variable-list-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-snippet-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-w3m-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-temporary-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-bookmark-file-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-bookmark-list-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-show-all "bookmark+")
- (autoload 'bmkp-bmenu-show-only-autofiles "bookmark+")
- (autoload 'bmkp-bmenu-show-only-autonamed "bookmark+")
- (autoload 'bmkp-bmenu-show-only-bookmark-files "bookmark+")
- (autoload 'bmkp-bmenu-show-only-bookmark-lists "bookmark+")
- (autoload 'bmkp-bmenu-show-only-desktops "bookmark+")
- (autoload 'bmkp-bmenu-show-only-dired "bookmark+")
- (autoload 'bmkp-bmenu-show-only-files "bookmark+")
- (autoload 'bmkp-bmenu-show-only-gnus "bookmark+")
- (autoload 'bmkp-bmenu-show-only-icicle-search-hits "bookmark+")
- (autoload 'bmkp-bmenu-show-only-image-files "bookmark+")
- (autoload 'bmkp-bmenu-show-only-info-nodes "bookmark+")
- (autoload 'bmkp-bmenu-show-only-man-pages "bookmark+")
- (autoload 'bmkp-bmenu-show-only-non-files "bookmark+")
- (autoload 'bmkp-bmenu-show-only-orphaned-local-files "bookmark+")
- (autoload 'bmkp-bmenu-show-only-regions "bookmark+")
- (autoload 'bmkp-bmenu-show-only-snippets "bookmark+")
- (autoload 'bmkp-bmenu-show-only-specific-buffer "bookmark+")
- (autoload 'bmkp-bmenu-show-only-specific-file "bookmark+")
- (autoload 'bmkp-bmenu-show-only-temporary "bookmark+")
- (autoload 'bmkp-bmenu-show-only-variable-lists "bookmark+")
- (autoload 'bmkp-bmenu-show-only-urls "bookmark+")
- (autoload 'bmkp-bmenu-show-only-w3m-urls "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-autofile-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-file-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-orphaned-local-file-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-specific-buffer-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-specific-file-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-refresh-menu-list "bookmark+")
  (autoload 'bmkp-bmenu-filter-bookmark-name-incrementally "bookmark+")
  (autoload 'bmkp-bmenu-filter-file-name-incrementally "bookmark+")
@@ -339,7 +343,7 @@
  (autoload 'bmkp-bmenu-mark-dired-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-mark-file-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-mark-gnus-bookmarks "bookmark+")
- (autoload 'bmkp-bmenu-mark-icicle-search-hits-bookmarks "bookmark+")
+ (autoload 'bmkp-bmenu-mark-icicles-search-hits-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-mark-image-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-mark-info-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-mark-man-bookmarks "bookmark+")
@@ -369,10 +373,9 @@
  (autoload 'bmkp-bmenu-omit/unomit-marked "bookmark+")
  (autoload 'bmkp-bmenu-omit-marked "bookmark+")
  (autoload 'bmkp-bmenu-unomit-marked "bookmark+")
- (autoload 'bmkp-bmenu-show-only-omitted "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-omitted-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-search-marked-bookmarks-regexp "bookmark+")
  (autoload 'bmkp-bmenu-query-replace-marked-bookmarks-regexp "bookmark+")
- (autoload 'bmkp-bmenu-show-only-tagged "bookmark+")
  (autoload 'bmkp-bmenu-remove-all-tags "bookmark+")
  (autoload 'bmkp-bmenu-add-tags "bookmark+")
  (autoload 'bmkp-bmenu-set-tag-value "bookmark+")
@@ -424,8 +427,8 @@
 
 ;;;***
 
-;;;### (autoloads nil "bookmark+-lit" "bookmark+-lit.el" (21710 57761
-;;;;;;  521527 583000))
+;;;### (autoloads nil "bookmark+-lit" "bookmark+-lit.el" (21729 48831
+;;;;;;  85978 970000))
 ;;; Generated autoloads from bookmark+-lit.el
  (autoload 'bmkp-auto-light-relocate-when-jump-flag "bookmark+")
  (autoload 'bmkp-auto-light-when-jump "bookmark+")
@@ -434,7 +437,7 @@
  (autoload 'bmkp-light-style-autonamed "bookmark+")
  (autoload 'bmkp-light-style-non-autonamed "bookmark+")
  (autoload 'bmkp-light-threshold "bookmark+")
- (autoload 'bmkp-bmenu-show-only-lighted "bookmark+")
+ (autoload 'bmkp-bmenu-show-only-lighted-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-light "bookmark+")
  (autoload 'bmkp-bmenu-light-marked "bookmark+")
  (autoload 'bmkp-bmenu-unlight "bookmark+")
@@ -473,13 +476,14 @@
 
 ;;;***
 
-;;;### (autoloads nil "bookmark+-mac" "bookmark+-mac.el" (21710 57761
-;;;;;;  609527 582000))
+;;;### (autoloads nil "bookmark+-mac" "bookmark+-mac.el" (21729 48831
+;;;;;;  173978 967000))
 ;;; Generated autoloads from bookmark+-mac.el
  (autoload 'bmkp-with-help-window "bookmark+")
  (autoload 'bmkp-with-output-to-plain-temp-buffer "bookmark+")
  (autoload 'bmkp-define-cycle-command "bookmark+")
  (autoload 'bmkp-define-next+prev-cycle-commands "bookmark+")
+ (autoload 'bmkp-define-show-only-command "bookmark+")
  (autoload 'bmkp-define-sort-command "bookmark+")
  (autoload 'bmkp-define-file-sort-predicate "bookmark+")
  (autoload 'bmkp-menu-bar-make-toggle "bookmark+")
@@ -488,8 +492,8 @@
 ;;;***
 
 ;;;### (autoloads nil nil ("bookmark+-chg.el" "bookmark+-doc.el"
-;;;;;;  "bookmark+-key.el" "bookmark+-pkg.el") (21710 57761 806024
-;;;;;;  854000))
+;;;;;;  "bookmark+-key.el" "bookmark+-pkg.el") (21729 48831 402953
+;;;;;;  907000))
 
 ;;;***
 

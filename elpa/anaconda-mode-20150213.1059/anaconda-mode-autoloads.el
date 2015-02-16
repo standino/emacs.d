@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (anaconda-mode anaconda-mode-local anaconda-mode-remote)
-;;;;;;  "anaconda-mode" "anaconda-mode.el" (21710 58180 1522 880000))
+;;;;;;  "anaconda-mode" "anaconda-mode.el" (21729 48842 197978 645000))
 ;;; Generated autoloads from anaconda-mode.el
 
 (autoload 'anaconda-mode-remote "anaconda-mode" "\
@@ -26,8 +26,8 @@ Code navigation, documentation lookup and completion for Python.
 
 ;;;***
 
-;;;### (autoloads nil nil ("anaconda-mode-pkg.el") (21710 58180 156035
-;;;;;;  930000))
+;;;### (autoloads nil nil ("anaconda-mode-pkg.el") (21729 48842 333774
+;;;;;;  147000))
 
 ;;;***
 
