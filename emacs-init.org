@@ -107,6 +107,13 @@ emacs -nw --batch -l ~/.emacs.d/init.el -f package-refresh-contents
 #+BEGIN_SRC emacs-lisp
 ;; 格式化org clock 输出
 (setq org-pretty-entities t)
+(setq org-agenda-files (list 
+                             ;; "~/cwboot/work/"
+                             ;; "~/cwboot/blog/"
+                             "~/.emacs.d/emacs-init.org" 
+                             "~/cwboot/work/Personal.org" 
+                             "~/cwboot/work/jd.org"
+                           ))
 (setq org-agenda-custom-commands
       '(("a" "My custom agenda"
          (
