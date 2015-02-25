@@ -1,10 +1,9 @@
 ;;; unfill-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (toggle-fill-unfill unfill-region unfill-paragraph)
-;;;;;;  "unfill" "unfill.el" (21642 33896 221496 630000))
+;;;### (autoloads nil "unfill" "unfill.el" (21741 29834 374762 800000))
 ;;; Generated autoloads from unfill.el
 
 (autoload 'unfill-paragraph "unfill" "\
@@ -26,15 +25,9 @@ Remove or add line ending chars on current paragraph.  This command is similar t
 
 ;;;***
 
-;;;### (autoloads nil nil ("unfill-pkg.el") (21642 33896 316933 80000))
-
-;;;***
-
-(provide 'unfill-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; unfill-autoloads.el ends here

@@ -1,12 +1,10 @@
 ;;; mic-paren-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (paren-backward-sexp paren-forward-sexp paren-toggle-open-paren-context
-;;;;;;  paren-toggle-matching-quoted-paren paren-toggle-matching-paired-delimiter
-;;;;;;  paren-deactivate paren-activate) "mic-paren" "mic-paren.el"
-;;;;;;  (21633 25723 601197 550000))
+;;;### (autoloads nil "mic-paren" "mic-paren.el" (21741 29792 29762
+;;;;;;  800000))
 ;;; Generated autoloads from mic-paren.el
 
 (autoload 'paren-activate "mic-paren" "\
@@ -85,16 +83,9 @@ See `paren-match-quoted-paren'.
 
 ;;;***
 
-;;;### (autoloads nil nil ("mic-paren-pkg.el") (21633 25723 706907
-;;;;;;  785000))
-
-;;;***
-
-(provide 'mic-paren-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; mic-paren-autoloads.el ends here

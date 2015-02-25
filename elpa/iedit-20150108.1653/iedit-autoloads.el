@@ -1,10 +1,9 @@
 ;;; iedit-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (iedit-mode-toggle-on-function iedit-mode) "iedit"
-;;;;;;  "iedit.el" (21710 57684 569528 448000))
+;;;### (autoloads nil "iedit" "iedit.el" (21741 29883 952762 800000))
 ;;; Generated autoloads from iedit.el
 
 (autoload 'iedit-mode "iedit" "\
@@ -69,8 +68,8 @@ Toggle Iedit mode on current function.
 
 ;;;***
 
-;;;### (autoloads (iedit-rectangle-mode) "iedit-rect" "iedit-rect.el"
-;;;;;;  (21710 57684 617528 447000))
+;;;### (autoloads nil "iedit-rect" "iedit-rect.el" (21741 29883 962762
+;;;;;;  800000))
 ;;; Generated autoloads from iedit-rect.el
 
 (autoload 'iedit-rectangle-mode "iedit-rect" "\
@@ -87,16 +86,14 @@ Commands:
 
 ;;;***
 
-;;;### (autoloads nil nil ("iedit-lib.el" "iedit-pkg.el") (21710
-;;;;;;  57684 735455 416000))
+;;;### (autoloads nil nil ("iedit-lib.el" "iedit-pkg.el") (21741
+;;;;;;  29883 986762 800000))
 
 ;;;***
 
-(provide 'iedit-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; iedit-autoloads.el ends here

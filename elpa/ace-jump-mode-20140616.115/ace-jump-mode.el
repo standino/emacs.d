@@ -1,11 +1,11 @@
 ;;; ace-jump-mode.el --- a quick cursor location minor mode for emacs -*- coding: utf-8-unix -*-
-;; Version: 20140616.115
 
 ;; Copyright (C) 2012 Free Software Foundation, Inc.
 
 ;; Author   : winterTTr <winterTTr@gmail.com>
 ;; URL      : https://github.com/winterTTr/ace-jump-mode/
-;; Version  : 2.0.RC
+;; Version: 20140616.115
+;; X-Original-Version  : 2.0.RC
 ;; Keywords : motion, location, cursor
 
 ;; This file is part of GNU Emacs.

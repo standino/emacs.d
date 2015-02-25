@@ -1,18 +1,15 @@
 ;;; packed-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil nil ("packed-pkg.el" "packed.el") (21710 56451
-;;;;;;  486756 836000))
+;;;### (autoloads nil nil ("packed.el") (21741 29144 474221 600000))
 
 ;;;***
 
-(provide 'packed-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; packed-autoloads.el ends here

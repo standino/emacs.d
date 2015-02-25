@@ -1,10 +1,9 @@
 ;;; scratch-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (scratch) "scratch" "scratch.el" (21633 25722 341197
-;;;;;;  565000))
+;;;### (autoloads nil "scratch" "scratch.el" (21741 29790 51762 800000))
 ;;; Generated autoloads from scratch.el
 
 (autoload 'scratch "scratch" "\
@@ -14,16 +13,14 @@ Get a scratch buffer for the current mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("el-get.el" "scratch-pkg.el") (21633 25722
-;;;;;;  586988 584000))
+;;;### (autoloads nil nil ("el-get.el" "scratch-pkg.el") (21741 29790
+;;;;;;  89762 800000))
 
 ;;;***
 
-(provide 'scratch-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; scratch-autoloads.el ends here
