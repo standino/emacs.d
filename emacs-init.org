@@ -338,11 +338,11 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
          :uri-template "/blog/html/%y/%m/%d/%t/"
          :sort-by :date       ;; how to sort the posts
          :category-index t)   ;; generate category index or not
-        ("wiki"
+        ("work"
          :show-meta t
          :show-comment t
          :uri-generator op/generate-uri
-         :uri-template "/wiki/html/%t/"
+         :uri-template "/work/html/%t/"
          :sort-by :mod-date
          :category-index t)
         ("index"
