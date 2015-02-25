@@ -1,9 +1,75 @@
 ;;; dired+-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "dired+" "dired+.el" (21720 12360 827310 800000))
+;;;### (autoloads (diredp-send-bug-report diredp-dired-plus-help
+;;;;;;  diredp-describe-mode diredp-mouse-do-chmod diredp-mouse-do-load
+;;;;;;  diredp-mouse-do-byte-compile diredp-mouse-do-compress diredp-mouse-do-grep
+;;;;;;  diredp-mouse-do-print diredp-mouse-do-hardlink diredp-mouse-do-symlink
+;;;;;;  diredp-mouse-do-shell-command diredp-mouse-do-delete diredp-mouse-downcase
+;;;;;;  diredp-mouse-upcase diredp-mouse-do-rename diredp-mouse-do-copy
+;;;;;;  diredp-mouse-flag-file-deletion diredp-mouse-mark/unmark-mark-region-files
+;;;;;;  diredp-mouse-mark-region-files diredp-mouse-mark/unmark diredp-mouse-unmark
+;;;;;;  diredp-mouse-mark diredp-mouse-backup-diff diredp-mouse-diff
+;;;;;;  diredp-mouse-ediff diredp-mouse-view-file diredp-mouse-find-file
+;;;;;;  dired-mouse-find-file-other-window diredp-mouse-find-file-other-frame
+;;;;;;  diredp-find-file-other-frame diredp-mouse-3-menu diredp-toggle-marks-in-region
+;;;;;;  diredp-flag-region-files-for-deletion diredp-unmark-region-files
+;;;;;;  diredp-mark-region-files dired-mark-sexp diredp-chmod-this-file
+;;;;;;  diredp-load-this-file diredp-byte-compile-this-file diredp-mouse-describe-file
+;;;;;;  diredp-describe-file diredp-mouse-copy-tags diredp-copy-tags-this-file
+;;;;;;  diredp-set-tag-value-this-file diredp-paste-replace-tags-this-file
+;;;;;;  diredp-paste-add-tags-this-file diredp-remove-all-tags-this-file
+;;;;;;  diredp-untag-this-file diredp-tag-this-file diredp-bookmark-this-file
+;;;;;;  diredp-shell-command-this-file diredp-async-shell-command-this-file
+;;;;;;  diredp-compress-this-file diredp-grep-this-file diredp-print-this-file
+;;;;;;  diredp-hardlink-this-file diredp-symlink-this-file diredp-relsymlink-this-file
+;;;;;;  diredp-copy-this-file diredp-rename-this-file diredp-upcase-this-file
+;;;;;;  diredp-downcase-this-file diredp-capitalize-this-file diredp-delete-this-file
+;;;;;;  diredp-capitalize dired-mark-files-regexp dired-do-delete
+;;;;;;  dired-do-flagged-delete diredp-prev-subdir diredp-next-subdir
+;;;;;;  diredp-prev-dirline diredp-next-dirline diredp-previous-line
+;;;;;;  diredp-next-line diredp-up-directory-reuse-dir-buffer diredp-up-directory
+;;;;;;  dired-do-find-marked-files dired-maybe-insert-subdir dired-do-load
+;;;;;;  dired-do-byte-compile dired-do-compress diredp-ediff diredp-omit-unmarked
+;;;;;;  diredp-omit-marked diredp-toggle-find-file-reuse-dir diredp-mouse-find-file-reuse-dir-buffer
+;;;;;;  diredp-find-file-reuse-dir-buffer diredp-do-bookmark-in-bookmark-file
+;;;;;;  diredp-set-bookmark-file-bookmark-for-marked diredp-mouse-do-bookmark
+;;;;;;  diredp-do-bookmark diredp-mouse-do-set-tag-value diredp-do-set-tag-value
+;;;;;;  diredp-mouse-do-paste-replace-tags diredp-do-paste-replace-tags
+;;;;;;  diredp-mouse-do-paste-add-tags diredp-do-paste-add-tags diredp-mouse-do-remove-all-tags
+;;;;;;  diredp-do-remove-all-tags diredp-mouse-do-untag diredp-do-untag
+;;;;;;  diredp-mouse-do-tag diredp-do-tag diredp-unmark-files-tagged-not-all
+;;;;;;  diredp-unmark-files-tagged-some diredp-unmark-files-tagged-none
+;;;;;;  diredp-unmark-files-tagged-all diredp-unmark-files-tagged-regexp
+;;;;;;  diredp-mark-files-tagged-regexp diredp-mark-files-tagged-not-all
+;;;;;;  diredp-mark-files-tagged-some diredp-mark-files-tagged-none
+;;;;;;  diredp-mark-files-tagged-all diredp-mark/unmark-extension
+;;;;;;  diredp-marked-other-window diredp-marked diredp-do-redisplay-recursive
+;;;;;;  diredp-do-touch-recursive diredp-do-chmod-recursive diredp-do-copy-recursive
+;;;;;;  diredp-do-move-recursive diredp-downcase-recursive diredp-upcase-recursive
+;;;;;;  diredp-capitalize-recursive diredp-copy-filename-as-kill-recursive
+;;;;;;  diredp-list-marked-recursive diredp-marked-recursive-other-window
+;;;;;;  diredp-marked-recursive diredp-do-grep-recursive diredp-do-query-replace-regexp-recursive
+;;;;;;  diredp-do-find-marked-files-recursive diredp-set-bookmark-file-bookmark-for-marked-recursive
+;;;;;;  diredp-do-bookmark-in-bookmark-file-recursive diredp-do-bookmark-dirs-recursive
+;;;;;;  diredp-do-bookmark-recursive diredp-image-dired-comment-files-recursive
+;;;;;;  diredp-image-dired-delete-tag-recursive diredp-image-dired-tag-files-recursive
+;;;;;;  diredp-image-dired-display-thumbs-recursive diredp-do-print-recursive
+;;;;;;  diredp-do-hardlink-recursive diredp-do-symlink-recursive
+;;;;;;  diredp-do-shell-command-recursive diredp-insert-subdirs-recursive
+;;;;;;  diredp-insert-subdirs diredp-list-marked diredp-mouse-find-line-file-other-window
+;;;;;;  diredp-find-line-file-other-window diredp-dired-inserted-subdirs
+;;;;;;  diredp-dired-this-subdir diredp-fileset-other-window diredp-fileset
+;;;;;;  diredp-add-to-this-dired-buffer diredp-add-to-dired-buffer
+;;;;;;  diredp-dired-union diredp-dired-recent-dirs-other-window
+;;;;;;  diredp-dired-recent-dirs diredp-dired-for-files-other-window
+;;;;;;  diredp-dired-for-files image-dired-dired-toggle-marked-thumbs
+;;;;;;  image-dired-dired-insert-marked-thumbs diredp-wrap-around-flag
+;;;;;;  diredp-w32-local-drives diredp-prompt-for-bookmark-prefix-flag
+;;;;;;  diff-switches diredp-image-preview-in-tooltip diredp-auto-focus-frame-for-thumbnail-tooltip-flag)
+;;;;;;  "dired+" "dired+.el" (21729 48724 805982 77000))
 ;;; Generated autoloads from dired+.el
 
 (defvar diredp-auto-focus-frame-for-thumbnail-tooltip-flag nil "\
@@ -1675,9 +1741,15 @@ Send a bug report about a Dired+ problem.
 
 ;;;***
 
+;;;### (autoloads nil nil ("dired+-pkg.el") (21729 48725 49190 383000))
+
+;;;***
+
+(provide 'dired+-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; dired+-autoloads.el ends here

@@ -8,9 +8,15 @@
 ;; Copyright (C) 2009, Thierry Volpiatto, all rights reserved.
 ;; Created: Fri Sep 15 07:58:41 2000
 ;; Version: 2015.02.08
+<<<<<<< HEAD:elpa/bookmark+-20150215.1910/bookmark+.el
 ;; Last-Updated: Sun Feb 15 10:46:20 2015 (-0800)
 ;;           By: dradams
 ;;     Update #: 15028
+=======
+;; Last-Updated: Sun Feb  8 16:09:18 2015 (-0800)
+;;           By: dradams
+;;     Update #: 15027
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/bookmark+-20150215.1910/bookmark+.el
 ;; URL: http://www.emacswiki.org/bookmark+.el
 ;; Doc URL: http://www.emacswiki.org/BookmarkPlus
 ;; Keywords: bookmarks, bookmark+, placeholders, annotations, search, info, url, w3m, gnus

@@ -3,8 +3,16 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
+<<<<<<< HEAD:elpa/inf-ruby-20150208.2313/inf-ruby-autoloads.el
 ;;;### (autoloads nil "inf-ruby" "inf-ruby.el" (21730 37475 328390
 ;;;;;;  0))
+=======
+;;;### (autoloads (inf-ruby-file-contents-match inf-ruby-console-default
+;;;;;;  inf-ruby-console-gem inf-ruby-console-rails inf-ruby-console-auto
+;;;;;;  inf-ruby-switch-setup run-ruby inf-ruby inf-ruby-minor-mode
+;;;;;;  inf-ruby-setup-keybindings) "inf-ruby" "inf-ruby.el" (21729
+;;;;;;  48707 157982 593000))
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/inf-ruby-20150208.2313/inf-ruby-autoloads.el
 ;;; Generated autoloads from inf-ruby.el
 
 (defvar ruby-source-modes '(ruby-mode enh-ruby-mode) "\
@@ -85,6 +93,15 @@ Run racksh, custom console.rb, or just IRB, in DIR.
 
 ;;;***
 
+<<<<<<< HEAD:elpa/inf-ruby-20150208.2313/inf-ruby-autoloads.el
+=======
+;;;### (autoloads nil nil ("inf-ruby-pkg.el") (21729 48707 261701
+;;;;;;  664000))
+
+;;;***
+
+(provide 'inf-ruby-autoloads)
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/inf-ruby-20150208.2313/inf-ruby-autoloads.el
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t

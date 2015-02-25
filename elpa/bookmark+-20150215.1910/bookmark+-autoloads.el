@@ -3,16 +3,26 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
+<<<<<<< HEAD:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;;### (autoloads nil "bookmark+" "bookmark+.el" (21730 37482 811877
 ;;;;;;  400000))
+=======
+;;;### (autoloads nil "bookmark+" "bookmark+.el" (21729 48831 217978
+;;;;;;  966000))
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;; Generated autoloads from bookmark+.el
  (autoload 'bmkp-version-number "bookmark+")
  (autoload 'bmkp-version "bookmark+")
 
 ;;;***
 
+<<<<<<< HEAD:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;;### (autoloads nil "bookmark+-1" "bookmark+-1.el" (21730 37482
 ;;;;;;  820882 800000))
+=======
+;;;### (autoloads nil "bookmark+-1" "bookmark+-1.el" (21729 48831
+;;;;;;  265978 965000))
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;; Generated autoloads from bookmark+-1.el
  (autoload 'bmkp-autofile-filecache "bookmark+")
  (autoload 'bmkp-auto-idle-bookmark-min-distance "bookmark+")
@@ -276,8 +286,13 @@
 
 ;;;***
 
+<<<<<<< HEAD:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;;### (autoloads nil "bookmark+-bmu" "bookmark+-bmu.el" (21730 37482
 ;;;;;;  838893 600000))
+=======
+;;;### (autoloads nil "bookmark+-bmu" "bookmark+-bmu.el" (21729 48831
+;;;;;;  353978 962000))
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;; Generated autoloads from bookmark+-bmu.el
  (autoload 'bmkp-bmenu-omitted-bookmarks "bookmark+")
  (autoload 'bmkp-bmenu-commands-file "bookmark+")
@@ -427,8 +442,13 @@
 
 ;;;***
 
+<<<<<<< HEAD:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;;### (autoloads nil "bookmark+-lit" "bookmark+-lit.el" (21730 37482
 ;;;;;;  772854 0))
+=======
+;;;### (autoloads nil "bookmark+-lit" "bookmark+-lit.el" (21729 48831
+;;;;;;  85978 970000))
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;; Generated autoloads from bookmark+-lit.el
  (autoload 'bmkp-auto-light-relocate-when-jump-flag "bookmark+")
  (autoload 'bmkp-auto-light-when-jump "bookmark+")
@@ -476,8 +496,13 @@
 
 ;;;***
 
+<<<<<<< HEAD:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;;### (autoloads nil "bookmark+-mac" "bookmark+-mac.el" (21730 37482
 ;;;;;;  801871 400000))
+=======
+;;;### (autoloads nil "bookmark+-mac" "bookmark+-mac.el" (21729 48831
+;;;;;;  173978 967000))
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;; Generated autoloads from bookmark+-mac.el
  (autoload 'bmkp-with-help-window "bookmark+")
  (autoload 'bmkp-with-output-to-plain-temp-buffer "bookmark+")
@@ -492,8 +517,13 @@
 ;;;***
 
 ;;;### (autoloads nil nil ("bookmark+-chg.el" "bookmark+-doc.el"
+<<<<<<< HEAD:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 ;;;;;;  "bookmark+-key.el" "bookmark+-pkg.el") (21730 37482 849900
 ;;;;;;  200000))
+=======
+;;;;;;  "bookmark+-key.el" "bookmark+-pkg.el") (21729 48831 402953
+;;;;;;  907000))
+>>>>>>> db382aeaee04b9b012d944701b5ded5e4216e0e6:elpa/bookmark+-20150215.1910/bookmark+-autoloads.el
 
 ;;;***
 
