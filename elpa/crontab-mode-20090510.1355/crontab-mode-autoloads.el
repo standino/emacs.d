@@ -1,10 +1,10 @@
 ;;; crontab-mode-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "crontab-mode" "crontab-mode.el" (21741 29799
-;;;;;;  227762 800000))
+;;;### (autoloads (crontab-get crontab-mode) "crontab-mode" "crontab-mode.el"
+;;;;;;  (21741 32947 581792 541000))
 ;;; Generated autoloads from crontab-mode.el
 
 (autoload 'crontab-mode "crontab-mode" "\
@@ -23,9 +23,16 @@ Get the crontab for the HOST into a buffer.
 
 ;;;***
 
+;;;### (autoloads nil nil ("crontab-mode-pkg.el") (21741 32947 650073
+;;;;;;  383000))
+
+;;;***
+
+(provide 'crontab-mode-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; crontab-mode-autoloads.el ends here

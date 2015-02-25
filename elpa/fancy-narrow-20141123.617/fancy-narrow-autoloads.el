@@ -1,10 +1,12 @@
 ;;; fancy-narrow-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "fancy-narrow" "fancy-narrow.el" (21741 29925
-;;;;;;  136762 800000))
+;;;### (autoloads (org-fancy-narrow-to-subtree fancy-narrow-to-page
+;;;;;;  org-fancy-narrow-to-element fancy-narrow-to-defun org-fancy-narrow-to-block
+;;;;;;  fancy-narrow-mode fancy-widen fancy-narrow-to-region fancy-narrow-active-p)
+;;;;;;  "fancy-narrow" "fancy-narrow.el" (21741 33245 609784 461000))
 ;;; Generated autoloads from fancy-narrow.el
 
 (autoload 'fancy-narrow-active-p "fancy-narrow" "\
@@ -93,9 +95,16 @@ Like `org-narrow-to-subtree', except using `fancy-narrow-to-region'.
 
 ;;;***
 
+;;;### (autoloads nil nil ("fancy-narrow-pkg.el") (21741 33245 771333
+;;;;;;  860000))
+
+;;;***
+
+(provide 'fancy-narrow-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; fancy-narrow-autoloads.el ends here

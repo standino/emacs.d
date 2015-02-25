@@ -1,3 +1,4 @@
+elpa/**
 *.odt
 org-clock-save.el
 testmyfun.el

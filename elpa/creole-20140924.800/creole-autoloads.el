@@ -1,9 +1,10 @@
 ;;; creole-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "creole" "creole.el" (21741 29952 329762 800000))
+;;;### (autoloads (creole-wiki) "creole" "creole.el" (21741 33286
+;;;;;;  789783 344000))
 ;;; Generated autoloads from creole.el
 
 (autoload 'creole-wiki "creole" "\
@@ -113,9 +114,15 @@ All, any or none of these keys may be specified.
 
 ;;;***
 
+;;;### (autoloads nil nil ("creole-pkg.el") (21741 33286 873410 694000))
+
+;;;***
+
+(provide 'creole-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; creole-autoloads.el ends here

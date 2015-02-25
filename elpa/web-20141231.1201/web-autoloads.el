@@ -1,9 +1,10 @@
 ;;; web-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "web" "web.el" (21741 29954 942762 800000))
+;;;### (autoloads (web-get web-json-post web-http-post web-http-get
+;;;;;;  web-http-call) "web" "web.el" (21741 33288 613783 295000))
 ;;; Generated autoloads from web.el
 
 (autoload 'web-http-call "web" "\
@@ -120,9 +121,15 @@ Get the specified URL into the BUFFER.
 
 ;;;***
 
+;;;### (autoloads nil nil ("web-pkg.el") (21741 33288 693635 556000))
+
+;;;***
+
+(provide 'web-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; web-autoloads.el ends here

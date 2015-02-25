@@ -1,9 +1,11 @@
 ;;; erlang-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "erlang" "erlang.el" (21741 29754 879762 800000))
+;;;### (autoloads (inferior-erlang erlang-compile erlang-shell erlang-find-tag-other-window
+;;;;;;  erlang-find-tag erlang-mode) "erlang" "erlang.el" (21741
+;;;;;;  32906 281793 661000))
 ;;; Generated autoloads from erlang.el
 
 (autoload 'erlang-mode "erlang" "\
@@ -118,8 +120,8 @@ editing control characters:
 
 ;;;***
 
-;;;### (autoloads nil "erlang-start" "erlang-start.el" (21741 29754
-;;;;;;  826762 800000))
+;;;### (autoloads nil "erlang-start" "erlang-start.el" (21741 32906
+;;;;;;  145793 665000))
 ;;; Generated autoloads from erlang-start.el
 
 (let ((a '("\\.erl\\'" . erlang-mode)) (b '("\\.hrl\\'" . erlang-mode))) (or (assoc (car a) auto-mode-alist) (setq auto-mode-alist (cons a auto-mode-alist))) (or (assoc (car b) auto-mode-alist) (setq auto-mode-alist (cons b auto-mode-alist))))
@@ -132,13 +134,15 @@ editing control characters:
 
 ;;;### (autoloads nil nil ("erlang-eunit.el" "erlang-flymake.el"
 ;;;;;;  "erlang-pkg.el" "erlang-skels-old.el" "erlang-skels.el" "erlang_appwiz.el")
-;;;;;;  (21741 29754 900762 800000))
+;;;;;;  (21741 32906 430085 957000))
 
 ;;;***
 
+(provide 'erlang-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; erlang-autoloads.el ends here

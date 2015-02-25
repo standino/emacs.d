@@ -1,10 +1,11 @@
 ;;; mwe-log-commands-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "mwe-log-commands" "mwe-log-commands.el" (21741
-;;;;;;  29814 798762 800000))
+;;;### (autoloads (mwe:open-command-log-buffer mwe:log-keyboard-commands)
+;;;;;;  "mwe-log-commands" "mwe-log-commands.el" (21741 32964 173792
+;;;;;;  92000))
 ;;; Generated autoloads from mwe-log-commands.el
 
 (autoload 'mwe:log-keyboard-commands "mwe-log-commands" "\
@@ -21,9 +22,16 @@ If ARG is Non-nil, the existing command log buffer is cleared.
 
 ;;;***
 
+;;;### (autoloads nil nil ("mwe-log-commands-pkg.el") (21741 32964
+;;;;;;  260170 56000))
+
+;;;***
+
+(provide 'mwe-log-commands-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; mwe-log-commands-autoloads.el ends here

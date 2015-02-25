@@ -1,10 +1,13 @@
 ;;; color-theme-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "color-theme" "color-theme.el" (21741 29142
-;;;;;;  382012 400000))
+;;;### (autoloads (color-theme-initialize color-theme-submit color-theme-install
+;;;;;;  color-theme-compare color-theme-make-snapshot color-theme-analyze-defun
+;;;;;;  color-theme-print color-theme-install-at-point-for-current-frame
+;;;;;;  color-theme-install-at-mouse color-theme-describe color-theme-select)
+;;;;;;  "color-theme" "color-theme.el" (21741 32798 653796 579000))
 ;;; Generated autoloads from color-theme.el
 
 (autoload 'color-theme-select "color-theme" "\
@@ -139,14 +142,16 @@ Initialize the color theme package by loading color-theme-libraries.
 
 ;;;***
 
-;;;### (autoloads nil nil ("color-theme-pkg.el") (21741 29142 408015
-;;;;;;  0))
+;;;### (autoloads nil nil ("color-theme-pkg.el") (21741 32798 697108
+;;;;;;  525000))
 
 ;;;***
 
+(provide 'color-theme-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; color-theme-autoloads.el ends here

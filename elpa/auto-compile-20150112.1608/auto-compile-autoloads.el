@@ -1,10 +1,11 @@
 ;;; auto-compile-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "auto-compile" "auto-compile.el" (21741 29147
-;;;;;;  23476 500000))
+;;;### (autoloads (toggle-auto-compile auto-compile-on-save-mode
+;;;;;;  auto-compile-mode) "auto-compile" "auto-compile.el" (21741
+;;;;;;  32801 697796 497000))
 ;;; Generated autoloads from auto-compile.el
 
 (autoload 'auto-compile-mode "auto-compile" "\
@@ -95,9 +96,16 @@ multiple files is toggled as follows:
 
 ;;;***
 
+;;;### (autoloads nil nil ("auto-compile-pkg.el") (21741 32801 792581
+;;;;;;  530000))
+
+;;;***
+
+(provide 'auto-compile-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; auto-compile-autoloads.el ends here

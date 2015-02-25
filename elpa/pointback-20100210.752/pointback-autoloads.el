@@ -1,10 +1,10 @@
 ;;; pointback-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "pointback" "pointback.el" (21741 29817 134762
-;;;;;;  800000))
+;;;### (autoloads (global-pointback-mode pointback-mode) "pointback"
+;;;;;;  "pointback.el" (21741 32965 981792 43000))
 ;;; Generated autoloads from pointback.el
 
 (autoload 'pointback-mode "pointback" "\
@@ -35,9 +35,16 @@ See `pointback-mode' for more information on Pointback mode.
 
 ;;;***
 
+;;;### (autoloads nil nil ("pointback-pkg.el") (21741 32966 49297
+;;;;;;  764000))
+
+;;;***
+
+(provide 'pointback-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; pointback-autoloads.el ends here

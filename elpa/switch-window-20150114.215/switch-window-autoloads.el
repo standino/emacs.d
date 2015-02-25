@@ -1,10 +1,10 @@
 ;;; switch-window-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "switch-window" "switch-window.el" (21741 29869
-;;;;;;  234762 800000))
+;;;### (autoloads (switch-window delete-other-window) "switch-window"
+;;;;;;  "switch-window.el" (21741 33024 457790 457000))
 ;;; Generated autoloads from switch-window.el
 
 (autoload 'delete-other-window "switch-window" "\
@@ -21,9 +21,16 @@ ask user for the window where move to
 
 ;;;***
 
+;;;### (autoloads nil nil ("switch-window-pkg.el") (21741 33024 537168
+;;;;;;  945000))
+
+;;;***
+
+(provide 'switch-window-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; switch-window-autoloads.el ends here
