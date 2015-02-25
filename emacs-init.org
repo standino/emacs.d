@@ -109,7 +109,7 @@ emacs -nw --batch -l ~/.emacs.d/init.el -f package-refresh-contents
 (setq org-pretty-entities t)
 (setq org-agenda-files (list 
                              ;; "~/cwboot/work/"
-                             ;; "~/cwboot/blog/"
+                             "~/cwboot/blog/planning2015.org"
                              "~/.emacs.d/emacs-init.org" 
                              "~/cwboot/work/Personal.org" 
                              "~/cwboot/work/jd.org"
@@ -321,8 +321,8 @@ Open the generated “Readme.html” in your browser and enjoy the cool slides.
 (require-package 'org)
 (require-package 'org-page)
 (require 'org-page)
-(setq op/site-main-title "Keep going")
-(setq op/site-sub-title "努力超越自己！")
+(setq op/site-main-title "简单")
+(setq op/site-sub-title "让生活更精彩。")
 (setq op/site-domain "http://standino.github.io/")
 (setq op/personal-github-link "https://github.com/standino")
 (setq op/personal-disqus-shortname "standino")
