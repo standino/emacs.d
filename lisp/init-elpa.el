@@ -74,9 +74,11 @@ ARCHIVE is the string name of the package archive.")
 ;; TODO: in half a year, I will remove gnu elpa because emacs 24.3 is the minimum version
 (setq package-archives '(("melpa" . "http://melpa.org/packages/")
                          ("melpa-stable" . "http://stable.melpa.org/packages/")
-                         ;; uncomment below line if you need use GNU ELPA
-                         ;; ("gnu" . "http://elpa.gnu.org/packages/")
-                         ))
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa-stable2" . "http://melpa-stable.milkbox.net/packages/")
+                         ("melpa2" . "http://melpa.milkbox.net/packages/")
+                         ("org" . "http://orgmode.org/elpa/")) )
 ;; Un-comment below line if you download zip file
 ;; from https://github.com/redguardtoo/myelpa/archive/master.zip
 ;; and extract its content into ~/myelpa/
