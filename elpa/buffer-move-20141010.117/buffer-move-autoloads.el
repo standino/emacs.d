@@ -1,10 +1,10 @@
 ;;; buffer-move-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (buf-move-right buf-move-left buf-move-down buf-move-up)
-;;;;;;  "buffer-move" "buffer-move.el" (21633 25765 57197 84000))
+;;;### (autoloads nil "buffer-move" "buffer-move.el" (21741 29867
+;;;;;;  882762 800000))
 ;;; Generated autoloads from buffer-move.el
 
 (autoload 'buf-move-up "buffer-move" "\
@@ -37,16 +37,9 @@ Swap the current buffer and the buffer on the right of the split.
 
 ;;;***
 
-;;;### (autoloads nil nil ("buffer-move-pkg.el") (21633 25765 145399
-;;;;;;  38000))
-
-;;;***
-
-(provide 'buffer-move-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; buffer-move-autoloads.el ends here

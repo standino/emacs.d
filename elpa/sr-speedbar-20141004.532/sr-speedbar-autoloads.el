@@ -1,10 +1,10 @@
 ;;; sr-speedbar-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (sr-speedbar-open sr-speedbar-toggle) "sr-speedbar"
-;;;;;;  "sr-speedbar.el" (21633 25836 817196 278000))
+;;;### (autoloads nil "sr-speedbar" "sr-speedbar.el" (21741 29927
+;;;;;;  3762 800000))
 ;;; Generated autoloads from sr-speedbar.el
 
 (autoload 'sr-speedbar-toggle "sr-speedbar" "\
@@ -24,16 +24,9 @@ Create `sr-speedbar' window.
 
 ;;;***
 
-;;;### (autoloads nil nil ("sr-speedbar-pkg.el") (21633 25836 910789
-;;;;;;  952000))
-
-;;;***
-
-(provide 'sr-speedbar-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; sr-speedbar-autoloads.el ends here

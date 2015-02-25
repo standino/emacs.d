@@ -1,10 +1,9 @@
 ;;; idomenu-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (idomenu) "idomenu" "idomenu.el" (21633 25762 649197
-;;;;;;  111000))
+;;;### (autoloads nil "idomenu" "idomenu.el" (21741 29864 68762 800000))
 ;;; Generated autoloads from idomenu.el
 
 (autoload 'idomenu "idomenu" "\
@@ -14,16 +13,9 @@ Switch to a buffer-local tag from Imenu via Ido.
 
 ;;;***
 
-;;;### (autoloads nil nil ("idomenu-pkg.el") (21633 25762 736638
-;;;;;;  635000))
-
-;;;***
-
-(provide 'idomenu-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; idomenu-autoloads.el ends here

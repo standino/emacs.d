@@ -1,18 +1,15 @@
 ;;; quack-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil nil ("quack-pkg.el" "quack.el") (21633 25860
-;;;;;;  902396 630000))
+;;;### (autoloads nil nil ("quack.el") (21741 29976 898762 800000))
 
 ;;;***
 
-(provide 'quack-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; quack-autoloads.el ends here

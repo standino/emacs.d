@@ -1,10 +1,10 @@
 ;;; move-text-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (move-text-default-bindings move-text-up move-text-down)
-;;;;;;  "move-text" "move-text.el" (21633 25737 405197 395000))
+;;;### (autoloads nil "move-text" "move-text.el" (21741 29813 500762
+;;;;;;  800000))
 ;;; Generated autoloads from move-text.el
 
 (autoload 'move-text-down "move-text" "\
@@ -26,16 +26,9 @@ Bind `move-text-up' and `move-text-down' to M-up and M-down.
 
 ;;;***
 
-;;;### (autoloads nil nil ("move-text-pkg.el") (21633 25737 497382
-;;;;;;  233000))
-
-;;;***
-
-(provide 'move-text-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; move-text-autoloads.el ends here

@@ -1,12 +1,9 @@
 ;;; elnode-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-
+(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads (elnode-do-init elnode-init elnode-webserver elnode-make-webserver
-;;;;;;  elnode--webserver-handler-proc elnode-hostpath-default-table
-;;;;;;  elnode-start elnode-app) "elnode" "elnode.el" (21633 25852
-;;;;;;  789196 98000))
+;;;### (autoloads nil "elnode" "elnode.el" (21741 29958 406762 800000))
 ;;; Generated autoloads from elnode.el
 
 (defconst elnode-config-directory (expand-file-name (concat user-emacs-directory "elnode/")) "\
@@ -172,8 +169,8 @@ in `elnode-webserver-docroot', which by default is ~/public_html.")
 
 ;;;***
 
-;;;### (autoloads (elnode-server-list elnode-deferred-list elnode-deferred-queue)
-;;;;;;  "elnode-lists" "elnode-lists.el" (21633 25852 657196 100000))
+;;;### (autoloads nil "elnode-lists" "elnode-lists.el" (21741 29958
+;;;;;;  379762 800000))
 ;;; Generated autoloads from elnode-lists.el
 
 (autoload 'elnode-deferred-queue "elnode-lists" "\
@@ -197,8 +194,8 @@ List the currently running Elnode servers.
 
 ;;;***
 
-;;;### (autoloads ((quote elnode-log-mode)) "elnode-log-mode" "elnode-log-mode.el"
-;;;;;;  (21633 25853 57196 95000))
+;;;### (autoloads nil "elnode-log-mode" "elnode-log-mode.el" (21741
+;;;;;;  29958 478762 800000))
 ;;; Generated autoloads from elnode-log-mode.el
 
 (autoload 'elnode-log-mode "elnode-log-mode" "\
@@ -210,8 +207,8 @@ For viewing access log files from Elnode.
 
 ;;;***
 
-;;;### (autoloads (elnode-make-proxy-server elnode-make-proxy) "elnode-proxy"
-;;;;;;  "elnode-proxy.el" (21633 25852 525196 101000))
+;;;### (autoloads nil "elnode-proxy" "elnode-proxy.el" (21741 29958
+;;;;;;  347762 800000))
 ;;; Generated autoloads from elnode-proxy.el
 
 (autoload 'elnode-make-proxy "elnode-proxy" "\
@@ -248,8 +245,8 @@ Interactively use C-u to specify the URL.
 
 ;;;***
 
-;;;### (autoloads (elnode-wikiserver elnode-wikiserver-test elnode-wikiserver-wikiroot)
-;;;;;;  "elnode-wiki" "elnode-wiki.el" (21633 25852 833196 98000))
+;;;### (autoloads nil "elnode-wiki" "elnode-wiki.el" (21741 29958
+;;;;;;  411762 800000))
 ;;; Generated autoloads from elnode-wiki.el
 
 (defconst elnode-wikiserver-wikiroot-default (expand-file-name (concat elnode-config-directory "wiki/")) "\
@@ -283,15 +280,13 @@ provided. Otherwise it will just error.
 ;;;***
 
 ;;;### (autoloads nil nil ("elnode-pkg.el" "elnode-rle.el" "elnode-testsupport.el")
-;;;;;;  (21633 25853 150873 970000))
+;;;;;;  (21741 29958 490762 800000))
 
 ;;;***
 
-(provide 'elnode-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
-;; coding: utf-8
 ;; End:
 ;;; elnode-autoloads.el ends here
