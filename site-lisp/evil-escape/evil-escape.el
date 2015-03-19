@@ -5,7 +5,7 @@
 ;; Author: Sylvain Benner <sylvain.benner@gmail.com>
 ;; Keywords: convenience editing evil
 ;; Created: 22 Oct 2014
-;; Version: 2.03
+;; Version: 2.14
 ;; Package-Requires: ((emacs "24") (evil "1.0.9"))
 ;; URL: https://github.com/syl20bnr/evil-escape
 
@@ -56,8 +56,20 @@
 ;; the variable `evil-escape-delay'. Default is `0.1'.
 ;; It must be set before requiring evil-escape.
 
+;; A major mode can be excluded by adding it to the list
+;; `evil-escape-excluded-major-modes'.
+
 ;; More information in the readme of the repository:
 ;; https://github.com/syl20bnr/evil-escape
+
+;; Limitations
+
+;; `fd' cannot be used during macro recording, use regular `ESC'
+;; instead.
+
+;; Due to the current implementation only the key declared in
+;; `evil-motion-state-map' can be used as the first character
+;; of the key sequence:
 
 ;;; Code:
 
@@ -77,10 +89,16 @@
   (defcustom evil-escape-delay 0.1
     "Max time delay between the two key press to be considered successful."
     :type 'number
-    :group 'evil-escape))
+    :group 'evil-escape)
+
+  (defcustom evil-escape-excluded-major-modes '()
+    "Excluded major modes where escape sequences has no effect."
+    :type 'sexp
+    :group 'evil-escape)
+)
 
 (defvar evil-escape-motion-state-shadowed-func nil
-  "Original function of `evil-motion-state' shadowed by `evil-escape'.
+  "Original function of `evil-motion-state' shadowed by `evil-espace'.
 This variable is used to restore the original function bound to the
 first key of the escape key sequence when `evil-escape'
 mode is disabled.")
@@ -91,9 +109,15 @@ This variable is used to restore the original function bound to the
 first key of the escape key sequence when `evil-escape'
 mode is disabled.")
 
+(defvar evil-escape-lisp-state-shadowed-func nil
+  "Original function of `evil-lisp-state-map' shadowed by `evil-escape'.
+This variable is used to restore the original function bound to the
+first key of the escape key sequence when `evil-escape'
+mode is disabled.")
+
 ;;;###autoload
 (define-minor-mode evil-escape-mode
-  "Buffer-local minor mode to escape insert state and everything else
+  "Buffer-local minor mode to escape insert state and everythin else
 with a key sequence."
   :lighter (:eval (concat " " evil-escape-key-sequence))
   :group 'evil
@@ -128,32 +152,47 @@ with a key sequence."
 
 `:delete-func FUNCTION'
      Specify the delete function to call when deleting the first key."
-  (let ((shadowed-func (plist-get properties :shadowed-func))
-        (insert-func (plist-get properties :insert-func))
-        (delete-func (plist-get properties :delete-func)))
+  (let* ((shadowed-func (plist-get properties :shadowed-func))
+         (evil-func-props (when shadowed-func
+                            (evil-get-command-properties shadowed-func)))
+         (insert-func (plist-get properties :insert-func))
+         (delete-func (plist-get properties :delete-func)))
     `(progn
        (define-key ,map ,(evil-escape--first-key)
          (evil-define-motion ,(evil-escape--escape-function-symbol from)
            (count)
-           ;; called by the user
-           (if (called-interactively-p 'interactive)
-               (evil-escape--escape ,evil-escape-key-sequence
-                                    ',command
-                                    ',shadowed-func
-                                    ',insert-func
-                                    ',delete-func)
-             ;; not called by the user, i.e. called by a keyboard macro
-             (when (fboundp ',insert-func)
-               (funcall ',insert-func ,(evil-escape--first-key)))))))))
+           ,@evil-func-props
+           (if (memq major-mode evil-escape-excluded-major-modes)
+               (progn
+                 ;; excluded major mode, passthrough
+                 (when (fboundp ',insert-func)
+                   (funcall ',insert-func ,(evil-escape--first-key)))
+                 (when (fboundp ',shadowed-func)
+                   (evil-escape--execute-shadowed-func ',shadowed-func)))
+             (if (called-interactively-p 'interactive)
+                 ;; called by the user
+                 (evil-escape--escape ,evil-escape-key-sequence
+                                      ',command
+                                      ',shadowed-func
+                                      ',insert-func
+                                      ',delete-func)
+               (cond
+                ;; not called by the user, i.e. called by a keyboard macro
+                ((fboundp ',insert-func)
+                 (funcall ',insert-func ,(evil-escape--first-key)))
+                ((fboundp ',shadowed-func)
+                 (evil-escape--setup-emacs-state-passthrough)
+                 (evil-escape--execute-shadowed-func ',shadowed-func))))))))))
 
 (defun evil-escape--define-keys ()
   "Set the key bindings to escape _everything!_"
   (setq evil-escape-motion-state-shadowed-func
-        (lookup-key evil-motion-state-map (evil-escape--first-key)))
+        (or evil-escape-motion-state-shadowed-func
+            (lookup-key evil-motion-state-map (evil-escape--first-key))))
   ;; evil states
   ;; insert state
   (eval `(evil-escape-define-escape "insert-state" evil-insert-state-map evil-normal-state
-                                    :insert-func evil-escape--default-insert-func
+                                    :insert-func evil-escape--insert-state-insert-func
                                     :delete-func evil-escape--default-delete-func))
   ;; emacs state
   (let ((exit-func (lambda () (interactive)
@@ -163,7 +202,7 @@ with a key sequence."
                               (evil-escape--escape-with-q))
                              ((eq 'gist-list-menu-mode major-mode)
                               (quit-window))
-                             (t  evil-normal-state)))))
+                             (t  (evil-normal-state))))))
     (eval `(evil-escape-define-escape "emacs-state" evil-emacs-state-map ,exit-func)))
   ;; visual state
   (eval `(evil-escape-define-escape "visual-state" evil-visual-state-map evil-exit-visual-state
@@ -191,7 +230,8 @@ with a key sequence."
                                     :delete-func evil-escape--default-delete-func))
   ;; isearch
   (setq evil-escape-isearch-shadowed-func
-        (lookup-key isearch-mode-map (evil-escape--first-key)))
+        (or evil-escape-isearch-shadowed-func
+            (lookup-key isearch-mode-map (evil-escape--first-key))))
   (eval `(evil-escape-define-escape "isearch" isearch-mode-map isearch-abort
                                     :insert t
                                     :delete t
@@ -200,14 +240,23 @@ with a key sequence."
                                     :delete-func isearch-delete-char))
   ;; lisp state if installed
   (eval-after-load 'evil-lisp-state
-    '(eval '(evil-escape-define-escape "lisp-state" evil-lisp-state-map evil-normal-state)))
+    '(progn
+       (setq evil-escape-lisp-state-shadowed-func
+             (or evil-escape-lisp-state-shadowed-func
+                 (lookup-key evil-lisp-state-map (evil-escape--first-key))))
+       (eval `(evil-escape-define-escape "lisp-state" evil-lisp-state-map
+                                         evil-normal-state
+                                         :shadowed-func ,evil-escape-lisp-state-shadowed-func))))
   ;; iedit state if installed
   (eval-after-load 'evil-iedit-state
     '(progn
-       (eval '(evil-escape-define-escape "iedit-state" evil-iedit-state-map
-                                         evil-iedit-state/quit-iedit-mode))
+       (eval `(evil-escape-define-escape "iedit-state" evil-iedit-state-map
+                                         evil-iedit-state/quit-iedit-mode
+                                         :shadowed-func ,evil-escape-motion-state-shadowed-func))
        (eval '(evil-escape-define-escape "iedit-insert-state" evil-iedit-insert-state-map
-                                         evil-iedit-state/quit-iedit-mode)))))
+                                         evil-iedit-state/quit-iedit-mode
+                                         :insert-func evil-escape--default-insert-func
+                                         :delete-func evil-escape--default-delete-func)))))
 
 (defun evil-escape--undefine-keys ()
   "Unset the key bindings defined in `evil-escape--define-keys'."
@@ -221,8 +270,9 @@ with a key sequence."
         (define-key isearch-mode-map
           (kbd first-key) evil-escape-isearch-shadowed-func))
     ;; list state
-    (eval-after-load 'evil-lisp-state
-      '(define-key evil-lisp-state-map (kbd first-key) nil))
+    (if evil-escape-lisp-state-shadowed-func
+        (define-key evil-lisp-state-map
+          (kbd first-key) evil-escape-lisp-state-shadowed-func))
     ;; iedit state
     (eval-after-load 'evil-iedit-state
       '(progn (define-key evil-iedit-state-map (kbd first-key) nil)
@@ -231,6 +281,13 @@ with a key sequence."
 (defun evil-escape--default-insert-func (key)
   "Insert KEY in current buffer if not read only."
   (when (not buffer-read-only) (insert key)))
+
+(defun evil-escape--insert-state-insert-func (key)
+  "Take care of term-mode."
+  (interactive)
+  (cond ((eq 'term-mode major-mode)
+         (call-interactively 'term-send-raw))
+        (t (evil-escape--default-insert-func key))))
 
 (defun evil-escape--isearch-insert-func (key)
   "Insert KEY in current buffer if not read only."
@@ -244,6 +301,10 @@ with a key sequence."
   "Send `q' key press event to exit from a buffer."
   (setq unread-command-events (listify-key-sequence "q")))
 
+(defun evil-escape--term-insert-func (key)
+  "Insert KEY in current term buffer."
+  (term-send-raw))
+
 (defun evil-escape--execute-shadowed-func (func)
   "Execute the passed FUNC if the context allows it."
   (unless (or (null func)
@@ -253,17 +314,20 @@ with a key sequence."
     (call-interactively func)))
 
 (defun evil-escape--passthrough (from key map hfunc)
-  "Allow the next command KEY to pass through MAP.
+  "Allow the next command KEY to pass through MAP so they can reach
+the underlying major or minor modes map.
 Once the command KEY passed through MAP the function HFUNC is removed
 from the `post-command-hook'."
   (if (lookup-key map key)
+      ;; first pass
       (define-key map key nil)
+    ;; second pass
     (let ((escape-func (evil-escape--escape-function-symbol from)))
       (define-key map key escape-func)
       (remove-hook 'post-command-hook hfunc))))
 
 (defun evil-escape--emacs-state-passthrough ()
-  "Allow next command KEY to pass through `evil-emcs-state-map'"
+  "Allow next command KEY to pass through `evil-emacs-state-map'"
   (evil-escape--passthrough "emacs-state"
                             (evil-escape--first-key)
                             evil-emacs-state-map
@@ -273,9 +337,11 @@ from the `post-command-hook'."
   "Setup a pass through for emacs state map"
   (when (eq 'emacs evil-state)
     (add-hook 'post-command-hook 'evil-escape--emacs-state-passthrough)
-    (setq unread-command-events
-          (append unread-command-events (listify-key-sequence
-                                         (evil-escape--first-key))))))
+    (unless (or (and (boundp 'isearch-mode) (symbol-value 'isearch-mode))
+                (minibufferp))
+      (setq unread-command-events
+            (append unread-command-events (listify-key-sequence
+                                           (evil-escape--first-key)))))))
 
 (defun evil-escape--escape
     (keys callback &optional shadowed-func insert-func delete-func)
@@ -305,6 +371,8 @@ DELETE-FUNC when calling CALLBACK. "
         ;; remove the f character
         (if delete-func (funcall delete-func))
         (set-buffer-modified-p modified)
+        ;; disable any running transient map first
+        (setq overriding-terminal-local-map nil)
         (call-interactively callback))
        (t ; otherwise
         (evil-escape--setup-emacs-state-passthrough)

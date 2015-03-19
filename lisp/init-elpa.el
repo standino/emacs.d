@@ -147,7 +147,6 @@ ARCHIVE is the string name of the package archive.")
     w3m
     fakir
     erlang
-    fancy-narrow
     company-c-headers
     company-anaconda
     anaconda-mode
@@ -178,6 +177,7 @@ ARCHIVE is the string name of the package archive.")
     color-theme-solarized
     colorsarenice-theme
     cyberpunk-theme
+    expand-region
     dakrone-theme
     darcula-theme
     dark-krystal-theme
@@ -228,13 +228,14 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'color-theme)
 (require-package 'auto-compile)
 (require-package 'ace-jump-mode)
-(require-package 'expand-region '(0 8 0) nil)
+(require-package 'expand-region nil) ;; use latest version if possible
 (require-package 'fringe-helper)
 (require-package 'haskell-mode '(13 7 0) nil)
 (require-package 'magit '(1 2 0) nil)
 (require-package 'git-commit-mode)
 (require-package 'gitignore-mode)
 (require-package 'gitconfig-mode)
+(require-package 'yagist)
 (require-package 'wgrep)
 (require-package 'lua-mode)
 (require-package 'project-local-variables)
@@ -290,7 +291,7 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'unfill)
 (require-package 'w3m)
 (require-package 'idomenu)
-(if *emacs24* (require-package 'ggtags))
+(if *emacs24* (require-package 'ggtags '(0 8 9) nil))
 (require-package 'buffer-move)
 (require-package 'switch-window)
 (require-package 'cpputils-cmake '(0 4 22) nil)
@@ -310,7 +311,6 @@ ARCHIVE is the string name of the package archive.")
 (if (and (>= emacs-major-version 24) (>= emacs-minor-version 1))
     (require-package 'js2-mode '(20140114 0 0) nil))
 (require-package 'tagedit)
-(require-package 'fancy-narrow)
 (require-package 'sr-speedbar)
 ;; company-mode drop emacs 23 support
 (when (>= emacs-major-version 24)

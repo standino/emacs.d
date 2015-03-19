@@ -819,12 +819,17 @@ buffer is not visiting a file."
   "Erase the content of the *Messages* buffer in emacs.
     Keep the last num lines if argument num if given."
   (interactive "p")
-  (erase-specific-buffer num
-                         (cond
-                          ((eq 'ruby-mode major-mode) "*server*")
-                          (t "*Messages*")
-                          )))
+  (let ((buf (cond
+              ((eq 'ruby-mode major-mode) "*server*")
+              (t "*Messages*"))))
+    (erase-specific-buffer num buf)))
 
+;; turn off read-only-mode in *Message* buffer, a "feature" in v24.4
+(when (fboundp 'messages-buffer-mode)
+  (defun messages-buffer-mode-hook-setup ()
+    (message "messages-buffer-mode-hook-setup called")
+    (read-only-mode -1))
+  (add-hook 'messages-buffer-mode-hook 'messages-buffer-mode-hook-setup))
 ;; }}
 
 ;; vimrc
@@ -941,9 +946,10 @@ The full path into relative path insert it as a local file link in org-mode"
   )
 
 ;; {{ save history
-(setq history-length 8000)
-(setq savehist-additional-variables '(search-ring regexp-search-ring kill-ring))
-(savehist-mode 1)
+(when (file-writable-p (file-truename "~/.emacs.d/history"))
+  (setq history-length 8000)
+  (setq savehist-additional-variables '(search-ring regexp-search-ring kill-ring))
+  (savehist-mode 1))
 ;; }}
 
 (setq system-time-locale "C")
@@ -994,6 +1000,7 @@ The full path into relative path insert it as a local file link in org-mode"
 ;; {{ support MY packages which are not included in melpa
 (autoload 'wxhelp-browse-class-or-api "wxwidgets-help" "" t)
 (autoload 'issue-tracker-increment-issue-id-under-cursor "issue-tracker" "" t)
+(autoload 'issue-tracker-insert-issue-list "issue-tracker" "" t)
 (autoload 'elpamr-create-mirror-for-installed "elpa-mirror" "" t)
 (autoload 'org2nikola-export-subtree "org2nikola" "" t)
 (autoload 'org2nikola-rerender-published-posts "org2nikola" "" t)
